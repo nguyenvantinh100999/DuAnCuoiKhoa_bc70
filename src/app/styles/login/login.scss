@@ -1,0 +1,178 @@
+@import "../baseIndex";
+@import "../variableIndex";
+@import url("https://fonts.googleapis.com/css2?family=Parisienne&display=swap");
+.loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(90deg, $primary-300, $primary-100);
+  .wrapper {
+    position: relative;
+    width: 60vw;
+    min-height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
+    background: transparent;
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    img {
+      position: absolute;
+      width: 60%;
+      right: -40px;
+      bottom: -300px;
+      transform: rotate(260deg);
+    }
+
+    .form-wrapper {
+      z-index: 2;
+      h2 {
+        @include mText($text-3xl, $fw-semi, $text-color-light);
+        text-align: center;
+        margin-bottom: 30px !important;
+      }
+      .input-box {
+        position: relative;
+        width: 320px;
+        margin-bottom: 20px;
+        input {
+          width: 100%;
+          height: 50px;
+          background: transparent;
+          border: 2px solid $primary-100;
+          outline: none;
+          border-radius: 40px;
+          font-size: $text-base;
+          color: $text-color-light;
+          padding: 0 20px 0 40px;
+          transition: all 0.5s ease-in-out;
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+          }
+          &:focus {
+            border: 2px solid $dark;
+          }
+          &:focus + label,
+          &:valid + label {
+            top: -10px;
+          }
+        }
+
+        label {
+          position: absolute;
+          top: 50%;
+          left: 40px;
+          transform: translateY(-50%);
+          transition: 0.5s;
+          color: $primary-100;
+        }
+        .icon {
+          position: absolute;
+          left: 15px;
+          color: $primary-100;
+          font-size: 1.2em;
+          line-height: 50px;
+        }
+        select {
+          width: 100%;
+          height: 50px;
+          background: transparent;
+          border: 2px solid $primary-100;
+          outline: none;
+          border-radius: 40px;
+          font-size: $text-base;
+          color: $text-color-light;
+          padding: 0 20px 0 40px;
+          option {
+            background: transparent;
+            color: $text-color;
+          }
+        }
+      }
+      .text-danger {
+        margin: 0;
+      }
+      .forgot-pass {
+        margin-bottom: 20px;
+        a {
+          @include mText($text-base, $fw-normal, $text-color-light);
+          //   text-decoration: none;
+          &:hover {
+            text-decoration: underline !important;
+          }
+        }
+      }
+      button {
+        width: 100%;
+        height: 45px;
+        background: $primary-100;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        font-size: 1em;
+        color: $text-color;
+        font-weight: 500;
+        margin-bottom: 20px;
+        transition: all 0.5s;
+        &:hover {
+          background: $primary-300;
+          color: $text-color-light;
+          border: 2px solid $dark;
+        }
+      }
+      .sign-link {
+        p {
+          color: $text-color-light;
+
+          a {
+            @extend .ms-1;
+            color: $text-color-light;
+            // text-decoration: none;
+            &:hover {
+              text-decoration: underline !important;
+            }
+          }
+        }
+      }
+    }
+    .text-right {
+      position: absolute;
+      top: 60px;
+      right: 200px;
+      font-family: "Parisienne", cursive;
+      @include mText($text-5xl, $fw-semi, $text-color-light);
+      user-select: none;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      &::before {
+        content: "Back";
+        position: absolute;
+        top: 60px;
+        right: -50px;
+      }
+    }
+
+    .login {
+      //   display: none;
+
+      transition: all 0.7s ease-in-out;
+    }
+    .register {
+      position: absolute;
+      margin-top: 15px;
+      transform: translateX(-400px);
+      transition: all 0.7s ease-in-out;
+    }
+    .active.login {
+      transform: translateX(-400px);
+    }
+    .active.register {
+      transition: 0.7s;
+      transform: translateX(0);
+    }
+  }
+}

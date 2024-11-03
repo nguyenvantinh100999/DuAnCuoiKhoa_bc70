@@ -1,0 +1,49 @@
+@import "../baseIndex";
+@import "../variableIndex";
+.page_404 {
+  height: 100vh;
+  background-position: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  .page404_container {
+    position: relative;
+    height: 100%;
+    align-items: center;
+    padding: 50px 0;
+    text-align: center;
+    .content404 {
+      .text404 {
+        font-size: 80px;
+        color: $primary-500;
+        font-weight: 600;
+        font-family: cursive;
+        text-align: center;
+      }
+    }
+    .content_box_404 {
+      top: 75%;
+      h3 {
+        font-family: monospace;
+        font-size: 40px;
+        font-weight: 600;
+      }
+      .btnLink_404 {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 20px 0;
+        background: $primary-300;
+        font-weight: 500;
+        color: $text-color-light;
+      }
+    }
+
+    .content404 .content404,
+    .content_box_404 {
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translate(-50%);
+      transform: translate(-50%);
+    }
+  }
+}

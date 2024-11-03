@@ -1,0 +1,179 @@
+//Màu sắc của web
+$primary-900: #f0f8ff;
+$primary-800: #80e27e;
+$primary-700: #087f23;
+$primary-600: #4caf50;
+$primary-500: #ed85ab;
+$primary-400: #8c8c8c;
+$primary-300: #41b294;
+$primary-200: #f6ba35;
+$primary-100: #fff;
+$dark: #000;
+$light: #fff;
+//Màu chữ (text-color)
+$text-color: $dark;
+$text-color-card: $primary-400;
+$text-color-light: $light;
+//Màu background
+$bg-primary-300: $primary-900;
+$bg-primary-200: $primary-400;
+$bg-primary-100: $primary-100;
+// $bg-success:$success;
+
+//sizing: (font size)
+$text-small: 13px;
+$text-base: 15px;
+$text-xl: 18px;
+$text-2xl: 20px;
+$text-3xl: 30px;
+$text-4xl: 40px;
+$text-5xl: 50px;
+$text-6xl: 60px;
+$text-7xl: 70px;
+$text-12xl: 120px;
+
+//font weight
+$fw-light: 300;
+$fw-normal: 400;
+$fw-semi: 600;
+$fw-bold: 900;
+
+//margin - padding
+$m-0: 0;
+$m-1: 0.25rem;
+$m-2: 0.5rem;
+$m-3: 0.75rem;
+$m-4: 1rem;
+$m-5: 1.25rem;
+$m-6: 1.5rem;
+$m-7: 1.75rem;
+$m-8: 2rem;
+$m-9: 2.25rem;
+
+$p-0: 0;
+$p-1: 0.25rem;
+$p-2: 0.5rem;
+$p-3: 0.75rem;
+$p-4: 1rem;
+$p-5: 1.25rem;
+$p-6: 1.5rem;
+$p-7: 1.75rem;
+$p-8: 2rem;
+$p-9: 2.25rem;
+
+//Tạo ra các class margin
+$list-size: 0rem, 0.5rem, 1rem, 1.5rem, 2rem, 2.5rem, 3rem, 3.5rem, 4rem; //list đơn giá trị
+$i: 0;
+@each $size in $list-size {
+  .m-#{$i} {
+    margin: $size;
+  }
+  .p-#{$i} {
+    padding: $size;
+  }
+  .mt-#{$i} {
+    margin-top: $size;
+  }
+  .mb-#{$i} {
+    margin-bottom: $size;
+  }
+  .ms-#{$i} {
+    margin-left: $size;
+  }
+  .me-#{$i} {
+    margin-right: $size;
+  }
+  .mx-#{$i} {
+    margin-left: $size;
+    margin-right: $size;
+  }
+  .my-#{$i} {
+    margin-top: $size;
+    margin-bottom: $size;
+  }
+  .pt-#{$i} {
+    padding-top: $size;
+  }
+  .pb-#{$i} {
+    padding-bottom: $size;
+  }
+  .ps-#{$i} {
+    padding-left: $size;
+  }
+  .pe-#{$i} {
+    padding-right: $size;
+  }
+  .px-#{$i} {
+    padding-left: $size;
+    padding-right: $size;
+  }
+  .py-#{$i} {
+    padding-top: $size;
+    padding-bottom: $size;
+  }
+
+  $i: $i + 1;
+}
+//mixin: tương tự hàm tuy nhiên không có xử lý return
+
+@mixin mText($fz: $text-base, $fw: $fw-normal, $c: $text-color) {
+  //default params (giá trị mặc định)
+  font-size: $fz;
+  font-weight: $fw;
+  color: $c;
+}
+@mixin mTextHover(
+  $fz: $text-base,
+  $fw: $fw-normal,
+  $c: $text-color,
+  $c-hover: $primary-300
+) {
+  @include mText($fz, $fw, $c);
+  transition: all 0.25s ease-in-out;
+  &:hover {
+    color: $c-hover;
+  }
+}
+@mixin mTextTitleFooter($fz: 23px, $fw: $fw-semi, $c: $text-primary-100) {
+  //default params (giá trị mặc định)
+  font-size: $fz;
+  font-weight: $fw;
+  color: $c;
+}
+@mixin mButton($fz, $fw, $c, $p, $bd, $bg, $bg-hover, $c-hover) {
+  @include mText($fz, $fw, $c);
+  padding: $p;
+  border: $bd;
+  background-color: $bg;
+  transition: all 0.7s;
+  cursor: pointer;
+  &:hover {
+    color: $c-hover;
+    background: $bg-hover;
+    transform: scale(0.9);
+  }
+}
+@mixin mButtonNew($fz, $fw, $c, $p, $bd, $br, $c-hover) {
+  @include mText($fz, $fw, $c);
+  padding: $p;
+  border: $bd;
+  border-radius: $br;
+  background-color: $bg-primary-100;
+  transition: all 0.5s;
+  cursor: pointer;
+  box-shadow: 0 0 0 3em $bg-primary-100 inset;
+  &:hover {
+    border-color: $bg-primary-100;
+    color: $c-hover;
+    box-shadow: 0 0 0 1px $bg-primary-100 inset;
+    background-color: $bg-primary-300;
+  }
+}
+
+@mixin mInputHover($bd-hover) {
+  &:focus {
+    border-color: $bd-hover;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease;
+  }
+}

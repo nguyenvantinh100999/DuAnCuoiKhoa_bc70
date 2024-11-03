@@ -1,0 +1,208 @@
+@import "../baseIndex";
+@import "../variableIndex";
+.coursesPage {
+  .titleCourse {
+    padding: 50px;
+    text-transform: uppercase;
+    background-color: #ffd60a;
+    color: $text-color-light;
+    h3 {
+    }
+    p {
+      @include mText($text-small, $fw-normal, $text-color-light);
+    }
+  }
+  .coursesContainer {
+    padding: 50px;
+    .row {
+      .coursesBoxItem {
+        padding: 0;
+        .coursesBox {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          color: $primary-100;
+          text-transform: uppercase;
+          height: 100%;
+          padding: 30px 20px;
+          text-align: center;
+          h6,
+          i {
+            padding-bottom: 10px;
+          }
+          i {
+            font-size: $text-3xl;
+          }
+          p {
+            font-size: $text-2xl;
+          }
+        }
+        .bgStyle1 {
+          background: #264653;
+        }
+        .bgStyle2 {
+          background: #2a9d8f;
+        }
+        .bgStyle3 {
+          background: #e9c46a;
+        }
+        .bgStyle4 {
+          background: #f4a261;
+        }
+        .bgStyle5 {
+          background: #ee8959;
+        }
+        .bgStyle6 {
+          background: #e76f51;
+        }
+      }
+    }
+  }
+  .courseListPage {
+    padding: 50px;
+    h6 {
+      @include mText($text-2xl, $fw-semi, $text-color);
+      i {
+        @include mText($text-2xl, $fw-semi, $primary-500);
+        margin-right: 5px;
+      }
+    }
+    .row {
+      .cardGlobalRes {
+        display: flex;
+        justify-content: center;
+        .cardGlobal {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          transition: all 0.5s;
+          width: 280px;
+          min-width: 280px;
+          min-height: 370px;
+          word-wrap: break-word;
+          background-color: #fff;
+          background-clip: border-box;
+          border: 1px solid rgba(0, 0, 0, 0.125);
+          box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
+          img {
+            height: 185px;
+            // min-height: 185px;
+            width: 100%;
+          }
+          .stikerCard {
+            display: inline-block;
+            position: absolute;
+            z-index: 10;
+            top: 174px;
+            padding: 0 10px;
+            color: $text-color-light;
+            background-color: $primary-300;
+          }
+          .cardBodyGlobal {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 20px;
+            h6 {
+              padding: 0 0 10px;
+              font-size: 16px;
+            }
+            .titleMaker {
+              display: flex;
+              align-items: center;
+              .imgCardFooter {
+                height: 40px;
+                width: 40px;
+                padding: 2px;
+                border-color: #f6ba35 transparent;
+                border-left: 1px solid transparent;
+                border-bottom: 1px solid $primary-200;
+                border-right: 1px solid transparent;
+                border-top: 1px solid $primary-200;
+                border-radius: 50%;
+                img {
+                  width: 100%;
+                  height: 100%;
+                  vertical-align: middle;
+                  border-style: none;
+                }
+              }
+              .colorCardTitle {
+                color: $text-color-card;
+              }
+            }
+          }
+          .cardFooter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.125);
+            p:first-of-type,
+            span:nth-of-type(2) {
+              @include mText($text-small, $fw-normal, $text-color-card);
+            }
+            p {
+              sup {
+                top: -0.5em;
+              }
+
+              sub,
+              sup {
+                position: relative;
+                font-size: 75%;
+                line-height: 0;
+                vertical-align: baseline;
+              }
+            }
+            p:first-of-type {
+              -webkit-text-decoration-line: line-through;
+              text-decoration-line: line-through;
+            }
+            p:nth-of-type(2) {
+              @include mText($text-base, $fw-normal, $primary-300);
+            }
+            .textStar {
+              color: $primary-200;
+            }
+          }
+        }
+      }
+
+      .cardEffect {
+        transition: all 0.5s;
+      }
+    }
+  }
+  .paginationPages {
+    ul {
+      display: flex;
+      justify-content: center;
+      padding-left: 0;
+      list-style: none;
+      border-radius: 0.25rem;
+      margin-bottom: 10px;
+      .page-item {
+        list-style: none;
+
+        .pageLinkPages {
+          position: relative;
+          display: block;
+          padding: 0.5rem 0.75rem;
+          margin-left: 5px;
+          line-height: 1.25;
+          color: $text-color;
+          background-color: $primary-100;
+          border: 2px solid $primary-300;
+          border-radius: 5px;
+          &:hover {
+            background-color: $primary-300;
+          }
+        }
+        .active {
+          background-color: $primary-300;
+        }
+      }
+    }
+  }
+}
