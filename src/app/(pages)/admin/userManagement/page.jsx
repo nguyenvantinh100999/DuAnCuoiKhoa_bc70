@@ -26,6 +26,9 @@ const page = () => {
   const [isDropdownVisible, setDropdownVisible] = useState(false); // State để kiểm soát hiển thị dropdown
   const [courseRegistered, setCourseRegistered] = useState([]);
   const [courseNotRegistered, setCourseNotRegistered] = useState([]);
+  const [showNotificationModal, setShowNotificationModal] = useState(false); // State cho modal thông báo
+  const [notificationMessage, setNotificationMessage] = useState(""); // Thông điệp thông báo
+  const [isSuccess, setIsSuccess] = useState(false); // Kiểm tra loại thông báo (thành công hay thất bại)
   const router = useRouter();
 
   useEffect(() => {
@@ -40,6 +43,24 @@ const page = () => {
     TokenCybersoft: TOKEN_CYBERSOFT,
     Authorization: `Bearer ${user?.accessToken}`,
     "Content-Type": "application/json",
+  };
+  //--------modal thông báo------------------------
+  const showSuccessNotification = (message) => {
+    setNotificationMessage(message);
+    setIsSuccess(true);
+    setShowNotificationModal(true);
+    setTimeout(() => {
+      setShowNotificationModal(false);
+    }, 1500);
+  };
+
+  const showErrorNotification = (message) => {
+    setNotificationMessage(message);
+    setIsSuccess(false);
+    setShowNotificationModal(true);
+    setTimeout(() => {
+      setShowNotificationModal(false);
+    }, 1500);
   };
   //----------lấy danh sách người dùng-----------------
   const getListUser = async () => {
@@ -122,13 +143,12 @@ const page = () => {
           headers: headers,
         }
       );
-      alert("Xóa người dùng thành công");
+      showSuccessNotification("Xóa người dùng thành công");
       getListUser();
       console.log("Xóa người dùng thành công", res.data);
     } catch (error) {
-      // Log chi tiết lỗi
-      console.error("Xóa người dùng thất bại", error.response);
-      alert(error.response?.data || "Xóa người dùng thất bại");
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
     }
   };
   useEffect(() => {
@@ -142,7 +162,7 @@ const page = () => {
     getCouresNotregistered(taiKhoan);
   };
 
-  //-----------cập nhật thông tin người dùng
+  //-----------cập nhật thông tin người dùng-------------------
   const formEditProfile = useFormik({
     initialValues: {
       taiKhoan: "",
@@ -180,13 +200,13 @@ const page = () => {
             data: values,
           }
         );
-        alert("Cập nhật thành công");
-        console.log("Cập nhật thành công", res.data);
+        showSuccessNotification("Cập nhật thành công");
+
         getListUser();
         resetForm();
       } catch (error) {
-        alert(error.response.data);
-        console.error("cập nhật thất bại", error.response.data);
+        const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+        showErrorNotification(errorMessage);
       }
     },
   });
@@ -229,13 +249,13 @@ const page = () => {
             data: values,
           }
         );
-        alert("Thêm thành công");
-        console.log("Thêm thành công", res.data);
+        showSuccessNotification("Thêm thành công");
+
         getListUser();
         resetForm();
       } catch (error) {
-        alert(error.response.data);
-        console.error("Thêm thất bại", error.response.data);
+        const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+        showErrorNotification(errorMessage);
       }
     },
   });
@@ -334,14 +354,14 @@ const page = () => {
           data: { taiKhoan: taiKhoan, maKhoaHoc: maKhoaHoc },
         }
       );
-      alert("Ghi danh thành công");
+      showSuccessNotification("Ghi danh thành công");
       fetchCourses(taiKhoan);
       getCouresregistered(taiKhoan);
       getCouresNotregistered(taiKhoan);
       console.log(response.data);
     } catch (error) {
-      alert(error.response.data);
-      console.error("Lỗi khi lấy danh sách khóa học:", error);
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
     }
   };
 
@@ -356,14 +376,14 @@ const page = () => {
           data: { taiKhoan: taiKhoan, maKhoaHoc: maKhoaHoc },
         }
       );
-      alert("Hủy ghi danh thành công");
+      showSuccessNotification("Hủy ghi danh thành công");
       fetchCourses(taiKhoan);
       getCouresregistered(taiKhoan);
       getCouresNotregistered(taiKhoan);
       console.log(response.data);
     } catch (error) {
-      alert(error.response.data);
-      console.error("Lỗi khi hủy ghi danh:", error);
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
     }
   };
   // Data cho table
@@ -899,6 +919,25 @@ const page = () => {
                 showQuickJumper: false,
               }}
             />
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        className="modalSuccess"
+        show={showNotificationModal}
+        onHide={() => setShowNotificationModal(false)}
+      >
+        <Modal.Body className="bg-white text-center">
+          <div className={isSuccess ? "successMessage" : "errorMessage"}>
+            <i
+              className={
+                isSuccess
+                  ? "fas fa-check-circle text-center text-success d-block"
+                  : "fas fa-exclamation-circle text-center text-warning d-block"
+              }
+              style={{ fontSize: "50px" }}
+            ></i>
+            <span className="fs-4 ">{notificationMessage}</span>
           </div>
         </Modal.Body>
       </Modal>

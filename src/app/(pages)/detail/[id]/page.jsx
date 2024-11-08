@@ -3,19 +3,19 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import "../../../styles/detail/detail.scss";
 import Image from "next/image";
-import {
-  getCourseDetailInfoById,
-  getCourseListByCategoryAction,
-} from "@/app/actions/service/productApi";
 import VideoModal from "@/app/components/VideoModal";
 import { API_URL, getHeaders, TOKEN_CYBERSOFT } from "@/app/utils/configHeader";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { Button, Modal, ModalFooter } from "react-bootstrap";
 const Detail = (props) => {
   const [prodDetail, setProdDetail] = useState([]);
   const [relatedCourses, setRelatedCourses] = useState([]);
-  const [imgSrc, setImgSrc] = useState(prodDetail?.hinhAnh);
-  const placeholderImage = "/img/back-end-can-ban-01_gp01.png";
+  const [showNotificationModal, setShowNotificationModal] = useState(false); // State cho modal thông báo
+  const [notificationMessage, setNotificationMessage] = useState(""); // Thông điệp thông báo
+  const [isSuccess, setIsSuccess] = useState(false); // Kiểm tra loại thông báo (thành công hay thất bại)
   const { id } = props.params;
+  const router = useRouter();
   const getCourseDetailInfoById = async (id) => {
     try {
       const res = await axios(
@@ -62,10 +62,28 @@ const Detail = (props) => {
     }
   }, [prodDetail]);
   const firtFourCourses = relatedCourses.slice(0, 4);
+  const showSuccessNotification = (message) => {
+    setNotificationMessage(message);
+    setIsSuccess(true);
+    setShowNotificationModal(true);
+    setTimeout(() => {
+      setShowNotificationModal(false);
+    }, 1500);
+  };
+
+  const showErrorNotification = (message) => {
+    setNotificationMessage(message);
+    setIsSuccess(false);
+    setShowNotificationModal(true);
+    setTimeout(() => {
+      setShowNotificationModal(false);
+    }, 1500);
+  };
   const handleRegister = async () => {
     const user = JSON.parse(localStorage.getItem("userLogin"));
     if (!user) {
       alert("Vui lòng đăng nhập trước khi đăng ký");
+      router.push("/login");
       return;
     }
 
@@ -85,9 +103,10 @@ const Detail = (props) => {
           },
         }
       );
-      alert("Đăng ký khóa học thành công!");
+      showSuccessNotification("Đăng ký khóa học thành công!");
     } catch (error) {
-      alert(error.response.data);
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
     }
   };
 
@@ -380,16 +399,10 @@ const Detail = (props) => {
           <div className="col-lg-4 col-md-5">
             <div className="sideBarCourseDetail">
               <div className="img-product">
-                <Image
-                  src={prodDetail.hinhAnh} // Sử dụng hình ảnh thay thế nếu không có hình ảnh chính
-                  alt={prodDetail?.moTa}
-                  width={256} // Chiều rộng hình ảnh
-                  height={256} // Chiều cao hình ảnh
-                  // onError={(e) => {
-                  //   if (imgSrc !== placeholderImage) {
-                  //     setImgSrc(placeholderImage); // Chỉ thay đổi src nếu chưa phải là placeholder
-                  //   } // Thay đổi src khi có lỗi
-                  // }}
+                <img
+                  src={prodDetail?.hinhAnh}
+                  alt="..."
+                  style={{ height: "auto" }}
                 />
               </div>
 
@@ -457,15 +470,15 @@ const Detail = (props) => {
                 key={item.maKhoaHoc}
                 className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
               >
-                <div className="cardGlobal" href="/chitiet/111111111111">
+                <div className="cardGlobal">
                   <Image
-                    width={250}
-                    height={250}
-                    crossOrigin="anonymous"
-                    quality={100}
-                    className=""
                     src={item.hinhAnh}
                     alt="..."
+                    width={256}
+                    height={256}
+                    crossOrigin="anonymous"
+                    quality={100}
+                    style={{ height: "auto" }}
                   />
                   <span className="stikerCard">{item.tenKhoaHoc}</span>
                   <div className="cardBodyGlobal">
@@ -547,6 +560,25 @@ const Detail = (props) => {
           })}
         </div>
       </div>
+      <Modal
+        className="modalSuccess"
+        show={showNotificationModal}
+        onHide={() => setShowNotificationModal(false)}
+      >
+        <Modal.Body className="bg-white text-center">
+          <div className={isSuccess ? "successMessage" : "errorMessage"}>
+            <i
+              className={
+                isSuccess
+                  ? "fas fa-check-circle text-center text-success d-block"
+                  : "fas fa-exclamation-circle text-center text-warning d-block"
+              }
+              style={{ fontSize: "50px" }}
+            ></i>
+            <span className="fs-4 ">{notificationMessage}</span>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

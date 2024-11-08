@@ -164,6 +164,42 @@
                 }
               }
             }
+            .cardSale {
+              position: absolute;
+              top: 5px;
+              left: -5px;
+              width: 90px;
+              height: 30px;
+              padding: 5px 8px 4px;
+              color: $primary-100;
+              background-color: red;
+              font-weight: 600;
+              font-size: 13px;
+              text-transform: uppercase;
+              &::after {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 0;
+                top: 0;
+                right: -12px;
+                border-color: red transparent;
+                border-style: solid;
+                border-width: 15px 12px 15px 0;
+              }
+              &::before {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 0;
+                left: 0;
+                bottom: -10px;
+                border-bottom: 10px solid transparent;
+                border-right: 5px solid red;
+                -webkit-filter: brightness(0.8);
+                filter: brightness(0.8);
+              }
+            }
             .subCard {
               position: absolute;
               visibility: hidden;
@@ -182,6 +218,9 @@
               background-clip: border-box;
               border: 1px solid rgba(0, 0, 0, 0.125);
               box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+              @media (max-width: 1024px) {
+                display: none;
+              }
               &::before {
                 content: "";
                 position: absolute;
@@ -252,40 +291,23 @@
                 text-align: center;
               }
             }
-            .cardSale {
-              position: absolute;
-              top: 5px;
-              left: -5px;
-              width: 90px;
-              height: 30px;
-              padding: 5px 8px 4px;
-              color: $primary-100;
-              background-color: red;
-              font-weight: 600;
-              font-size: 13px;
-              text-transform: uppercase;
-              &::after {
-                content: "";
-                position: absolute;
-                width: 0;
-                height: 0;
-                top: 0;
-                right: -12px;
-                border-color: red transparent;
-                border-style: solid;
-                border-width: 15px 12px 15px 0;
+
+            .viewDetail {
+              color: $text-color-card;
+              text-align: end;
+              display: none;
+              transition: all 0.5s;
+              @extend .pe-1;
+              @extend .mb-1;
+              @media (max-width: 1024px) {
+                display: block;
               }
-              &::before {
-                content: "";
-                position: absolute;
-                width: 0;
-                height: 0;
-                left: 0;
-                bottom: -10px;
-                border-bottom: 10px solid transparent;
-                border-right: 5px solid red;
-                -webkit-filter: brightness(0.8);
-                filter: brightness(0.8);
+              &:hover {
+                color: $primary-200;
+                text-decoration: underline !important;
+              }
+              i {
+                @extend .ms-1;
               }
             }
           }

@@ -36,6 +36,9 @@ const page = () => {
   const [userCourse, setUserCourse] = useState([]);
   const [userCourseRegister, setUserCourseRegister] = useState([]);
   const [userCourseNotRegister, setUserCourseNotRegister] = useState([]);
+  const [showNotificationModal, setShowNotificationModal] = useState(false); // State cho modal thông báo
+  const [notificationMessage, setNotificationMessage] = useState(""); // Thông điệp thông báo
+  const [isSuccess, setIsSuccess] = useState(false); // Kiểm tra loại thông báo (thành công hay thất bại)
   const router = useRouter();
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem(USER_LOGIN));
@@ -49,6 +52,24 @@ const page = () => {
     TokenCybersoft: TOKEN_CYBERSOFT,
     Authorization: `Bearer ${user?.accessToken}`,
     "Content-Type": "application/json",
+  };
+  //--------modal thông báo------------------------
+  const showSuccessNotification = (message) => {
+    setNotificationMessage(message);
+    setIsSuccess(true);
+    setShowNotificationModal(true);
+    setTimeout(() => {
+      setShowNotificationModal(false);
+    }, 1500);
+  };
+
+  const showErrorNotification = (message) => {
+    setNotificationMessage(message);
+    setIsSuccess(false);
+    setShowNotificationModal(true);
+    setTimeout(() => {
+      setShowNotificationModal(false);
+    }, 1500);
   };
   //---------------------lấy danh sách khóa học-----------------------------
   const getListCourse = async () => {
@@ -247,13 +268,13 @@ const page = () => {
           data: { maKhoaHoc: maKhoaHoc },
         }
       );
-      alert("Xóa Khóa học thành công");
+      showSuccessNotification("Xóa Khóa học thành công");
       getListCourse();
       console.log("Xóa Khóa học thành công", res.data);
     } catch (error) {
       // Log chi tiết lỗi
-      console.error("Xóa Khóa học thất bại", error.response);
-      alert(error.response?.data || "Xóa Khóa học thất bại");
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
     }
   };
   //------------lấy danh sách học viên đã ghi danh khóa học----------------
@@ -352,14 +373,14 @@ const page = () => {
           data: { taiKhoan: taiKhoan, maKhoaHoc: maKhoaHoc },
         }
       );
-      alert("Ghi danh thành công");
+      showSuccessNotification("Ghi danh thành công");
       getListUserCourse(maKhoaHoc);
       getListUserResgister(maKhoaHoc);
       getListUserNotResgister(maKhoaHoc);
       console.log(response.data);
     } catch (error) {
-      alert(error.response.data);
-      console.error("Lỗi ghi danh:", error);
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
     }
   };
   //----------hủy ghi danh người dùng vào khóa học------------------
@@ -373,14 +394,14 @@ const page = () => {
           data: { taiKhoan: taiKhoan, maKhoaHoc: maKhoaHoc },
         }
       );
-      alert("Hủy ghi danh thành công");
+      showSuccessNotification("Hủy ghi danh thành công");
       getListUserCourse(maKhoaHoc);
       getListUserResgister(maKhoaHoc);
       getListUserNotResgister(maKhoaHoc);
       console.log(response.data);
     } catch (error) {
-      alert(error.response.data);
-      console.error("Lỗi khi hủy ghi danh:", error);
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
     }
   };
   const columModalfirt = [
@@ -932,6 +953,25 @@ const page = () => {
                 showQuickJumper: false,
               }}
             />
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        className="modalSuccess"
+        show={showNotificationModal}
+        onHide={() => setShowNotificationModal(false)}
+      >
+        <Modal.Body className="bg-white text-center">
+          <div className={isSuccess ? "successMessage" : "errorMessage"}>
+            <i
+              className={
+                isSuccess
+                  ? "fas fa-check-circle text-center text-success d-block"
+                  : "fas fa-exclamation-circle text-center text-warning d-block"
+              }
+              style={{ fontSize: "50px" }}
+            ></i>
+            <span className="fs-4 ">{notificationMessage}</span>
           </div>
         </Modal.Body>
       </Modal>

@@ -85,50 +85,56 @@
           background-clip: border-box;
           border: 1px solid rgba(0, 0, 0, 0.125);
           box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
+          &:hover a {
+            //   color: $text-color;
+            //   text-decoration: none;
+          }
+          &:hover .subCard {
+            visibility: visible;
+            opacity: 1;
+          }
           img {
-            height: 185px;
-            // min-height: 185px;
+            //   height: auto;
             width: 100%;
+            height: 250px;
           }
           .stikerCard {
             display: inline-block;
             position: absolute;
             z-index: 10;
-            top: 174px;
+            top: 55%;
             padding: 0 10px;
-            color: $text-color-light;
+            color: $primary-100;
             background-color: $primary-300;
           }
           .cardBodyGlobal {
             flex: 1 1 auto;
             min-height: 1px;
             padding: 20px;
+            margin-top: 10px;
             h6 {
               padding: 0 0 10px;
               font-size: 16px;
+              color: $text-color;
             }
-            .titleMaker {
+            .cardIcon {
               display: flex;
+              justify-content: space-between;
               align-items: center;
-              .imgCardFooter {
-                height: 40px;
-                width: 40px;
-                padding: 2px;
-                border-color: #f6ba35 transparent;
-                border-left: 1px solid transparent;
-                border-bottom: 1px solid $primary-200;
-                border-right: 1px solid transparent;
-                border-top: 1px solid $primary-200;
-                border-radius: 50%;
-                img {
-                  width: 100%;
-                  height: 100%;
-                  vertical-align: middle;
-                  border-style: none;
-                }
-              }
-              .colorCardTitle {
+              span {
                 color: $text-color-card;
+                i {
+                  margin-right: 8px;
+                }
+                .iconOclock {
+                  color: $primary-200;
+                }
+                .iconCalendar {
+                  color: $primary-500;
+                }
+                .iconLevel {
+                  color: #65c9ff;
+                }
               }
             }
           }
@@ -138,11 +144,30 @@
             align-items: center;
             padding: 5px 20px;
             border-top: 1px solid rgba(0, 0, 0, 0.125);
-            p:first-of-type,
-            span:nth-of-type(2) {
-              @include mText($text-small, $fw-normal, $text-color-card);
+            .titleMaker {
+              display: flex;
+              align-items: center;
+              .imgCardFooter {
+                height: 40px;
+                width: 40px;
+                padding: 2px;
+                border-color: $primary-200 transparent;
+                border-left: 1px solid transparent;
+                border-bottom: 1px solid $primary-200;
+                border-right: 1px solid transparent;
+                border-top: 1px solid $primary-200;
+                border-radius: 50%;
+                img {
+                  width: 100%;
+                  height: auto;
+                }
+              }
+              .colorCardTitle {
+                color: $text-color-card;
+              }
             }
             p {
+              margin-bottom: 0;
               sup {
                 top: -0.5em;
               }
@@ -158,19 +183,165 @@
             p:first-of-type {
               -webkit-text-decoration-line: line-through;
               text-decoration-line: line-through;
+              @include mText($text-small, $fw-normal, $text-color-card);
             }
             p:nth-of-type(2) {
-              @include mText($text-base, $fw-normal, $primary-300);
+              font-weight: 500;
+              color: $primary-300;
+              .iconTag {
+                font-size: 18px;
+                color: red;
+                margin-left: 4px;
+              }
             }
-            .textStar {
+          }
+          .cardSale {
+            position: absolute;
+            top: 5px;
+            left: -5px;
+            width: 90px;
+            height: 30px;
+            padding: 5px 8px 4px;
+            color: $primary-100;
+            background-color: red;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            &::after {
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              top: 0;
+              right: -12px;
+              border-color: red transparent;
+              border-style: solid;
+              border-width: 15px 12px 15px 0;
+            }
+            &::before {
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              left: 0;
+              bottom: -10px;
+              border-bottom: 10px solid transparent;
+              border-right: 5px solid red;
+              -webkit-filter: brightness(0.8);
+              filter: brightness(0.8);
+            }
+          }
+          .subCard {
+            position: absolute;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 99;
+            top: 0;
+            right: -100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.5s;
+            width: 350px;
+            min-width: 280px;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+            @media (max-width: 1024px) {
+              display: none;
+            }
+            &::before {
+              content: "";
+              position: absolute;
+              top: 50%;
+              left: -15px;
+              width: 0;
+              height: 0;
+              border-top: 15px solid transparent;
+              border-bottom: 15px solid transparent;
+              border-right: 15px solid $primary-100;
+            }
+            .subCardHead,
+            h6,
+            p,
+            .cardIcon {
+              padding: 10px 0;
+              margin-bottom: 0;
+            }
+            .subCardHead {
+              img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                object-fit: cover;
+              }
+              .colorCardTitle {
+                color: $text-color-card;
+              }
+            }
+            h6 {
+              color: $text-color;
+            }
+            .colorCardTitle {
+              color: $text-color-card;
+            }
+            .cardIcon,
+            .coursesBotHome {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              span {
+                color: $text-color-card;
+                i {
+                  margin-right: 8px;
+                }
+                .iconOclock {
+                  color: #f5c002;
+                }
+                .iconCalendar {
+                  color: #f06f68;
+                }
+                .iconLevel {
+                  color: #65c9ff;
+                }
+              }
+            }
+            .btnGlobal {
+              @include mButton(
+                $text-base,
+                $fw-semi,
+                $text-color,
+                15px,
+                1px solid $primary-300,
+                $primary-300,
+                $primary-300,
+                $text-color-light
+              );
+              text-align: center;
+            }
+          }
+
+          .viewDetail {
+            color: $text-color-card;
+            text-align: end;
+            display: none;
+            transition: all 0.5s;
+            @extend .pe-1;
+            @extend .mb-1;
+            @media (max-width: 1024px) {
+              display: block;
+            }
+            &:hover {
               color: $primary-200;
+              text-decoration: underline !important;
+            }
+            i {
+              @extend .ms-1;
             }
           }
         }
-      }
-
-      .cardEffect {
-        transition: all 0.5s;
       }
     }
   }

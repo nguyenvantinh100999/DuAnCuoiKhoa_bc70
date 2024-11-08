@@ -431,6 +431,9 @@
           background-clip: border-box;
           border: 1px solid rgba(0, 0, 0, 0.125);
           box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+          @media (max-width: 1024px) {
+            display: none;
+          }
           &::before {
             content: "";
             position: absolute;
@@ -500,23 +503,24 @@
             );
             text-align: center;
           }
-          // &:nth-of-type(1),
-          // &:nth-of-type(2) {
-          //   top: 10px; // Thay đổi giá trị top nếu cần
-          //   right: -100%; // Đảm bảo right vẫn được áp dụng
-          // }
-
-          // // Đặt thuộc tính cho thẻ thứ ba
-          // &:nth-of-type(3) {
-          //   left: -50%;
-          //   top: 50px; // Thay đổi giá trị top nếu cần
-          // }
-
-          // // Đặt thuộc tính cho thẻ thứ tư nếu cần
-          // &:nth-of-type(4) {
-          //   left: -50%;
-          //   top: 100px; // Thay đổi giá trị top nếu cần
-          // }
+        }
+      }
+      .viewDetail {
+        color: $text-color-card;
+        text-align: end;
+        display: none;
+        transition: all 0.5s;
+        @extend .pe-1;
+        @extend .mb-1;
+        @media (max-width: 1024px) {
+          display: block;
+        }
+        &:hover {
+          color: $primary-200;
+          text-decoration: underline !important;
+        }
+        i {
+          @extend .ms-1;
         }
       }
     }

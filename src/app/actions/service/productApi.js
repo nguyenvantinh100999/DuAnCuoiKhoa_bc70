@@ -100,7 +100,7 @@ export const getCourseListInfoByKeyWord = async (keyword) => {
     );
     return res.data;
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách khóa học:", error);
+    alert(error.response.data || error);
     // Bạn có thể xử lý lỗi theo cách khác ở đây, ví dụ như trả về một giá trị mặc định
     throw error; // Hoặc ném lại lỗi để xử lý ở nơi gọi hàm
   }

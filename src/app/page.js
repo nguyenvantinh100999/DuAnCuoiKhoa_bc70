@@ -19,11 +19,17 @@ const Home = async () => {
   //   slidesToScroll: 3,
   // };
   const courseBackEnd = functionGetCourseByCategory("BackEnd");
+  const fourCourseBackEnd = courseBackEnd.slice(2, 6);
   const courseDesign = functionGetCourseByCategory("Design");
+  const fourCourseDesign = courseDesign.slice(1, 5);
   const courseDiDong = functionGetCourseByCategory("DiDong");
+  const fourCourseDiDong = courseDiDong.slice(2, 4);
   const courseFrontEnd = functionGetCourseByCategory("FrontEnd");
+  const fourcourseFrontEnd = courseFrontEnd.slice(2, 4);
   const courseFullStack = functionGetCourseByCategory("FullStack");
+  const fourCourseFullStack = courseFullStack.slice(2, 4);
   const courseTuDuy = functionGetCourseByCategory("TuDuy");
+  const fourCourseTuDuy = courseTuDuy.slice(2, 4);
   return (
     <div className="homePage">
       <div className="row sliderHome">
@@ -269,7 +275,7 @@ const Home = async () => {
         <h6>Khóa học phổ biến</h6>
       </div>
       <div className="row mt-4 coursePage">
-        {data.map((item) => {
+        {fourCourseBackEnd.map((item) => {
           return (
             <div
               key={item.maKhoaHoc}
@@ -282,6 +288,407 @@ const Home = async () => {
                   crossOrigin="anonymous"
                   quality={100}
                   className=""
+                  src={item.hinhAnh}
+                  style={{ height: "auto" }}
+                  alt="..."
+                />
+                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <div className="cardBodyGlobal">
+                  <h6>
+                    {item.moTa.length > 50
+                      ? item.moTa.substring(0, 50) + "..."
+                      : item.moTa}
+                  </h6>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+                </div>
+                <div className="cardFooter">
+                  <div className="titleMaker">
+                    <div className="imgCardFooter">
+                      <img src="/img/avatar2.bb9626e2.png" alt="..." />
+                    </div>
+                    <span className="ml-2 colorCardTitle">Elon Musk</span>
+                  </div>
+                  <div className="cardFooter-price">
+                    <p>
+                      800.000<sup>đ</sup>
+                    </p>
+                    <p>
+                      400.000<sup>đ</sup>
+                      <i className="fas fa-tag iconTag" />
+                    </p>
+                  </div>
+                </div>
+                <div className="cardSale">
+                  <span>Yêu thích</span>
+                </div>
+                <div className="subCard">
+                  <div className="subCardHead">
+                    <img src="/img/emoji.6d1b7051.png" alt="..." />
+                    <span className="ml-1 colorCardTitle">
+                      Elun Musk Ricard
+                    </span>
+                  </div>
+                  <h6>BOOTCAMP - LẬP TRÌNH FULL STACK TỪ ZERO ĐẾN CÓ VIỆC</h6>
+                  <p className="colorCardTitle">
+                    Đã có hơn 6200 bạn đăng kí học và có việc làm thông qua
+                    chương trình đào tạo Bootcamp Lập trình Front End chuyên
+                    nghiệp. Khóa học 100% thực hành cường độ cao theo dự án thực
+                    tế và kết nối doanh nghiệp hỗ trợ tìm việc ngay sau khi
+                    học...
+                  </p>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+
+                  <Link
+                    className="btnGlobal btnSubCard"
+                    href={`/detail/${item.maKhoaHoc}`}
+                  >
+                    xem chi tiết
+                  </Link>
+                </div>
+                <Link href={`/detail/${item.maKhoaHoc}`} className="viewDetail">
+                  Xem chi tiết
+                  <i className="fas fa-chevron-right"></i>{" "}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+        {fourCourseDesign.map((item) => {
+          return (
+            <div
+              key={item.maKhoaHoc}
+              className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
+            >
+              <div className="cardGlobal">
+                <Image
+                  width={250}
+                  height={250}
+                  crossOrigin="anonymous"
+                  quality={100}
+                  className=""
+                  src={item.hinhAnh}
+                  style={{ height: "auto" }}
+                  alt="..."
+                />
+                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <div className="cardBodyGlobal">
+                  <h6>
+                    {item.moTa.length > 50
+                      ? item.moTa.substring(0, 50) + "..."
+                      : item.moTa}
+                  </h6>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+                </div>
+                <div className="cardFooter">
+                  <div className="titleMaker">
+                    <div className="imgCardFooter">
+                      <img src="/img/avatar2.bb9626e2.png" alt="..." />
+                    </div>
+                    <span className="ml-2 colorCardTitle">Elon Musk</span>
+                  </div>
+                  <div className="cardFooter-price">
+                    <p>
+                      800.000<sup>đ</sup>
+                    </p>
+                    <p>
+                      400.000<sup>đ</sup>
+                      <i className="fas fa-tag iconTag" />
+                    </p>
+                  </div>
+                </div>
+                <div className="cardSale">
+                  <span>Yêu thích</span>
+                </div>
+                <div className="subCard">
+                  <div className="subCardHead">
+                    <img src="/img/emoji.6d1b7051.png" alt="..." />
+                    <span className="ml-1 colorCardTitle">
+                      Elun Musk Ricard
+                    </span>
+                  </div>
+                  <h6>BOOTCAMP - LẬP TRÌNH FULL STACK TỪ ZERO ĐẾN CÓ VIỆC</h6>
+                  <p className="colorCardTitle">
+                    Đã có hơn 6200 bạn đăng kí học và có việc làm thông qua
+                    chương trình đào tạo Bootcamp Lập trình Front End chuyên
+                    nghiệp. Khóa học 100% thực hành cường độ cao theo dự án thực
+                    tế và kết nối doanh nghiệp hỗ trợ tìm việc ngay sau khi
+                    học...
+                  </p>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+
+                  <Link
+                    className="btnGlobal btnSubCard"
+                    href={`/detail/${item.maKhoaHoc}`}
+                  >
+                    xem chi tiết
+                  </Link>
+                </div>
+                <Link href={`/detail/${item.maKhoaHoc}`} className="viewDetail">
+                  Xem chi tiết
+                  <i className="fas fa-chevron-right"></i>{" "}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+        {fourCourseDiDong.map((item) => {
+          return (
+            <div
+              key={item.maKhoaHoc}
+              className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
+            >
+              <div className="cardGlobal">
+                <Image
+                  width={250}
+                  height={250}
+                  crossOrigin="anonymous"
+                  quality={100}
+                  className=""
+                  src={item.hinhAnh}
+                  style={{ height: "auto" }}
+                  alt="..."
+                />
+                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <div className="cardBodyGlobal">
+                  <h6>
+                    {item.moTa.length > 50
+                      ? item.moTa.substring(0, 50) + "..."
+                      : item.moTa}
+                  </h6>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+                </div>
+                <div className="cardFooter">
+                  <div className="titleMaker">
+                    <div className="imgCardFooter">
+                      <img src="/img/avatar2.bb9626e2.png" alt="..." />
+                    </div>
+                    <span className="ml-2 colorCardTitle">Elon Musk</span>
+                  </div>
+                  <div className="cardFooter-price">
+                    <p>
+                      800.000<sup>đ</sup>
+                    </p>
+                    <p>
+                      400.000<sup>đ</sup>
+                      <i className="fas fa-tag iconTag" />
+                    </p>
+                  </div>
+                </div>
+                <div className="cardSale">
+                  <span>Yêu thích</span>
+                </div>
+                <div className="subCard">
+                  <div className="subCardHead">
+                    <img src="/img/emoji.6d1b7051.png" alt="..." />
+                    <span className="ml-1 colorCardTitle">
+                      Elun Musk Ricard
+                    </span>
+                  </div>
+                  <h6>BOOTCAMP - LẬP TRÌNH FULL STACK TỪ ZERO ĐẾN CÓ VIỆC</h6>
+                  <p className="colorCardTitle">
+                    Đã có hơn 6200 bạn đăng kí học và có việc làm thông qua
+                    chương trình đào tạo Bootcamp Lập trình Front End chuyên
+                    nghiệp. Khóa học 100% thực hành cường độ cao theo dự án thực
+                    tế và kết nối doanh nghiệp hỗ trợ tìm việc ngay sau khi
+                    học...
+                  </p>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+
+                  <Link
+                    className="btnGlobal btnSubCard"
+                    href={`/detail/${item.maKhoaHoc}`}
+                  >
+                    xem chi tiết
+                  </Link>
+                </div>
+                <Link href={`/detail/${item.maKhoaHoc}`} className="viewDetail">
+                  Xem chi tiết
+                  <i className="fas fa-chevron-right"></i>{" "}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+        {fourcourseFrontEnd.map((item) => {
+          return (
+            <div
+              key={item.maKhoaHoc}
+              className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
+            >
+              <div className="cardGlobal">
+                <Image
+                  width={250}
+                  height={250}
+                  crossOrigin="anonymous"
+                  quality={100}
+                  className=""
+                  src={item.hinhAnh}
+                  style={{ height: "auto" }}
+                  alt="..."
+                />
+                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <div className="cardBodyGlobal">
+                  <h6>
+                    {item.moTa.length > 50
+                      ? item.moTa.substring(0, 50) + "..."
+                      : item.moTa}
+                  </h6>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+                </div>
+                <div className="cardFooter">
+                  <div className="titleMaker">
+                    <div className="imgCardFooter">
+                      <img src="/img/avatar2.bb9626e2.png" alt="..." />
+                    </div>
+                    <span className="ml-2 colorCardTitle">Elon Musk</span>
+                  </div>
+                  <div className="cardFooter-price">
+                    <p>
+                      800.000<sup>đ</sup>
+                    </p>
+                    <p>
+                      400.000<sup>đ</sup>
+                      <i className="fas fa-tag iconTag" />
+                    </p>
+                  </div>
+                </div>
+                <div className="cardSale">
+                  <span>Yêu thích</span>
+                </div>
+                <div className="subCard">
+                  <div className="subCardHead">
+                    <img src="/img/emoji.6d1b7051.png" alt="..." />
+                    <span className="ml-1 colorCardTitle">
+                      Elun Musk Ricard
+                    </span>
+                  </div>
+                  <h6>BOOTCAMP - LẬP TRÌNH FULL STACK TỪ ZERO ĐẾN CÓ VIỆC</h6>
+                  <p className="colorCardTitle">
+                    Đã có hơn 6200 bạn đăng kí học và có việc làm thông qua
+                    chương trình đào tạo Bootcamp Lập trình Front End chuyên
+                    nghiệp. Khóa học 100% thực hành cường độ cao theo dự án thực
+                    tế và kết nối doanh nghiệp hỗ trợ tìm việc ngay sau khi
+                    học...
+                  </p>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+
+                  <Link
+                    className="btnGlobal btnSubCard"
+                    href={`/detail/${item.maKhoaHoc}`}
+                  >
+                    xem chi tiết
+                  </Link>
+                </div>
+                <Link href={`/detail/${item.maKhoaHoc}`} className="viewDetail">
+                  Xem chi tiết
+                  <i className="fas fa-chevron-right"></i>{" "}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+        {fourCourseFullStack.map((item) => {
+          return (
+            <div
+              key={item.maKhoaHoc}
+              className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
+            >
+              <div className="cardGlobal">
+                <Image
+                  width={250}
+                  height={250}
+                  crossOrigin="anonymous"
+                  quality={100}
+                  className=""
+                  style={{ height: "auto" }}
                   src={item.hinhAnh}
                   alt="..."
                 />
@@ -360,6 +767,110 @@ const Home = async () => {
                     xem chi tiết
                   </Link>
                 </div>
+                <Link href={`/detail/${item.maKhoaHoc}`} className="viewDetail">
+                  Xem chi tiết
+                  <i className="fas fa-chevron-right"></i>{" "}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+        {fourCourseTuDuy.map((item) => {
+          return (
+            <div
+              key={item.maKhoaHoc}
+              className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
+            >
+              <div className="cardGlobal">
+                <Image
+                  width={250}
+                  height={250}
+                  crossOrigin="anonymous"
+                  quality={100}
+                  className=""
+                  src={item.hinhAnh}
+                  alt="..."
+                  style={{ height: "auto" }}
+                />
+                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <div className="cardBodyGlobal">
+                  <h6>
+                    {item.moTa.length > 50
+                      ? item.moTa.substring(0, 50) + "..."
+                      : item.moTa}
+                  </h6>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+                </div>
+                <div className="cardFooter">
+                  <div className="titleMaker">
+                    <div className="imgCardFooter">
+                      <img src="/img/avatar2.bb9626e2.png" alt="..." />
+                    </div>
+                    <span className="ml-2 colorCardTitle">Elon Musk</span>
+                  </div>
+                  <div className="cardFooter-price">
+                    <p>
+                      800.000<sup>đ</sup>
+                    </p>
+                    <p>
+                      400.000<sup>đ</sup>
+                      <i className="fas fa-tag iconTag" />
+                    </p>
+                  </div>
+                </div>
+                <div className="cardSale">
+                  <span>Yêu thích</span>
+                </div>
+                <div className="subCard">
+                  <div className="subCardHead">
+                    <img src="/img/emoji.6d1b7051.png" alt="..." />
+                    <span className="ml-1 colorCardTitle">
+                      Elun Musk Ricard
+                    </span>
+                  </div>
+                  <h6>BOOTCAMP - LẬP TRÌNH FULL STACK TỪ ZERO ĐẾN CÓ VIỆC</h6>
+                  <p className="colorCardTitle">
+                    Đã có hơn 6200 bạn đăng kí học và có việc làm thông qua
+                    chương trình đào tạo Bootcamp Lập trình Front End chuyên
+                    nghiệp. Khóa học 100% thực hành cường độ cao theo dự án thực
+                    tế và kết nối doanh nghiệp hỗ trợ tìm việc ngay sau khi
+                    học...
+                  </p>
+                  <div className="cardIcon">
+                    <span>
+                      <i className="far fa-clock iconOclock" />8 giờ
+                    </span>
+                    <span>
+                      <i className="far fa-calendar-alt iconCalendar" />4 tuần
+                    </span>
+                    <span>
+                      <i className="fas fa-signal iconLevel" />
+                      Tất cả
+                    </span>
+                  </div>
+
+                  <Link
+                    className="btnGlobal btnSubCard"
+                    href={`/detail/${item.maKhoaHoc}`}
+                  >
+                    xem chi tiết
+                  </Link>
+                </div>
+                <Link href={`/detail/${item.maKhoaHoc}`} className="viewDetail">
+                  Xem chi tiết
+                  <i className="fas fa-chevron-right"></i>{" "}
+                </Link>
               </div>
             </div>
           );

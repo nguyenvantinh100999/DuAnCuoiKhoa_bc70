@@ -13,8 +13,10 @@ import Link from "next/link";
 const page = () => {
   const [profile, setProfile] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showNotificationModal, setShowNotificationModal] = useState(false); // State cho modal thông báo
+  const [notificationMessage, setNotificationMessage] = useState(""); // Thông điệp thông báo
+  const [isSuccess, setIsSuccess] = useState(false); // Kiểm tra loại thông báo (thành công hay thất bại)
   const [active, setActive] = useState("");
-
   const [user, setUser] = useState(null);
   const router = useRouter();
   useEffect(() => {
@@ -62,10 +64,20 @@ const page = () => {
           headers: headers,
         }
       );
-      alert("Hủy khóa học thành công!");
+      setNotificationMessage("Xóa khóa học thành công!");
+      setIsSuccess(true);
+      setShowNotificationModal(true); // Hiển thị modal thông báo thành công
+      setTimeout(() => {
+        setShowNotificationModal(false); // Ẩn modal sau 1 giây
+      }, 1500);
       getProfileAction();
     } catch (error) {
-      alert(error.response.data);
+      setNotificationMessage(error.response.data);
+      setIsSuccess(false);
+      setShowNotificationModal(true); // Hiển thị modal thông báo thành công
+      setTimeout(() => {
+        setShowNotificationModal(false); // Ẩn modal sau 1 giây
+      }, 1500);
     }
   };
   useEffect(() => {
@@ -107,12 +119,23 @@ const page = () => {
             data: values,
           }
         );
-        alert("Cập nhật thành công");
+        setShowModal(false);
+        setNotificationMessage("Cập nhật thành công!");
+        setIsSuccess(true);
+        setShowNotificationModal(true); // Hiển thị modal thông báo thành công
+        setTimeout(() => {
+          setShowNotificationModal(false); // Ẩn modal sau 1 giây
+        }, 1500);
         console.log("Cập nhật thành công", res.data);
         getProfileAction();
         resetForm();
       } catch (error) {
-        alert(error.response.data);
+        setNotificationMessage(error.response.data);
+        setIsSuccess(false);
+        setShowNotificationModal(true);
+        setTimeout(() => {
+          setShowNotificationModal(false); // Ẩn modal sau 1 giây
+        }, 1500);
         console.error("đăng ký thất bại", error.response.data);
       }
     },
@@ -503,6 +526,25 @@ const page = () => {
                 </Button>
               </Modal.Footer>
             </form>
+          </Modal.Body>
+        </Modal>
+        <Modal
+          className="modalSuccess"
+          show={showNotificationModal}
+          onHide={() => setShowNotificationModal(false)}
+        >
+          <Modal.Body className="bg-white text-center">
+            <div className={isSuccess ? "successMessage" : "errorMessage"}>
+              <i
+                className={
+                  isSuccess
+                    ? "fas fa-check-circle text-center text-success d-block"
+                    : "fas fa-exclamation-circle text-center text-warning d-block"
+                }
+                style={{ fontSize: "50px" }}
+              ></i>
+              <span className="fs-4 ">{notificationMessage}</span>
+            </div>
           </Modal.Body>
         </Modal>
       </div>

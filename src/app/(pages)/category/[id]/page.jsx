@@ -39,6 +39,7 @@ const Category = async (props) => {
                       className=""
                       src={item.hinhAnh}
                       alt="..."
+                      style={{ height: "auto" }}
                     />
                     <span className="stikerCard">{item.tenKhoaHoc}</span>
                     <div className="cardBodyGlobal">
@@ -119,6 +120,13 @@ const Category = async (props) => {
                     <div className="cardSale">
                       <span>Yêu thích</span>
                     </div>
+                    <Link
+                      href={`/detail/${item.maKhoaHoc}`}
+                      className="viewDetail"
+                    >
+                      Xem chi tiết
+                      <i className="fas fa-chevron-right"></i>{" "}
+                    </Link>
                   </div>
                 </div>
               );
