@@ -39,7 +39,7 @@ const Category = async (props) => {
                       className=""
                       src={item.hinhAnh}
                       alt="..."
-                      style={{ height: "auto" }}
+                      style={{ width: "auto" }}
                     />
                     <span className="stikerCard">{item.tenKhoaHoc}</span>
                     <div className="cardBodyGlobal">

@@ -49,7 +49,7 @@ const Home = async () => {
                 height={250}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ height: "auto" }}
+                style={{ width: "auto" }}
               />
             </div>
             <h1>Chào mừng</h1>
@@ -72,7 +72,7 @@ const Home = async () => {
                 height={895}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ height: "auto" }}
+                style={{ width: "auto" }}
               />
               <Image
                 className="sliderSubImg sliderCodeImg"
@@ -82,7 +82,7 @@ const Home = async () => {
                 height={134}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ height: "auto" }}
+                style={{ width: "auto" }}
               />
               <Image
                 className="sliderSubImg sliderMesImg "
@@ -92,7 +92,7 @@ const Home = async () => {
                 height={134}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ height: "auto" }}
+                style={{ width: "auto" }}
               />
               <Image
                 className="sliderSubImg sliderCloudImg"
@@ -102,7 +102,7 @@ const Home = async () => {
                 height={134}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ height: "auto" }}
+                style={{ width: "auto" }}
               />
               <Image
                 className="sliderSubImg sliderCloud2Img"
@@ -112,7 +112,7 @@ const Home = async () => {
                 height={134}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ height: "auto" }}
+                style={{ width: "auto" }}
               />
               <Image
                 className="sliderSubImg sliderCloud3Img"
@@ -122,7 +122,7 @@ const Home = async () => {
                 height={134}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ height: "auto" }}
+                style={{ width: "auto" }}
               />
             </div>
           </div>
@@ -289,7 +289,7 @@ const Home = async () => {
                   quality={100}
                   className=""
                   src={item.hinhAnh}
-                  style={{ height: "auto" }}
+                  style={{ width: "auto" }}
                   alt="..."
                 />
                 <span className="stikerCard">{item.tenKhoaHoc}</span>
@@ -389,7 +389,7 @@ const Home = async () => {
                   quality={100}
                   className=""
                   src={item.hinhAnh}
-                  style={{ height: "auto" }}
+                  style={{ width: "auto" }}
                   alt="..."
                 />
                 <span className="stikerCard">{item.tenKhoaHoc}</span>
@@ -489,7 +489,7 @@ const Home = async () => {
                   quality={100}
                   className=""
                   src={item.hinhAnh}
-                  style={{ height: "auto" }}
+                  style={{ width: "auto" }}
                   alt="..."
                 />
                 <span className="stikerCard">{item.tenKhoaHoc}</span>
@@ -589,7 +589,7 @@ const Home = async () => {
                   quality={100}
                   className=""
                   src={item.hinhAnh}
-                  style={{ height: "auto" }}
+                  style={{ width: "auto" }}
                   alt="..."
                 />
                 <span className="stikerCard">{item.tenKhoaHoc}</span>
@@ -688,7 +688,7 @@ const Home = async () => {
                   crossOrigin="anonymous"
                   quality={100}
                   className=""
-                  style={{ height: "auto" }}
+                  style={{ width: "auto" }}
                   src={item.hinhAnh}
                   alt="..."
                 />
@@ -790,7 +790,7 @@ const Home = async () => {
                   className=""
                   src={item.hinhAnh}
                   alt="..."
-                  style={{ height: "auto" }}
+                  style={{ width: "auto" }}
                 />
                 <span className="stikerCard">{item.tenKhoaHoc}</span>
                 <div className="cardBodyGlobal">

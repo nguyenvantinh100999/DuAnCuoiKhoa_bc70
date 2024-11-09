@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
+import { deburr } from "lodash";
 import { Layout, Menu, Space, Table, Button, Input, Avatar } from "antd";
 import Highlighter from "react-highlight-words";
 const { Header, Sider, Content } = Layout;
@@ -90,14 +91,17 @@ const page = () => {
   const handleSearchUser = async (value) => {
     setLoading(true);
     try {
-      if (value) {
+      const normalizedValue = deburr(value.trim());
+      console.log("Normalized Value:", normalizedValue); //
+      if (normalizedValue) {
         const res = await axios(
-          `https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/TimKiemNguoiDung?tuKhoa=${value}`,
+          `https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/TimKiemNguoiDung?tuKhoa=${normalizedValue}`,
           {
             method: "GET",
             headers: getHeaders(),
           }
         );
+        console.log("API Response:", res.data); // Kiểm tra dữ liệu trả về từ API
         const dataWithSTT = res.data.map((item, index) => ({
           ...item,
           stt: index + 1,

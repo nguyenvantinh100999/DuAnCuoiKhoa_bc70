@@ -11,17 +11,18 @@ import {
   Upload,
   message,
   Form,
+  Row,
+  Col,
+  Select,
 } from "antd";
-import Highlighter from "react-highlight-words";
 const { Header, Sider, Content } = Layout;
 import { getHeaders, TOKEN_CYBERSOFT } from "@/app/utils/configHeader";
 import axios from "axios";
-import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import * as Yup from "yup";
-import "../../../styles/modal/modalProfile.scss";
-import { ButtonGroup, Modal, ModalFooter } from "react-bootstrap";
 import { useFormik } from "formik";
+import "../../../styles/modal/modalProfile.scss";
+import { Modal } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import { USER_LOGIN } from "@/app/utils/setting";
 const page = () => {
@@ -30,7 +31,6 @@ const page = () => {
   const [dataCourseCategory, setDataCourseCategory] = useState([]);
   const [dataCourseFilter, setDataCourseFilter] = useState([]);
   const [user, setUser] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const [showModalRegister, setShowModalRegister] = useState(false);
   const [showModalAddCourse, setShowModalAddCourse] = useState(false);
   const [userCourse, setUserCourse] = useState([]);
@@ -146,109 +146,55 @@ const page = () => {
     }
   };
 
-  //---------------------Thêm Khóa học-------------------
+  //--------Thêm khóa học--------------------
   const [form] = Form.useForm();
-  const [imageUrl, setImageUrl] = useState(null);
-
-  const handleImageUpload = async (file) => {
-    // Kiểm tra định dạng file (nếu cần)
-    const isImage = file.type.startsWith("image/");
-    if (!isImage) {
-      message.error("Bạn chỉ có thể tải lên hình ảnh!");
-      return false; // Ngăn không cho tải lên
-    }
-
-    setImageUrl(file); // Lưu file vào state
-    return false; // Ngăn không cho Upload tự động tải lên
+  const [fileList, setFileList] = useState([]); // Quản lý danh sách tệp
+  const handleFileChange = (info) => {
+    setFileList(info.fileList); // Cập nhật danh sách tệp
   };
-
   const onFinish = async (values) => {
     try {
-      let formData = new FormData();
-      formData.append("file", imageUrl);
-      // Gọi API tải hình ảnh
-      const uploadResponse = await axios.post(
-        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHocUploadHinh",
-
-        formData,
+      // Gọi API thêm khóa học
+      const response = await axios.post(
+        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHoc",
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            TokenCybersoft: TOKEN_CYBERSOFT,
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
+          ...values,
+          taiKhoanNguoiTao: user.taiKhoan, // Nếu không có giá trị, mặc định là 0
+          ngayTao: new Date().toLocaleDateString("en-GB"),
+          headers: headers,
         }
       );
-      if (uploadResponse.status === 200) {
-        // Kiểm tra xem server có trả về URL hình ảnh hay không
-        const imageUrlResponse = uploadResponse.data; // Giả sử server trả về URL hình ảnh
-        const courseData = {
-          maKhoaHoc: values.maKhoaHoc,
-          biDanh: values.biDanh,
-          tenKhoaHoc: values.tenKhoaHoc,
-          moTa: values.moTa,
-          luotXem: 100,
-          danhGia: 5,
-          hinhAnh: imageUrlResponse, // URL hình ảnh
-          maNhom: values.maNhom,
-          ngayTao: new Date().toLocaleDateString("en-GB"), // Định dạng dd/MM/yyyy
-          maDanhMucKhoaHoc: values.maDanhMucKhoaHoc,
-          taiKhoanNguoiTao: user.taiKhoan,
-        };
-        const response = await axios.post(
-          "http://elearning0706.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHoc",
 
-          courseData,
-          { headers: headers }
+      // Sau khi thêm khóa học thành công, gọi API tải lên hình ảnh
+      if (response.status === 200) {
+        const frm = new FormData();
+        frm.append("file", fileList[0]?.originFileObj); // Lấy tệp đầu tiên trong danh sách
+        frm.append("tenKhoaHoc", values.tenKhoaHoc);
+
+        const uploadResponse = await axios.post(
+          "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/UploadHinhAnhKhoaHoc",
+          frm,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              TokenCybersoft: TOKEN_CYBERSOFT,
+              Authorization: `Bearer ${user?.accessToken}`,
+            },
+          }
         );
-        if (response.status === 200) {
-          message.success("Khóa học đã được thêm thành công!");
+
+        if (uploadResponse.status === 200) {
+          message.success("Thêm khóa học thành công!");
           form.resetFields();
-          setImageUrl(null); // Reset file hình ảnh
+          setFileList([]); // Đặt lại danh sách tệp
         }
       }
     } catch (error) {
-      message.error("Thêm khóa học thất bại!");
-      alert(error.response?.data || error.message);
+      message.error("Có lỗi xảy ra, vui lòng thử lại!");
+      console.error(error);
     }
-    // const courseData = {
-    //   ...values,
-    //   luotXem: 0,
-    //   hinhAnh: imageUrl,
-    //   danhGia: 0,
-    //   taiKhoanNguoiTao: user.taiKhoan,
-    //   ngayTao: new Date().toISOString(), // Hoặc định dạng ngày bạn muốn
-    // };
-    // try {
-    //   const response = await axios.post(
-    //     "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHoc",
-    //     {
-    //       courseData,
-    //       headers: headers,
-    //     }
-    //   );
-
-    //   // Nếu thêm khóa học thành công, gọi API tải hình ảnh
-    //   if (response.status === 200) {
-    //     const uploadResponse = await axios.post(
-    //       "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/UploadHinhAnhKhoaHoc",
-    //       formData,
-    //       {
-    //         headers: headers,
-    //       }
-    //     );
-
-    //     // Kiểm tra nếu tải hình ảnh thành công
-    //     if (uploadResponse.status === 200) {
-    //       message.success(
-    //         "Khóa học đã được thêm thành công và hình ảnh đã được tải lên!"
-    //       );
-    //       form.resetFields();
-    //       setImageFile(null); // Reset file hình ảnh
-    //     }
-    //   }
-    // }
   };
+
   //-------------Xóa khóa học-------------------
   const handleDeleteCourse = async (maKhoaHoc) => {
     const confirmDelete = window.confirm(
@@ -632,250 +578,159 @@ const page = () => {
             <Modal.Title>Thêm Khóa học</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {/* <form className="d-flex flex-wrap" role="form">
-              <div className="form-group col-6 mb-2  px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0">
-                      <i className="fa fa-user" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
+            <Form form={form} layout="vertical" onFinish={onFinish}>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Mã Khóa Học"
                     name="maKhoaHoc"
-                    id="tknv"
-                    className="form-control input-sm"
-                    placeholder="Mã khóa học"
-                  />
-                </div>
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0">
-                      <i className="fa fa-address-book" />
-                    </span>
-                  </div>
-                  <input
-                    type="name"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập mã khóa học!" },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Bí Danh"
+                    name="biDanh"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập bí danh!" },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Tên Khóa Học"
                     name="tenKhoaHoc"
-                    id="name"
-                    className="form-control input-sm"
-                    placeholder="Tên khóa học"
-                  />
-                </div>
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0">
-                      <i className="fa fa-briefcase" />
-                    </span>
-                  </div>
-                  <select className="form-control" name="maDanhMucKhoaHoc">
-                    <option value>Danh mục khóa học</option>
-                    {dataCourseCategory.map((item, index) => {
-                      return (
-                        <option key={index} value={item.maDanhMuc}>
-                          {item.tenDanhMuc}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0">
-                      <i className="fa fa-calendar" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    name="ngayTao"
-                    id="datepicker"
-                    className="form-control"
-                    placeholder="Ngày tạo"
-                  />
-                </div>
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0">
-                      <i className="fa fa-user" />
-                    </span>
-                  </div>
-                  <input
-                    type="number"
-                    name="danhGia"
-                    id="tknv"
-                    className="form-control input-sm"
-                    placeholder="Đánh giá"
-                  />
-                </div>
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0">
-                      <i className="fa fa-address-book" />
-                    </span>
-                  </div>
-                  <input
-                    type="number"
-                    name="luotXem"
-                    id="name"
-                    className="form-control input-sm"
-                    placeholder="Lượt xem"
-                  />
-                </div>
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0">
-                      <i className="fa fa-briefcase" />
-                    </span>
-                  </div>
-                  <select className="form-control" name="taiKhoanNguoiTao">
-                    <option value>Người tạo</option>
-                  </select>
-                </div>
-                <span className="sp-thongbao" id="tbChucVu" />
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div>
-                  <input
-                    name="hinhAnh"
-                    accept="image/png,image/jpg,image/jpeg"
-                    type="file"
-                    id="hinhAnh"
-                  />
-                </div>
-              </div>
-              <div className="form-group col-6 mb-2 px-4">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text h-100 rounded-0 ">
-                      <i className="fa fa-address-book" />
-                    </span>
-                  </div>
-                  <select className="form-control" name="maNhom">
-                    <option value>Mã nhóm</option>
-                    <option value="GP01">GP01</option>
-                    <option value="GP02">GP02</option>
-                    <option value="GP03">GP03</option>
-                    <option value="GP04">GP04</option>
-                    <option value="GP05">GP05</option>
-                    <option value="GP06">GP06</option>
-                    <option value="GP07">GP07</option>
-                    <option value="GP08">GP08</option>
-                    <option value="GP09">GP09</option>
-                    <option value="GP10">GP10</option>
-                    <option value="GP11">GP11</option>
-                    <option value="GP12">GP12</option>
-                    <option value="GP13">GP13</option>
-                    <option value="GP14">GP14</option>
-                    <option value="GP15">GP15</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-12 container text-justify">
-                <h5 className="card-header mb-2">Mô tả khóa học</h5>
-                <div className="row">
-                  <span className="col-3">
-                    <img
-                      src="/img/logo512.png"
-                      className="img-fluid rounded"
-                      height={200}
-                      width={200}
-                    />
-                  </span>
-                  <textarea
-                    type="text"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng nhập tên khóa học!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Mô Tả"
                     name="moTa"
-                    className="form-control input-sm w-75 col-9"
-                    placeholder="Nhập mô tả"
-                  />
-                </div>
-              </div>
-              <div className="modal-footer col-12" id="modal-footer">
-                <button id="btnThem" type="submit" className="btn btn-success">
-                  Thêm khóa học
-                </button>
-                <button
-                  id="btnDong"
-                  type="button"
-                  className="btn btn-danger"
-                  data-dismiss="modal"
-                  onClick={() => {
-                    setShowModalAddCourse(false);
-                  }}
-                >
-                  Đóng
-                </button>
-              </div>
-            </form> */}
-            <Form form={form} onFinish={onFinish}>
-              <Form.Item
-                name="maKhoaHoc"
-                label="Mã Khóa Học"
-                rules={[
-                  { required: true, message: "Vui lòng nhập mã khóa học!" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="biDanh"
-                label="Bí Danh"
-                rules={[{ required: true, message: "Vui lòng nhập bí danh!" }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name={"tenKhoaHoc"}
-                id="tenKhoaHoc"
-                label="Tên khóa học"
-                rules={[
-                  { required: true, message: "Vui lòng nhập tên khóa học!" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="moTa"
-                label="Mô Tả"
-                rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}
-              >
-                <Input.TextArea />
-              </Form.Item>
-              <Form.Item
-                name="maNhom"
-                label="Mã Nhóm"
-                rules={[{ required: true, message: "Vui lòng nhập mã nhóm!" }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="maDanhMucKhoaHoc"
-                label="Mã Danh Mục Khóa Học"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập mã danh mục khóa học!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item label="Hình Ảnh" name={"hinhAnh"}>
-                <Upload beforeUpload={handleImageUpload} showUploadList={false}>
-                  <Button>Chọn Hình Ảnh</Button>
-                </Upload>
-              </Form.Item>
+                    rules={[
+                      { required: true, message: "Vui lòng nhập mô tả!" },
+                    ]}
+                  >
+                    <Input.TextArea />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Hình Ảnh"
+                    name="hinhAnh"
+                    rules={[
+                      { required: true, message: "Vui lòng tải lên hình ảnh!" },
+                    ]}
+                  >
+                    <Upload
+                      beforeUpload={() => false} // Ngăn không cho tự động tải lên
+                      onChange={handleFileChange}
+                      fileList={fileList} // Sử dụng fileList để quản lý danh sách tệp
+                      showUploadList={false}
+                    >
+                      <Button>Chọn Hình Ảnh</Button>
+                    </Upload>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Mã Nhóm"
+                    name="maNhom"
+                    rules={[
+                      { required: true, message: "Vui lòng chọn mã nhóm!" },
+                    ]}
+                  >
+                    <Select placeholder="Chọn mã nhóm">
+                      <Select.Option value="GP01">GP01</Select.Option>
+                      <Select.Option value="GP02">GP02</Select.Option>
+                      <Select.Option value="GP03">GP03</Select.Option>
+                      <Select.Option value="GP04">GP04</Select.Option>
+                      <Select.Option value="GP05">GP05</Select.Option>
+                      <Select.Option value="GP06">GP06</Select.Option>
+                      <Select.Option value="GP07">GP07</Select.Option>
+                      <Select.Option value="GP08">GP08</Select.Option>
+                      <Select.Option value="GP09">GP09</Select.Option>
+                      <Select.Option value="GP10">GP10</Select.Option>
+                      <Select.Option value="GP11">GP11</Select.Option>
+                      <Select.Option value="GP12">GP12</Select.Option>
+                      <Select.Option value="GP13">GP13</Select.Option>
+                      <Select.Option value="GP14">GP14</Select.Option>
+                      <Select.Option value="GP15">GP15</Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Mã Danh Mục Khóa Học"
+                    name="maDanhMucKhoaHoc"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng chọn mã danh mục khóa học!",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Chọn mã danh mục">
+                      {dataCourseCategory.map((category) => (
+                        <Select.Option
+                          key={category.maDanhMuc}
+                          value={category.maDanhMuc}
+                        >
+                          {category.tenDanhMuc}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Đánh Giá"
+                    name="danhGia"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập đánh giá!" },
+                    ]}
+                  >
+                    <Input type="number" min={0} max={5} />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Lượt Xem"
+                    name="luotXem"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập lượt xem!" },
+                    ]}
+                  >
+                    <Input type="number" min={0} />
+                  </Form.Item>
+                </Col>
+              </Row>
+
               <Form.Item>
                 <Button type="primary" htmlType="submit">
                   Thêm Khóa Học

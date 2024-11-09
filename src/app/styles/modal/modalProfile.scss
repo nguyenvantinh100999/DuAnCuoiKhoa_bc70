@@ -5,7 +5,9 @@
 body.modal-open {
   overflow: hidden; // Vô hiệu hóa cuộn
 }
-
+.modal {
+  z-index: 1050 !important;
+}
 .modal-content {
   background: linear-gradient(250deg, $primary-200, $primary-300, $primary-500);
   border-radius: 10px; // Bo góc modal

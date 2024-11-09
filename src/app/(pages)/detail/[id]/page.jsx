@@ -402,7 +402,7 @@ const Detail = (props) => {
                 <img
                   src={prodDetail?.hinhAnh}
                   alt="..."
-                  style={{ height: "auto" }}
+                  style={{ width: "auto" }}
                 />
               </div>
 
@@ -478,7 +478,7 @@ const Detail = (props) => {
                     height={256}
                     crossOrigin="anonymous"
                     quality={100}
-                    style={{ height: "auto" }}
+                    style={{ width: "auto" }}
                   />
                   <span className="stikerCard">{item.tenKhoaHoc}</span>
                   <div className="cardBodyGlobal">
