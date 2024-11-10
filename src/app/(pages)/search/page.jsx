@@ -212,7 +212,7 @@ const Search = async (props) => {
                           <span className="ml-2">Nguyễn Nam</span>
                         </div>
                       </div>
-                      <div className="col-xl-2 col-lg-2 cancelNet">
+                      <div className="col-xl-2 col-lg-2 mt-2 cancelNet">
                         <Link
                           className="btnGlobal"
                           href={`/detail/${item.maKhoaHoc}`}

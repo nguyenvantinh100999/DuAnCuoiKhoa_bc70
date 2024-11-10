@@ -104,6 +104,11 @@
               margin-top: 10px;
               .col-xl-3 {
                 text-align: center;
+                @media (max-width: 992px) {
+                  .imgNet {
+                    width: auto !important;
+                  }
+                }
                 .imgNet {
                   object-fit: fill;
                   width: 100%;

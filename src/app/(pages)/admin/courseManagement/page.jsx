@@ -33,6 +33,7 @@ const page = () => {
   const [user, setUser] = useState(null);
   const [showModalRegister, setShowModalRegister] = useState(false);
   const [showModalAddCourse, setShowModalAddCourse] = useState(false);
+  const [showModalEditCourse, setShowModalEditCourse] = useState(false);
   const [userCourse, setUserCourse] = useState([]);
   const [userCourseRegister, setUserCourseRegister] = useState([]);
   const [userCourseNotRegister, setUserCourseNotRegister] = useState([]);
@@ -147,7 +148,7 @@ const page = () => {
   };
 
   //--------Thêm khóa học--------------------
-  const [form] = Form.useForm();
+  const [formAdd] = Form.useForm();
   const [fileList, setFileList] = useState([]); // Quản lý danh sách tệp
   const handleFileChange = (info) => {
     setFileList(info.fileList); // Cập nhật danh sách tệp
@@ -183,27 +184,55 @@ const page = () => {
           },
         }
       );
-
-      // // Sau khi thêm khóa học thành công, gọi API tải lên hình ảnh
-      // if (response.status === 200) {
-      //   const frm = new FormData();
-      //   frm.append("file", fileList[0]?.originFileObj); // Lấy tệp đầu tiên trong danh sách
-      //   frm.append("tenKhoaHoc", values.tenKhoaHoc);
-
-      //   const uploadResponse = await axios.post(
-      //     "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/UploadHinhAnhKhoaHoc",
-      //     frm
-      //   );
-
-      //   if (uploadResponse.status === 200) {
-      //     message.success("Thêm khóa học thành công!");
-      //     form.resetFields();
-      //     setFileList([]); // Đặt lại danh sách tệp
-      //   }
-      // }
+      showSuccessNotification("Thêm Khóa học thành công");
+      getListCourse();
+      formAdd.resetFields();
+      setShowModalAddCourse(false);
+      console.log("Thêm Khóa học thành công", response.data);
     } catch (error) {
-      message.error("Có lỗi xảy ra, vui lòng thử lại!");
-      console.error(error);
+      // Log chi tiết lỗi
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
+    }
+  };
+  //-------------cập nhật khóa học---------------------
+  const [formEdit] = Form.useForm();
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const editCourse = async (values) => {
+    try {
+      console.log("value", values);
+
+      let form = new FormData();
+      //nafy laf vieets nawgsn gon
+      Object.keys(values).forEach((key) => {
+        if (key === "hinhAnh" && values[key]?.fileList?.length > 0) {
+          form.append("hinhAnh", values[key].fileList[0].originFileObj);
+        } else {
+          form.append(key, values[key]);
+        }
+      });
+      form.append("taiKhoanNguoiTao", user.taiKhoan);
+      form.append("ngayTao", new Date().toLocaleDateString("en-GB"));
+      console.log("form", form);
+
+      const response = await axios.post(
+        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/CapNhatKhoaHocUpload",
+        form,
+        {
+          headers: {
+            ...headers,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      showSuccessNotification("Cập nhật Khóa học thành công");
+      getListCourse();
+      console.log("Cập nhật Khóa học thành công", response.data);
+    } catch (error) {
+      // Log chi tiết lỗi
+      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+      showErrorNotification(errorMessage);
+      console.error("Error response:", error.response);
     }
   };
 
@@ -515,7 +544,14 @@ const page = () => {
           <Button
             style={{ marginRight: "5px", backgroundColor: "#ffd700" }}
             onClick={() => {
-              // handleEdit(record);
+              const updatedRecord = {
+                ...record,
+                maDanhMucKhoaHoc: record.danhMucKhoaHoc.maDanhMucKhoahoc,
+              };
+              console.log("Selected Course Record:", record);
+              setSelectedCourse(updatedRecord); // Lưu trữ dữ liệu khóa học vào state
+              formEdit.setFieldsValue(updatedRecord); // Điền dữ liệu vào form
+              setShowModalEditCourse(true); // Mở modal
             }}
           >
             Sửa
@@ -590,7 +626,7 @@ const page = () => {
             <Modal.Title>Thêm Khóa học</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form form={form} layout="vertical" onFinish={onFinish}>
+            <Form form={formAdd} layout="vertical" onFinish={onFinish}>
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
@@ -745,7 +781,7 @@ const page = () => {
 
               <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  Thêm Khóa Học
+                  Thêm khóa học
                 </Button>
               </Form.Item>
             </Form>
@@ -821,6 +857,175 @@ const page = () => {
               }}
             />
           </div>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        size="lg"
+        className="modalProfile"
+        show={showModalEditCourse}
+        onHide={() => setShowModalEditCourse(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Cập nhật Khóa học</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form form={formEdit} layout="vertical" onFinish={editCourse}>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Mã Khóa Học"
+                  name="maKhoaHoc"
+                  rules={[
+                    { required: true, message: "Vui lòng nhập mã khóa học!" },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Bí Danh"
+                  name="biDanh"
+                  rules={[
+                    { required: true, message: "Vui lòng nhập bí danh!" },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Tên Khóa Học"
+                  name="tenKhoaHoc"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập tên khóa học!",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Mô Tả"
+                  name="moTa"
+                  rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}
+                >
+                  <Input.TextArea />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Hình Ảnh"
+                  name="hinhAnh"
+                  rules={[
+                    { required: true, message: "Vui lòng tải lên hình ảnh!" },
+                  ]}
+                >
+                  <Upload
+                    beforeUpload={() => false} // Ngăn không cho tự động tải lên
+                    onChange={handleFileChange}
+                    fileList={fileList} // Sử dụng fileList để quản lý danh sách tệp
+                    showUploadList={false}
+                  >
+                    <Button>Chọn Hình Ảnh</Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Mã Nhóm"
+                  name="maNhom"
+                  rules={[
+                    { required: true, message: "Vui lòng chọn mã nhóm!" },
+                  ]}
+                >
+                  <Select placeholder="Chọn mã nhóm">
+                    <Select.Option value="GP01">GP01</Select.Option>
+                    <Select.Option value="GP02">GP02</Select.Option>
+                    <Select.Option value="GP03">GP03</Select.Option>
+                    <Select.Option value="GP04">GP04</Select.Option>
+                    <Select.Option value="GP05">GP05</Select.Option>
+                    <Select.Option value="GP06">GP06</Select.Option>
+                    <Select.Option value="GP07">GP07</Select.Option>
+                    <Select.Option value="GP08">GP08</Select.Option>
+                    <Select.Option value="GP09">GP09</Select.Option>
+                    <Select.Option value="GP10">GP10</Select.Option>
+                    <Select.Option value="GP11">GP11</Select.Option>
+                    <Select.Option value="GP12">GP12</Select.Option>
+                    <Select.Option value="GP13">GP13</Select.Option>
+                    <Select.Option value="GP14">GP14</Select.Option>
+                    <Select.Option value="GP15">GP15</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Mã Danh Mục Khóa Học"
+                  name="maDanhMucKhoaHoc"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng chọn mã danh mục khóa học!",
+                    },
+                  ]}
+                >
+                  <Select placeholder="Chọn mã danh mục">
+                    {dataCourseCategory.map((category) => (
+                      <Select.Option
+                        key={category.maDanhMuc}
+                        value={category.maDanhMuc}
+                      >
+                        {category.tenDanhMuc}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Đánh Giá"
+                  name="danhGia"
+                  rules={[
+                    { required: true, message: "Vui lòng nhập đánh giá!" },
+                  ]}
+                >
+                  <Input type="number" min={0} max={5} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Lượt Xem"
+                  name="luotXem"
+                  rules={[
+                    { required: true, message: "Vui lòng nhập lượt xem!" },
+                  ]}
+                >
+                  <Input type="number" min={0} />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Lưu thông tin
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal.Body>
       </Modal>
       <Modal
