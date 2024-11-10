@@ -154,41 +154,53 @@ const page = () => {
   };
   const onFinish = async (values) => {
     try {
-      // Gọi API thêm khóa học
+      console.log("value", values);
+
+      let form = new FormData();
+      //nafy laf vieets nawgsn gon
+      Object.keys(values).forEach((key) => {
+        if (key === "hinhAnh" && values[key]?.fileList?.length > 0) {
+          form.append("hinhAnh", values[key].fileList[0].originFileObj);
+        } else {
+          form.append(key, values[key]);
+        }
+      });
+      form.append("taiKhoanNguoiTao", user.taiKhoan);
+      form.append("ngayTao", new Date().toLocaleDateString("en-GB"));
+      console.log("form", form);
+      //nay la viet chii tiet
+      // form.append("maKhoaHoc",values.maKhoaHoc)
+      // form.append("tenKhoaHoc",values.tenkhoahoc)
+      //tiep tucj file thong tin
+      //Gọi API thêm khóa học
       const response = await axios.post(
-        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHoc",
+        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHocUploadHinh",
+        form,
         {
-          ...values,
-          taiKhoanNguoiTao: user.taiKhoan, // Nếu không có giá trị, mặc định là 0
-          ngayTao: new Date().toLocaleDateString("en-GB"),
-          headers: headers,
+          headers: {
+            ...headers,
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
-      // Sau khi thêm khóa học thành công, gọi API tải lên hình ảnh
-      if (response.status === 200) {
-        const frm = new FormData();
-        frm.append("file", fileList[0]?.originFileObj); // Lấy tệp đầu tiên trong danh sách
-        frm.append("tenKhoaHoc", values.tenKhoaHoc);
+      // // Sau khi thêm khóa học thành công, gọi API tải lên hình ảnh
+      // if (response.status === 200) {
+      //   const frm = new FormData();
+      //   frm.append("file", fileList[0]?.originFileObj); // Lấy tệp đầu tiên trong danh sách
+      //   frm.append("tenKhoaHoc", values.tenKhoaHoc);
 
-        const uploadResponse = await axios.post(
-          "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/UploadHinhAnhKhoaHoc",
-          frm,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              TokenCybersoft: TOKEN_CYBERSOFT,
-              Authorization: `Bearer ${user?.accessToken}`,
-            },
-          }
-        );
+      //   const uploadResponse = await axios.post(
+      //     "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/UploadHinhAnhKhoaHoc",
+      //     frm
+      //   );
 
-        if (uploadResponse.status === 200) {
-          message.success("Thêm khóa học thành công!");
-          form.resetFields();
-          setFileList([]); // Đặt lại danh sách tệp
-        }
-      }
+      //   if (uploadResponse.status === 200) {
+      //     message.success("Thêm khóa học thành công!");
+      //     form.resetFields();
+      //     setFileList([]); // Đặt lại danh sách tệp
+      //   }
+      // }
     } catch (error) {
       message.error("Có lỗi xảy ra, vui lòng thử lại!");
       console.error(error);
