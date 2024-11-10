@@ -72,7 +72,7 @@ const Home = async () => {
                 height={895}
                 crossOrigin="anonymous"
                 quality={100}
-                style={{ width: "auto" }}
+                style={{ height: "auto" }}
               />
               <Image
                 className="sliderSubImg sliderCodeImg"
