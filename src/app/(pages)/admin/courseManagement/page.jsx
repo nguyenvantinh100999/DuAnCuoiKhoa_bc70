@@ -43,7 +43,7 @@ const page = () => {
   const router = useRouter();
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem(USER_LOGIN));
-    if (storedUser) {
+    if (storedUser && storedUser.maLoaiNguoiDung === "GV") {
       setUser(storedUser);
     } else {
       router.push("/login");
@@ -188,6 +188,7 @@ const page = () => {
       getListCourse();
       formAdd.resetFields();
       setShowModalAddCourse(false);
+      setFileList([]);
       console.log("Thêm Khóa học thành công", response.data);
     } catch (error) {
       // Log chi tiết lỗi
@@ -227,9 +228,11 @@ const page = () => {
       );
       showSuccessNotification("Cập nhật Khóa học thành công");
       getListCourse();
+      setFileList([]);
       console.log("Cập nhật Khóa học thành công", response.data);
     } catch (error) {
       // Log chi tiết lỗi
+      setFileList([]);
       const errorMessage = error.response?.data || "Đã xảy ra lỗi";
       showErrorNotification(errorMessage);
       console.error("Error response:", error.response);
@@ -611,7 +614,7 @@ const page = () => {
               dataCourseFilter.length > 0
                 ? dataCourseFilter.length
                 : dataCourse.length,
-            pageSize: 6,
+            pageSize: 5,
             showSizeChanger: false,
             showQuickJumper: false,
           }}

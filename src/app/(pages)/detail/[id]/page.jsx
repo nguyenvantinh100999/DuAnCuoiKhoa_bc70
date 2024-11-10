@@ -399,11 +399,7 @@ const Detail = (props) => {
           <div className="col-lg-4 col-md-5">
             <div className="sideBarCourseDetail">
               <div className="img-product">
-                <img
-                  src={prodDetail?.hinhAnh}
-                  alt="..."
-                  style={{ width: "auto" }}
-                />
+                <img src={prodDetail?.hinhAnh} alt="..." />
               </div>
 
               <div className="coursePrice">

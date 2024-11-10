@@ -10,7 +10,9 @@
   align-items: center;
   padding: 10px 50px;
   transition: box-shadow 0.5s ease;
-
+  @media (max-width: 480px) {
+    padding: 10px 0 !important;
+  }
   &.visible {
     position: fixed;
     box-shadow: 0 2px 24px 0 rgba(0, 0, 0, 0.15);

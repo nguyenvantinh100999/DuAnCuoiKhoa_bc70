@@ -364,14 +364,14 @@ const page = () => {
                     {profile.chiTietKhoaHocGhiDanh?.map((item) => {
                       return (
                         <div className="row" key={item.maKhoaHoc}>
-                          <div className="col-xl-3 col-lg-4">
+                          <div className="col-xl-3 col-lg-4 mt-2">
                             <img
                               className="imgNet"
                               src={item.hinhAnh}
                               alt="..."
                             />
                           </div>
-                          <div className="col-xl-7 col-lg-6 cardNetContent">
+                          <div className="col-xl-7 col-lg-6 mt-2 cardNetContent">
                             <h6>{item.tenKhoaHoc}</h6>
                             <p className="colorCardTitle">{item.moTa}</p>
                             <div className="iconNetCard">

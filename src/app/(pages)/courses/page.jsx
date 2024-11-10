@@ -8,7 +8,6 @@ const CoursesPage = async ({ searchParams }) => {
 
   const { courses, currentPage, totalPages } =
     await getCourseListByPaginationAction(page, pageSize);
-
   return (
     <div className="coursesPage">
       <div className="titleCourse">
@@ -177,8 +176,7 @@ const CoursesPage = async ({ searchParams }) => {
           <li className="page-item">
             {" "}
             <Link
-              className="pageLinkPages"
-              disabled={currentPage === 1}
+              className={`pageLinkPages ${currentPage === 1 ? "disabled" : ""}`}
               href={`/courses/?page=${currentPage - 1}`}
             >
               <i className="fas fa-chevron-left"></i> Trước
@@ -203,8 +201,9 @@ const CoursesPage = async ({ searchParams }) => {
 
           <li className="page-item">
             <Link
-              className="pageLinkPages"
-              disabled={currentPage === totalPages}
+              className={`pageLinkPages ${
+                currentPage === totalPages ? "disabled" : ""
+              }`}
               href={`/courses/?page=${currentPage + 1}`}
             >
               Sau <i className="fas fa-chevron-right"></i>

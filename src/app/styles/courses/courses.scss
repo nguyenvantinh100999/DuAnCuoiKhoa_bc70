@@ -377,3 +377,7 @@
     }
   }
 }
+.disabled {
+  pointer-events: none; /* Ngăn không cho nhấp vào */
+  opacity: 0.5; /* Làm mờ nút */
+}

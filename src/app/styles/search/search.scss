@@ -104,16 +104,15 @@
               margin-top: 10px;
               .col-xl-3 {
                 text-align: center;
-                @media (max-width: 992px) {
+                @media (max-width: 991px) {
                   .imgNet {
-                    width: auto !important;
+                    height: auto !important;
                   }
                 }
                 .imgNet {
                   object-fit: fill;
                   width: 100%;
                   height: 200px;
-                  //   min-height: 200px;
                 }
               }
               .cardNetContent {

@@ -226,6 +226,11 @@
                   margin-top: 10px;
                   .col-xl-3 {
                     text-align: center;
+                    @media (max-width: 991px) {
+                      .imgNet {
+                        height: auto !important;
+                      }
+                    }
                     .imgNet {
                       object-fit: fill;
                       width: 100%;
@@ -271,6 +276,11 @@
                     flex-direction: column;
                     align-items: end;
                     justify-content: space-between;
+                    @media (max-width: 991px) {
+                      margin-top: 10px;
+                      flex-direction: row;
+                      align-items: center;
+                    }
                     a {
                       @include mText($text-base, $fw-normal, $text-color-card);
                       &:hover {
