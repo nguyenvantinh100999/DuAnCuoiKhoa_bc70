@@ -21,6 +21,10 @@
     display: flex;
     align-items: center;
     overflow: hidden;
+    @media (max-width: 768px) {
+      width: 100vw;
+      justify-content: center;
+    }
     img {
       position: absolute;
       width: 60%;
@@ -169,9 +173,15 @@
       margin-top: 15px;
       transform: translateX(-400px);
       transition: all 0.7s ease-in-out;
+      @media (max-width: 768px) {
+        transform: translateX(-550px);
+      }
     }
     .active.login {
       transform: translateX(-400px);
+      @media (max-width: 768px) {
+        transform: translateX(-550px);
+      }
     }
     .active.register {
       transition: 0.7s;

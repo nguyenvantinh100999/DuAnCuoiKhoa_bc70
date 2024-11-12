@@ -10,6 +10,7 @@ import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import * as Yup from "yup";
 import "../../../styles/modal/modalProfile.scss";
+import Dropdown from "react-bootstrap/Dropdown";
 import { ButtonGroup, Modal, ModalFooter } from "react-bootstrap";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
@@ -37,7 +38,7 @@ const page = () => {
     if (storedUser && storedUser.maLoaiNguoiDung === "GV") {
       setUser(storedUser);
     } else {
-      router.push("/");
+      router.push("/not-found");
     }
   }, [router]);
   const headers = {
@@ -117,6 +118,24 @@ const page = () => {
       setLoading(false);
     }
   };
+  //----chỉnh sửa người dùng admin--------
+  const handleEditAmin = () => {
+    formEditProfile.setValues({
+      taiKhoan: user?.taiKhoan || "", // Đảm bảo không phải là undefined
+      hoTen: user?.hoTen || "",
+      soDT: user?.soDt || "",
+      email: user?.email || "",
+      maLoaiNguoiDung: user?.maLoaiNguoiDung || "",
+      maNhom: user?.maNhom || "GP01",
+    });
+    setShowModal(true);
+  };
+  //----Đăng xuất người dùng admin--------
+  const handleLogoutAmin = () => {
+    localStorage.removeItem("userLogin");
+    localStorage.removeItem("accessToken");
+    window.location.reload();
+  };
   //----chỉnh sửa người dùng--------
   const handleEdit = (record) => {
     formEditProfile.setValues({
@@ -185,7 +204,7 @@ const page = () => {
         .min(8, "ít nhất 8 ký tự"),
       email: Yup.string()
         .required("email không được bỏ trống")
-        .email("email không hợp lệ !"),
+        .email("email không hợp lệ !(VD:admin@gmail.com)"),
       soDT: Yup.string()
         .required("phone không được bỏ trống")
         .matches(
@@ -547,15 +566,7 @@ const page = () => {
   return (
     <div className="userTemplate" style={{ maxHeight: "100vh" }}>
       <Layout>
-        <Header
-          style={{
-            background: "#fff",
-            padding: 0,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <Header>
           <button
             onClick={() => {
               setShowModalAdd(true);
@@ -565,6 +576,7 @@ const page = () => {
             Thêm người dùng
           </button>
           <Search
+            className="searchAdmin"
             placeholder="Nhập tài khoản cần tìm"
             allowClear
             enterButton="Tìm kiếm"
@@ -574,6 +586,34 @@ const page = () => {
             }}
             style={{ width: 400 }}
           />
+          <div className="iconProfile">
+            <p>
+              Xin chào <span>{user?.hoTen},</span>
+            </p>
+            <img src="/img/emoji.6d1b7051.png" alt="iconProfile" />
+          </div>
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              Chỉnh sửa
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => {
+                  handleEditAmin(true);
+                }}
+              >
+                Cập nhật thông tin
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  handleLogoutAmin();
+                }}
+              >
+                Đăng Xuất
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Header>
         <Table
           columns={columns}
@@ -619,7 +659,7 @@ const page = () => {
               />
               <label htmlFor="taiKhoan">Tài khoản</label>
             </div>
-            {formEditProfile.errors.taiKhoan && (
+            {formEditProfile.touched.taiKhoan && (
               <p className="text-danger ">{formEditProfile.errors.taiKhoan}</p>
             )}
             <div className="input-box">
@@ -637,7 +677,7 @@ const page = () => {
               />
               <label htmlFor="hoTen">Họ Tên</label>
             </div>
-            {formEditProfile.errors.hoTen && (
+            {formEditProfile.touched.hoTen && (
               <p className="text-danger ">{formEditProfile.errors.hoTen}</p>
             )}
             <div className="input-box">
@@ -655,7 +695,7 @@ const page = () => {
               />
               <label htmlFor="matKhau">Mật khẩu</label>
             </div>
-            {formEditProfile.errors.matKhau && (
+            {formEditProfile.touched.matKhau && (
               <p className="text-danger ">{formEditProfile.errors.matKhau}</p>
             )}
             <div className="input-box">
@@ -673,7 +713,7 @@ const page = () => {
               />
               <label htmlFor="email">Email</label>
             </div>
-            {formEditProfile.errors.email && (
+            {formEditProfile.touched.email && (
               <p className="text-danger ">{formEditProfile.errors.email}</p>
             )}
             <div className="input-box">
@@ -691,7 +731,7 @@ const page = () => {
               />
               <label htmlFor="soDT">Số Điện Thoại</label>
             </div>
-            {formEditProfile.errors.soDT && (
+            {formEditProfile.touched.soDT && (
               <p className="text-danger ">{formEditProfile.errors.soDT}</p>
             )}
             <div className="input-box">
@@ -710,7 +750,7 @@ const page = () => {
             </div>
             <Modal.Footer>
               <button type="submit" variant="primary">
-                Thêm người dùng
+                Lưu thông tin
               </button>
               <button
                 variant="secondary"
@@ -749,7 +789,7 @@ const page = () => {
               />
               <label htmlFor="taiKhoan">Tài khoản</label>
             </div>
-            {formAddUser.errors.taiKhoan && (
+            {formAddUser.touched.taiKhoan && (
               <p className="text-danger ">{formAddUser.errors.taiKhoan}</p>
             )}
             <div className="input-box">
@@ -767,7 +807,7 @@ const page = () => {
               />
               <label htmlFor="hoTen">Họ Tên</label>
             </div>
-            {formAddUser.errors.hoTen && (
+            {formAddUser.touched.hoTen && (
               <p className="text-danger ">{formAddUser.errors.hoTen}</p>
             )}
             <div className="input-box">
@@ -785,7 +825,7 @@ const page = () => {
               />
               <label htmlFor="matKhau">Mật khẩu</label>
             </div>
-            {formAddUser.errors.matKhau && (
+            {formAddUser.touched.matKhau && (
               <p className="text-danger ">{formAddUser.errors.matKhau}</p>
             )}
             <div className="input-box">
@@ -803,7 +843,7 @@ const page = () => {
               />
               <label htmlFor="email">Email</label>
             </div>
-            {formAddUser.errors.email && (
+            {formAddUser.touched.email && (
               <p className="text-danger ">{formAddUser.errors.email}</p>
             )}
             <div className="input-box">
@@ -821,7 +861,7 @@ const page = () => {
               />
               <label htmlFor="soDT">Số Điện Thoại</label>
             </div>
-            {formAddUser.errors.soDT && (
+            {formAddUser.touched.soDT && (
               <p className="text-danger ">{formAddUser.errors.soDT}</p>
             )}
             <div className="input-box">
@@ -841,7 +881,7 @@ const page = () => {
             </div>
             <Modal.Footer>
               <button type="submit" variant="primary">
-                Lưu thông tin
+                Thêm người dùng
               </button>
               <button
                 variant="secondary"

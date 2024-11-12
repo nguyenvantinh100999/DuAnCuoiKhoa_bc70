@@ -16,6 +16,34 @@ const Detail = (props) => {
   const [isSuccess, setIsSuccess] = useState(false); // Kiểm tra loại thông báo (thành công hay thất bại)
   const { id } = props.params;
   const router = useRouter();
+  // Thời gian đếm ngược (1 ngày 3 giờ 0 phút 0 giây)
+  const initialTime = 1 * 24 * 60 * 60 + 3 * 60 * 60; // Tổng số giây
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 0) {
+          clearInterval(timer);
+          return 0; // Dừng lại khi thời gian hết
+        }
+        return prevTime - 1; // Giảm thời gian còn lại
+      });
+    }, 1000); // Cập nhật mỗi giây
+
+    return () => clearInterval(timer); // Dọn dẹp khi component unmount
+  }, []);
+  // Chuyển đổi giây thành định dạng "1 ngày 3:00:00"
+  const formatTimeLeft = (seconds) => {
+    const days = Math.floor(seconds / (24 * 60 * 60));
+    const hours = Math.floor((seconds % (24 * 60 * 60)) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return `${days} ngày ${hours}:${String(minutes).padStart(2, "0")}:${String(
+      secs
+    ).padStart(2, "0")}`;
+  };
+
   const getCourseDetailInfoById = async (id) => {
     try {
       const res = await axios(
@@ -119,9 +147,7 @@ const Detail = (props) => {
       <div className="detailCouresContent">
         <div className="row">
           <div className="col-lg-8 col-md-7">
-            <h4 className="titleDetailCourse">
-              LẬP TRÌNH FRONT-END CHUYÊN NGHIỆP
-            </h4>
+            <h4 className="titleDetailCourse">{prodDetail.tenKhoaHoc}</h4>
             <div className=" row headDetailCourse">
               <div className="col-lg-4">
                 <div className="detailCourseIntro">
@@ -407,6 +433,17 @@ const Detail = (props) => {
                   <i className="fas fa-bolt" />
                   500.000<sup>đ</sup>
                 </p>
+                <div className="originalPrice">
+                  <p>
+                    <span className="discountedPrice">
+                      1.000.000<sup>đ</sup>
+                    </span>
+                    <span className="discountPercentage">50%</span>
+                  </p>
+                  <span className="countdownTimer">
+                    {formatTimeLeft(timeLeft)}
+                  </span>
+                </div>
               </div>
               <button
                 className="btnGlobal btnPreview"
@@ -476,7 +513,11 @@ const Detail = (props) => {
                     quality={100}
                     style={{ width: "auto" }}
                   />
-                  <span className="stikerCard">{item.tenKhoaHoc}</span>
+                  <span className="stikerCard">
+                    {item.tenKhoaHoc.length > 25
+                      ? item.tenKhoaHoc.substring(0, 25) + "..."
+                      : item.tenKhoaHoc}
+                  </span>
                   <div className="cardBodyGlobal">
                     <h6>
                       {item.moTa.length > 50
@@ -550,6 +591,13 @@ const Detail = (props) => {
                   <div className="cardSale">
                     <span>Yêu thích</span>
                   </div>
+                  <Link
+                    href={`/detail/${item.maKhoaHoc}`}
+                    className="viewDetail"
+                  >
+                    Xem chi tiết
+                    <i className="fas fa-chevron-right"></i>{" "}
+                  </Link>
                 </div>
               </div>
             );

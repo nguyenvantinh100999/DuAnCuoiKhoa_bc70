@@ -292,7 +292,11 @@ const Home = async () => {
                   style={{ width: "auto" }}
                   alt="..."
                 />
-                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <span className="stikerCard">
+                  {item.tenKhoaHoc.length > 25
+                    ? item.tenKhoaHoc.substring(0, 25) + "..."
+                    : item.tenKhoaHoc}
+                </span>
                 <div className="cardBodyGlobal">
                   <h6>
                     {item.moTa.length > 50
@@ -392,7 +396,11 @@ const Home = async () => {
                   style={{ width: "auto" }}
                   alt="..."
                 />
-                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <span className="stikerCard">
+                  {item.tenKhoaHoc.length > 25
+                    ? item.tenKhoaHoc.substring(0, 25) + "..."
+                    : item.tenKhoaHoc}
+                </span>
                 <div className="cardBodyGlobal">
                   <h6>
                     {item.moTa.length > 50
@@ -492,7 +500,11 @@ const Home = async () => {
                   style={{ width: "auto" }}
                   alt="..."
                 />
-                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <span className="stikerCard">
+                  {item.tenKhoaHoc.length > 25
+                    ? item.tenKhoaHoc.substring(0, 25) + "..."
+                    : item.tenKhoaHoc}
+                </span>
                 <div className="cardBodyGlobal">
                   <h6>
                     {item.moTa.length > 50
@@ -592,7 +604,11 @@ const Home = async () => {
                   style={{ width: "auto" }}
                   alt="..."
                 />
-                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <span className="stikerCard">
+                  {item.tenKhoaHoc.length > 25
+                    ? item.tenKhoaHoc.substring(0, 25) + "..."
+                    : item.tenKhoaHoc}
+                </span>
                 <div className="cardBodyGlobal">
                   <h6>
                     {item.moTa.length > 50
@@ -692,7 +708,11 @@ const Home = async () => {
                   src={item.hinhAnh}
                   alt="..."
                 />
-                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <span className="stikerCard">
+                  {item.tenKhoaHoc.length > 25
+                    ? item.tenKhoaHoc.substring(0, 25) + "..."
+                    : item.tenKhoaHoc}
+                </span>
                 <div className="cardBodyGlobal">
                   <h6>
                     {item.moTa.length > 50
@@ -792,7 +812,11 @@ const Home = async () => {
                   alt="..."
                   style={{ width: "auto" }}
                 />
-                <span className="stikerCard">{item.tenKhoaHoc}</span>
+                <span className="stikerCard">
+                  {item.tenKhoaHoc.length > 25
+                    ? item.tenKhoaHoc.substring(0, 25) + "..."
+                    : item.tenKhoaHoc}
+                </span>
                 <div className="cardBodyGlobal">
                   <h6>
                     {item.moTa.length > 50

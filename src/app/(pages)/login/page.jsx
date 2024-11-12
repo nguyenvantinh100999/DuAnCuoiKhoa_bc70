@@ -36,7 +36,6 @@ const page = () => {
         localStorage.setItem(USER_LOGIN, userLogin);
         router.push("/");
         alert("đăng nhập thành công");
-        console.log("đăng nhập thành công", res.data);
       } catch (error) {
         alert("đăng nhập thất bại, tài khoản hoặc mật khẩu không đúng!");
         console.error("đăng nhập thất bại", error.response.data);
@@ -162,7 +161,7 @@ const page = () => {
               />
               <label htmlFor="taiKhoan">Tài khoản</label>
             </div>
-            {formRegister.errors.taiKhoan && (
+            {formRegister.touched.taiKhoan && (
               <p className="text-danger ">{formRegister.errors.taiKhoan}</p>
             )}
             <div className="input-box">
@@ -180,7 +179,7 @@ const page = () => {
               />
               <label htmlFor="hoTen">Họ Tên</label>
             </div>
-            {formRegister.errors.hoTen && (
+            {formRegister.touched.hoTen && (
               <p className="text-danger ">{formRegister.errors.hoTen}</p>
             )}
             <div className="input-box">
@@ -198,7 +197,7 @@ const page = () => {
               />
               <label htmlFor="matKhau">Mật khẩu</label>
             </div>
-            {formRegister.errors.matKhau && (
+            {formRegister.touched.matKhau && (
               <p className="text-danger ">{formRegister.errors.matKhau}</p>
             )}
             <div className="input-box">
@@ -217,7 +216,7 @@ const page = () => {
               <label htmlFor="email">Email</label>
             </div>
 
-            {formRegister.errors.email && (
+            {formRegister.touched.email && (
               <p className="text-danger ">{formRegister.errors.email}</p>
             )}
             <div className="input-box">
@@ -236,7 +235,7 @@ const page = () => {
               <label htmlFor="soDT">Số Điện Thoại</label>
             </div>
 
-            {formRegister.errors.soDT && (
+            {formRegister.touched.soDT && (
               <p className="text-danger ">{formRegister.errors.soDT}</p>
             )}
             <div className="input-box">

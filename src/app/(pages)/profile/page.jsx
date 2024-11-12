@@ -108,7 +108,7 @@ const page = () => {
           "phone không hợp lệ (VD: 0909090909)"
         ),
     }),
-
+    validateOnMount: false,
     onSubmit: async (values, { resetForm }) => {
       try {
         const res = await axios(
@@ -454,7 +454,7 @@ const page = () => {
                 />
                 <label htmlFor="hoTen">Họ Tên</label>
               </div>
-              {formEditProfile.errors.hoTen && (
+              {formEditProfile.touched.hoTen && (
                 <p className="text-danger ">{formEditProfile.errors.hoTen}</p>
               )}
               <div className="input-box">
@@ -472,7 +472,7 @@ const page = () => {
                 />
                 <label htmlFor="matKhau">Mật khẩu</label>
               </div>
-              {formEditProfile.errors.matKhau && (
+              {formEditProfile.touched.matKhau && (
                 <p className="text-danger ">{formEditProfile.errors.matKhau}</p>
               )}
               <div className="input-box">
@@ -490,7 +490,7 @@ const page = () => {
                 />
                 <label htmlFor="email">Email</label>
               </div>
-              {formEditProfile.errors.email && (
+              {formEditProfile.touched.email && (
                 <p className="text-danger ">{formEditProfile.errors.email}</p>
               )}
               <div className="input-box">
@@ -508,7 +508,7 @@ const page = () => {
                 />
                 <label htmlFor="soDT">Số Điện Thoại</label>
               </div>
-              {formEditProfile.errors.soDT && (
+              {formEditProfile.touched.soDT && (
                 <p className="text-danger ">{formEditProfile.errors.soDT}</p>
               )}
               <Modal.Footer>

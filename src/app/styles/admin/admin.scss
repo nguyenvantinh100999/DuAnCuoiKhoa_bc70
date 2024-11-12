@@ -64,6 +64,29 @@
           .ant-layout-header {
             border-radius: 10px;
             padding: 0 20px !important;
+            background-color: $primary-100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .btnGlobal {
+            }
+            .searchAdmin {
+            }
+            .iconProfile {
+              display: flex;
+              align-items: center;
+              p {
+                margin: 0;
+                span {
+                  @include mText($text-base, $fw-semi, $text-color);
+                }
+              }
+              img {
+                @extend .ms-1;
+                width: 40px;
+                height: auto;
+              }
+            }
           }
           .ant-table-wrapper {
             height: auto;

@@ -41,7 +41,11 @@ const Category = async (props) => {
                       alt="..."
                       style={{ width: "auto" }}
                     />
-                    <span className="stikerCard">{item.tenKhoaHoc}</span>
+                    <span className="stikerCard">
+                      {item.tenKhoaHoc.length > 25
+                        ? item.tenKhoaHoc.substring(0, 25) + "..."
+                        : item.tenKhoaHoc}
+                    </span>
                     <div className="cardBodyGlobal">
                       <h6>
                         {item.moTa.length > 50

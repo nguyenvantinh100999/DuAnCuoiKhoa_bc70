@@ -83,7 +83,11 @@ const CoursesPage = async ({ searchParams }) => {
                     alt="..."
                     style={{ width: "auto" }}
                   />
-                  <span className="stikerCard">{item.tenKhoaHoc}</span>
+                  <span className="stikerCard">
+                    {item.tenKhoaHoc.length > 30
+                      ? item.tenKhoaHoc.substring(0, 30) + "..."
+                      : item.tenKhoaHoc}
+                  </span>
                   <div className="cardBodyGlobal">
                     <h6>
                       {item.moTa.length > 50

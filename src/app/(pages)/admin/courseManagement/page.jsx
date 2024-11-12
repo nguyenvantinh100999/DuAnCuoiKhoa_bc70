@@ -23,6 +23,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import "../../../styles/modal/modalProfile.scss";
 import { Modal } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
 import { useRouter } from "next/navigation";
 import { USER_LOGIN } from "@/app/utils/setting";
 const page = () => {
@@ -32,6 +33,7 @@ const page = () => {
   const [dataCourseFilter, setDataCourseFilter] = useState([]);
   const [user, setUser] = useState(null);
   const [showModalRegister, setShowModalRegister] = useState(false);
+  const [ShowModalEditProfile, setShowModalEditProfile] = useState(false);
   const [showModalAddCourse, setShowModalAddCourse] = useState(false);
   const [showModalEditCourse, setShowModalEditCourse] = useState(false);
   const [userCourse, setUserCourse] = useState([]);
@@ -46,7 +48,7 @@ const page = () => {
     if (storedUser && storedUser.maLoaiNguoiDung === "GV") {
       setUser(storedUser);
     } else {
-      router.push("/login");
+      router.push("/not-found");
     }
   }, [router]);
   const headers = {
@@ -146,12 +148,76 @@ const page = () => {
       setLoading(false);
     }
   };
+  //----chỉnh sửa người dùng admin--------
+  const handleEditAmin = () => {
+    formEditProfile.setValues({
+      taiKhoan: user?.taiKhoan || "", // Đảm bảo không phải là undefined
+      hoTen: user?.hoTen || "",
+      soDT: user?.soDt || "",
+      email: user?.email || "",
+      maLoaiNguoiDung: user?.maLoaiNguoiDung || "",
+      maNhom: user?.maNhom || "GP01",
+    });
+    setShowModalEditProfile(true);
+  };
+  //----Đăng xuất người dùng admin--------
+  const handleLogoutAmin = () => {
+    localStorage.removeItem("userLogin");
+    localStorage.removeItem("accessToken");
+    window.location.reload();
+  };
+  //-----------cập nhật thông tin người dùng-------------------
+  const formEditProfile = useFormik({
+    initialValues: {
+      taiKhoan: "",
+      matKhau: "",
+      hoTen: "",
+      soDT: "",
+      maLoaiNguoiDung: "",
+      maNhom: "GP01",
+      email: "",
+    },
+    validationSchema: Yup.object().shape({
+      taiKhoan: Yup.string().required("Tài khoản không được bỏ trống"),
+      hoTen: Yup.string().required("Họ tên không được bỏ trống"),
+      matKhau: Yup.string()
+        .required("Mật khẩu không được bỏ trống")
+        .min(8, "ít nhất 8 ký tự"),
+      email: Yup.string()
+        .required("email không được bỏ trống")
+        .email("email không hợp lệ !(VD:admin@gmail.com)"),
+      soDT: Yup.string()
+        .required("phone không được bỏ trống")
+        .matches(
+          /^(0[1-9]{1}[0-9]{8}|(84|0)(9[0-9]|8[1-9]|7[0-9]|6[2-9]|5[0-9]|4[0-9]|3[2-9]|2[0-9]|1[0-9])[0-9]{7})$/,
+          "phone không hợp lệ (VD: 0909090909)"
+        ),
+    }),
 
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const res = await axios(
+          "https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+          {
+            method: "PUT",
+            headers: headers,
+            data: values,
+          }
+        );
+        showSuccessNotification("Cập nhật thành công");
+        resetForm();
+      } catch (error) {
+        const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+        showErrorNotification(errorMessage);
+      }
+    },
+  });
   //--------Thêm khóa học--------------------
   const [formAdd] = Form.useForm();
   const [fileList, setFileList] = useState([]); // Quản lý danh sách tệp
   const handleFileChange = (info) => {
     setFileList(info.fileList); // Cập nhật danh sách tệp
+    console.log(fileList);
   };
   const onFinish = async (values) => {
     try {
@@ -194,10 +260,17 @@ const page = () => {
       // Log chi tiết lỗi
       const errorMessage = error.response?.data || "Đã xảy ra lỗi";
       showErrorNotification(errorMessage);
+
+      setFileList([]);
     }
   };
   //-------------cập nhật khóa học---------------------
   const [formEdit] = Form.useForm();
+  const [fileListEdit, setFileListEdit] = useState([]); // Quản lý danh sách tệp
+  const handleFileChangeEdit = (info) => {
+    setFileListEdit(info.fileListEdit); // Cập nhật danh sách tệp
+    console.log(fileListEdit);
+  };
   const [selectedCourse, setSelectedCourse] = useState(null);
   const editCourse = async (values) => {
     try {
@@ -206,8 +279,8 @@ const page = () => {
       let form = new FormData();
       //nafy laf vieets nawgsn gon
       Object.keys(values).forEach((key) => {
-        if (key === "hinhAnh" && values[key]?.fileList?.length > 0) {
-          form.append("hinhAnh", values[key].fileList[0].originFileObj);
+        if (key === "hinhAnh" && values[key]?.fileListEdit?.length > 0) {
+          form.append("hinhAnh", values[key].fileListEdit[0].originFileObj);
         } else {
           form.append(key, values[key]);
         }
@@ -228,13 +301,14 @@ const page = () => {
       );
       showSuccessNotification("Cập nhật Khóa học thành công");
       getListCourse();
-      setFileList([]);
+      setFileListEdit([]); // Cập nhật danh sách tệp
       console.log("Cập nhật Khóa học thành công", response.data);
     } catch (error) {
-      // Log chi tiết lỗi
-      setFileList([]);
+      // Log chi tiết
       const errorMessage = error.response?.data || "Đã xảy ra lỗi";
       showErrorNotification(errorMessage);
+
+      setFileListEdit([]); // Cập nhật danh sách tệp
       console.error("Error response:", error.response);
     }
   };
@@ -574,15 +648,7 @@ const page = () => {
   return (
     <div className="userTemplate" style={{ maxHeight: "100vh" }}>
       <Layout>
-        <Header
-          style={{
-            background: "#fff",
-            padding: 0,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <Header>
           <button
             onClick={() => {
               setShowModalAddCourse(true);
@@ -601,6 +667,34 @@ const page = () => {
             }}
             style={{ width: 400 }}
           />
+          <div className="iconProfile">
+            <p>
+              Xin chào <span>{user?.hoTen},</span>
+            </p>
+            <img src="/img/emoji.6d1b7051.png" alt="iconProfile" />
+          </div>
+          <Dropdown>
+            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              Chỉnh sửa
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => {
+                  handleEditAmin(true);
+                }}
+              >
+                Cập nhật thông tin
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  handleLogoutAmin();
+                }}
+              >
+                Đăng Xuất
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Header>
         <Table
           columns={columns}
@@ -935,8 +1029,8 @@ const page = () => {
                 >
                   <Upload
                     beforeUpload={() => false} // Ngăn không cho tự động tải lên
-                    onChange={handleFileChange}
-                    fileList={fileList} // Sử dụng fileList để quản lý danh sách tệp
+                    onChange={handleFileChangeEdit}
+                    fileList={fileListEdit} // Sử dụng fileList để quản lý danh sách tệp
                     showUploadList={false}
                   >
                     <Button>Chọn Hình Ảnh</Button>
@@ -1048,6 +1142,139 @@ const page = () => {
             ></i>
             <span className="fs-4 ">{notificationMessage}</span>
           </div>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        className="modalProfile"
+        show={ShowModalEditProfile}
+        onHide={() => setShowModalEditProfile(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Chỉnh sửa thông tin cá nhân</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form
+            className="formEditProdile"
+            onSubmit={formEditProfile.handleSubmit}
+          >
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="taiKhoan"
+                id="taiKhoan"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.taiKhoan || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="taiKhoan">Tài khoản</label>
+            </div>
+            {formEditProfile.touched.taiKhoan && (
+              <p className="text-danger ">{formEditProfile.errors.taiKhoan}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="hoTen"
+                id="hoTen"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.hoTen || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="hoTen">Họ Tên</label>
+            </div>
+            {formEditProfile.touched.hoTen && (
+              <p className="text-danger ">{formEditProfile.errors.hoTen}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-lock"></i>
+              </span>
+              <input
+                required
+                type="password"
+                name="matKhau"
+                id="matKhau"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.matKhau || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="matKhau">Mật khẩu</label>
+            </div>
+            {formEditProfile.touched.matKhau && (
+              <p className="text-danger ">{formEditProfile.errors.matKhau}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-envelope"></i>
+              </span>
+              <input
+                required
+                type="email"
+                name="email"
+                id="email"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.email || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="email">Email</label>
+            </div>
+            {formEditProfile.touched.email && (
+              <p className="text-danger ">{formEditProfile.errors.email}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-phone"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="soDT"
+                id="soDT"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.soDT || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="soDT">Số Điện Thoại</label>
+            </div>
+            {formEditProfile.touched.soDT && (
+              <p className="text-danger ">{formEditProfile.errors.soDT}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <select
+                name="maLoaiNguoiDung"
+                id="maLoaiNguoiDung"
+                value={formEditProfile.values.maLoaiNguoiDung || ""}
+                onChange={formEditProfile.handleChange}
+              >
+                <option value="GV">Giáo vụ</option>
+                <option value="HV">Học viên</option>
+              </select>
+            </div>
+            <Modal.Footer>
+              <button type="submit" variant="primary">
+                Lưu thông tin
+              </button>
+              <button
+                variant="secondary"
+                onClick={() => {
+                  setShowModalEditProfile(false);
+                }}
+              >
+                Đóng
+              </button>
+            </Modal.Footer>
+          </form>
         </Modal.Body>
       </Modal>
     </div>
