@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import HeaderHome from "./HeaderHome";
 import Footer from "./Footer";
+import BackToTop from "./BackToTop";
 
 const LayoutWrapper = ({ children }) => {
   const pathname = usePathname(); // Lấy đường dẫn hiện tại
@@ -13,6 +14,7 @@ const LayoutWrapper = ({ children }) => {
       {/* Kiểm tra xem đường dẫn có phải là '/login' hay không */}
       {!isLoginOrAdmin && <HeaderHome />}
       {children}
+      {!isLoginOrAdmin && <BackToTop />}
       {!isLoginOrAdmin && <Footer />}
     </>
   );

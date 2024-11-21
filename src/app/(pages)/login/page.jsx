@@ -92,7 +92,7 @@ const page = () => {
     <div className="loginForm">
       <div className="wrapper">
         <img src="/img/imgTree.png" alt="..." />
-        <h3 className="text-right">Welcome</h3>
+        <h3 className="text-right">Welcome Back</h3>
         <div className={`form-wrapper login ${isLoginActive}`}>
           <form onSubmit={fromLogin.handleSubmit}>
             <h2>Đăng Nhập</h2>

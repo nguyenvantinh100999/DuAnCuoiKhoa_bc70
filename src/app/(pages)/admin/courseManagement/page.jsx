@@ -43,6 +43,9 @@ const page = () => {
   const [notificationMessage, setNotificationMessage] = useState(""); // Thông điệp thông báo
   const [isSuccess, setIsSuccess] = useState(false); // Kiểm tra loại thông báo (thành công hay thất bại)
   const router = useRouter();
+  const [buttonEdit, setButtonEdit] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [khoaHocClick, setKhoaHocClick] = useState("");
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem(USER_LOGIN));
     if (storedUser && storedUser.maLoaiNguoiDung === "GV") {
@@ -212,7 +215,7 @@ const page = () => {
       }
     },
   });
-  //--------Thêm khóa học--------------------
+  //--------Thêm và cập nhật khóa học khóa học--------------------
   const [formAdd] = Form.useForm();
   const [fileList, setFileList] = useState([]); // Quản lý danh sách tệp
   const handleFileChange = (info) => {
@@ -220,6 +223,12 @@ const page = () => {
     console.log(fileList);
   };
   const onFinish = async (values) => {
+    let url =
+      "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHocUploadHinh";
+    if (buttonEdit) {
+      url =
+        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/CapNhatKhoaHocUpload";
+    }
     try {
       console.log("value", values);
 
@@ -240,79 +249,30 @@ const page = () => {
       // form.append("tenKhoaHoc",values.tenkhoahoc)
       //tiep tucj file thong tin
       //Gọi API thêm khóa học
-      const response = await axios.post(
-        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/ThemKhoaHocUploadHinh",
-        form,
-        {
-          headers: {
-            ...headers,
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      const response = await axios.post(url, form, {
+        headers: {
+          ...headers,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      showSuccessNotification(
+        buttonEdit ? "Chỉnh sửa thành công" : "Thêm Khóa học thành công"
       );
-      showSuccessNotification("Thêm Khóa học thành công");
       getListCourse();
       formAdd.resetFields();
       setShowModalAddCourse(false);
       setFileList([]);
-      console.log("Thêm Khóa học thành công", response.data);
+      console.log(
+        buttonEdit ? "Chỉnh sửa thành công" : "Thêm Khóa học thành công",
+        response.data
+      );
     } catch (error) {
       // Log chi tiết lỗi
       const errorMessage = error.response?.data || "Đã xảy ra lỗi";
       showErrorNotification(errorMessage);
-
       setFileList([]);
     }
   };
-  //-------------cập nhật khóa học---------------------
-  const [formEdit] = Form.useForm();
-  const [fileListEdit, setFileListEdit] = useState([]); // Quản lý danh sách tệp
-  const handleFileChangeEdit = (info) => {
-    setFileListEdit(info.fileListEdit); // Cập nhật danh sách tệp
-    console.log(fileListEdit);
-  };
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const editCourse = async (values) => {
-    try {
-      console.log("value", values);
-
-      let form = new FormData();
-      //nafy laf vieets nawgsn gon
-      Object.keys(values).forEach((key) => {
-        if (key === "hinhAnh" && values[key]?.fileListEdit?.length > 0) {
-          form.append("hinhAnh", values[key].fileListEdit[0].originFileObj);
-        } else {
-          form.append(key, values[key]);
-        }
-      });
-      form.append("taiKhoanNguoiTao", user.taiKhoan);
-      form.append("ngayTao", new Date().toLocaleDateString("en-GB"));
-      console.log("form", form);
-
-      const response = await axios.post(
-        "https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/CapNhatKhoaHocUpload",
-        form,
-        {
-          headers: {
-            ...headers,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      showSuccessNotification("Cập nhật Khóa học thành công");
-      getListCourse();
-      setFileListEdit([]); // Cập nhật danh sách tệp
-      console.log("Cập nhật Khóa học thành công", response.data);
-    } catch (error) {
-      // Log chi tiết
-      const errorMessage = error.response?.data || "Đã xảy ra lỗi";
-      showErrorNotification(errorMessage);
-
-      setFileListEdit([]); // Cập nhật danh sách tệp
-      console.error("Error response:", error.response);
-    }
-  };
-
   //-------------Xóa khóa học-------------------
   const handleDeleteCourse = async (maKhoaHoc) => {
     const confirmDelete = window.confirm(
@@ -419,6 +379,9 @@ const page = () => {
       setLoading(false);
     }
   };
+  const options = userCourseNotRegister?.map((item) => {
+    return { value: item.taiKhoan, label: item.hoTen };
+  });
   //------------hàm gọi lấy danh sách ghi danh-------------------
   const handleClick = (maKhoaHoc) => {
     setShowModalRegister(true);
@@ -468,37 +431,6 @@ const page = () => {
       showErrorNotification(errorMessage);
     }
   };
-  const columModalfirt = [
-    {
-      title: "STT",
-      dataIndex: "stt",
-      key: "stt",
-    },
-    {
-      title: "Tài Khoản",
-      dataIndex: "taiKhoan",
-      key: "taiKhoan",
-    },
-    {
-      title: "Học viên",
-      dataIndex: "hoTen",
-      key: "hoTen",
-    },
-    {
-      title: "Chờ xác nhận",
-      render: (record) => (
-        <button
-          className="btn btn-success"
-          onClick={() => {
-            registerCourse(record.taiKhoan, record.maKhoaHoc);
-          }}
-        >
-          Ghi danh
-        </button>
-      ),
-    },
-  ];
-
   const columModalSecond = [
     {
       title: "STT",
@@ -520,7 +452,7 @@ const page = () => {
       render: (record) => (
         <>
           <button
-            className="btn btn-success"
+            className="btn btn-success me-2"
             onClick={() => {
               registerCourse(record.taiKhoan, record.maKhoaHoc);
             }}
@@ -614,6 +546,7 @@ const page = () => {
             style={{ marginRight: "5px" }}
             onClick={() => {
               handleClick(record.maKhoaHoc);
+              setKhoaHocClick(record.maKhoaHoc);
             }}
           >
             Ghi danh
@@ -626,9 +559,9 @@ const page = () => {
                 maDanhMucKhoaHoc: record.danhMucKhoaHoc.maDanhMucKhoahoc,
               };
               console.log("Selected Course Record:", record);
-              setSelectedCourse(updatedRecord); // Lưu trữ dữ liệu khóa học vào state
-              formEdit.setFieldsValue(updatedRecord); // Điền dữ liệu vào form
-              setShowModalEditCourse(true); // Mở modal
+              formAdd.setFieldsValue(updatedRecord); // Điền dữ liệu vào form
+              setShowModalAddCourse(true); // Mở modal
+              setButtonEdit(true);
             }}
           >
             Sửa
@@ -652,6 +585,8 @@ const page = () => {
           <button
             onClick={() => {
               setShowModalAddCourse(true);
+              setButtonEdit(false);
+              formAdd.resetFields();
             }}
             className="btn btn-primary btnGlobal"
           >
@@ -672,29 +607,29 @@ const page = () => {
               Xin chào <span>{user?.hoTen},</span>
             </p>
             <img src="/img/emoji.6d1b7051.png" alt="iconProfile" />
-          </div>
-          <Dropdown>
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
-              Chỉnh sửa
-            </Dropdown.Toggle>
+            <Dropdown>
+              <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Chỉnh sửa
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item
-                onClick={() => {
-                  handleEditAmin(true);
-                }}
-              >
-                Cập nhật thông tin
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  handleLogoutAmin();
-                }}
-              >
-                Đăng Xuất
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    handleEditAmin(true);
+                  }}
+                >
+                  Cập nhật thông tin
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    handleLogoutAmin();
+                  }}
+                >
+                  Đăng Xuất
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </Header>
         <Table
           columns={columns}
@@ -713,260 +648,25 @@ const page = () => {
             showQuickJumper: false,
           }}
         />
-        <Modal
-          size="lg"
-          className="modalProfile"
-          show={showModalAddCourse}
-          onHide={() => setShowModalAddCourse(false)}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Thêm Khóa học</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form form={formAdd} layout="vertical" onFinish={onFinish}>
-              <Row gutter={16}>
-                <Col span={12}>
-                  <Form.Item
-                    label="Mã Khóa Học"
-                    name="maKhoaHoc"
-                    rules={[
-                      { required: true, message: "Vui lòng nhập mã khóa học!" },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label="Bí Danh"
-                    name="biDanh"
-                    rules={[
-                      { required: true, message: "Vui lòng nhập bí danh!" },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                <Col span={12}>
-                  <Form.Item
-                    label="Tên Khóa Học"
-                    name="tenKhoaHoc"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng nhập tên khóa học!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label="Mô Tả"
-                    name="moTa"
-                    rules={[
-                      { required: true, message: "Vui lòng nhập mô tả!" },
-                    ]}
-                  >
-                    <Input.TextArea />
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                <Col span={12}>
-                  <Form.Item
-                    label="Hình Ảnh"
-                    name="hinhAnh"
-                    rules={[
-                      { required: true, message: "Vui lòng tải lên hình ảnh!" },
-                    ]}
-                  >
-                    <Upload
-                      beforeUpload={() => false} // Ngăn không cho tự động tải lên
-                      onChange={handleFileChange}
-                      fileList={fileList} // Sử dụng fileList để quản lý danh sách tệp
-                      showUploadList={false}
-                    >
-                      <Button>Chọn Hình Ảnh</Button>
-                    </Upload>
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label="Mã Nhóm"
-                    name="maNhom"
-                    rules={[
-                      { required: true, message: "Vui lòng chọn mã nhóm!" },
-                    ]}
-                  >
-                    <Select placeholder="Chọn mã nhóm">
-                      <Select.Option value="GP01">GP01</Select.Option>
-                      <Select.Option value="GP02">GP02</Select.Option>
-                      <Select.Option value="GP03">GP03</Select.Option>
-                      <Select.Option value="GP04">GP04</Select.Option>
-                      <Select.Option value="GP05">GP05</Select.Option>
-                      <Select.Option value="GP06">GP06</Select.Option>
-                      <Select.Option value="GP07">GP07</Select.Option>
-                      <Select.Option value="GP08">GP08</Select.Option>
-                      <Select.Option value="GP09">GP09</Select.Option>
-                      <Select.Option value="GP10">GP10</Select.Option>
-                      <Select.Option value="GP11">GP11</Select.Option>
-                      <Select.Option value="GP12">GP12</Select.Option>
-                      <Select.Option value="GP13">GP13</Select.Option>
-                      <Select.Option value="GP14">GP14</Select.Option>
-                      <Select.Option value="GP15">GP15</Select.Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                <Col span={12}>
-                  <Form.Item
-                    label="Mã Danh Mục Khóa Học"
-                    name="maDanhMucKhoaHoc"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng chọn mã danh mục khóa học!",
-                      },
-                    ]}
-                  >
-                    <Select placeholder="Chọn mã danh mục">
-                      {dataCourseCategory.map((category) => (
-                        <Select.Option
-                          key={category.maDanhMuc}
-                          value={category.maDanhMuc}
-                        >
-                          {category.tenDanhMuc}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Row gutter={16}>
-                <Col span={12}>
-                  <Form.Item
-                    label="Đánh Giá"
-                    name="danhGia"
-                    rules={[
-                      { required: true, message: "Vui lòng nhập đánh giá!" },
-                    ]}
-                  >
-                    <Input type="number" min={0} max={5} />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    label="Lượt Xem"
-                    name="luotXem"
-                    rules={[
-                      { required: true, message: "Vui lòng nhập lượt xem!" },
-                    ]}
-                  >
-                    <Input type="number" min={0} />
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Thêm khóa học
-                </Button>
-              </Form.Item>
-            </Form>
-          </Modal.Body>
-        </Modal>
       </Layout>
-      <Modal
-        size="xl"
-        className="modalGhiDanh"
-        show={showModalRegister}
-        onHide={() => setShowModalRegister(false)}
-        style={{ minWidth: "80vw" }}
-      >
-        <Modal.Body style={{ display: "block" }}>
-          <div className="border-bottom border-secondary">
-            <div className="row">
-              <h5 className="text-left col-6" id="URM-title">
-                Chọn khóa muốn học ghi danh
-              </h5>
-            </div>
-            <Table
-              columns={columModalfirt}
-              rowKey={"stt"}
-              dataSource={userCourseNotRegister}
-              loading={loading}
-              pagination={{
-                total: userCourseNotRegister.length,
-                pageSize: 2,
-                showSizeChanger: false,
-                showQuickJumper: false,
-              }}
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Body style={{ display: "block" }}>
-          <div className="border-bottom border-secondary">
-            <div className="row">
-              <h5 className="text-left col-6" id="URM-title">
-                Khóa học chờ xác thực
-              </h5>
-            </div>
-            <Table
-              columns={columModalSecond}
-              rowKey={"stt"}
-              dataSource={userCourseRegister}
-              loading={loading}
-              pagination={{
-                total: userCourseRegister.length,
-                pageSize: 2,
-                showSizeChanger: false,
-                showQuickJumper: false,
-              }}
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Body style={{ display: "block" }}>
-          <div className="border-bottom border-secondary">
-            <div className="row">
-              <h5 className="text-left col-6" id="URM-title">
-                Khóa học đã ghi danh
-              </h5>
-            </div>
-            <Table
-              columns={columModalThree}
-              rowKey={"stt"}
-              dataSource={userCourse}
-              loading={loading}
-              pagination={{
-                total: userCourse.length,
-                pageSize: 2,
-                showSizeChanger: false,
-                showQuickJumper: false,
-              }}
-            />
-          </div>
-        </Modal.Body>
-      </Modal>
       <Modal
         size="lg"
         className="modalProfile"
-        show={showModalEditCourse}
-        onHide={() => setShowModalEditCourse(false)}
+        show={showModalAddCourse}
+        onHide={() => setShowModalAddCourse(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Cập nhật Khóa học</Modal.Title>
+          <Modal.Title>
+            {buttonEdit ? "Chỉnh sữa khóa học" : "Thêm Khóa học"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form form={formEdit} layout="vertical" onFinish={editCourse}>
+          <Form
+            style={{ width: "100%" }}
+            form={formAdd}
+            layout="vertical"
+            onFinish={onFinish}
+          >
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
@@ -1029,8 +729,8 @@ const page = () => {
                 >
                   <Upload
                     beforeUpload={() => false} // Ngăn không cho tự động tải lên
-                    onChange={handleFileChangeEdit}
-                    fileList={fileListEdit} // Sử dụng fileList để quản lý danh sách tệp
+                    onChange={handleFileChange}
+                    fileList={fileList} // Sử dụng fileList để quản lý danh sách tệp
                     showUploadList={false}
                   >
                     <Button>Chọn Hình Ảnh</Button>
@@ -1119,28 +819,90 @@ const page = () => {
 
             <Form.Item>
               <Button type="primary" htmlType="submit">
-                Lưu thông tin
+                {buttonEdit ? "Lưu thông tin" : "Thêm khóa học"}
               </Button>
             </Form.Item>
           </Form>
         </Modal.Body>
       </Modal>
       <Modal
-        className="modalSuccess"
-        show={showNotificationModal}
-        onHide={() => setShowNotificationModal(false)}
+        size="xl"
+        className="modalGhiDanh"
+        show={showModalRegister}
+        onHide={() => setShowModalRegister(false)}
+        style={{ minWidth: "80vw" }}
       >
-        <Modal.Body className="bg-white text-center">
-          <div className={isSuccess ? "successMessage" : "errorMessage"}>
-            <i
-              className={
-                isSuccess
-                  ? "fas fa-check-circle text-center text-success d-block"
-                  : "fas fa-exclamation-circle text-center text-warning d-block"
-              }
-              style={{ fontSize: "50px" }}
-            ></i>
-            <span className="fs-4 ">{notificationMessage}</span>
+        <Modal.Body style={{ display: "block" }}>
+          <div className="border-bottom border-secondary">
+            <div className="row justify-content-between align-items-center">
+              <h5 className="text-left col-3" id="URM-title">
+                Chọn khóa học
+              </h5>
+              <Select
+                className="col-7"
+                showSearch
+                placeholder="Chọn tài khoản"
+                value={selectedValue}
+                onChange={(value) => setSelectedValue(value)}
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                options={options}
+              />
+              <button
+                className="btn btn-success col w-100"
+                onClick={() => {
+                  registerCourse(selectedValue, khoaHocClick);
+                }}
+              >
+                Ghi Danh
+              </button>
+            </div>
+          </div>
+        </Modal.Body>
+
+        <Modal.Body style={{ display: "block" }}>
+          <div className="border-bottom border-secondary">
+            <div className="row">
+              <h5 className="text-left col-6" id="URM-title">
+                Học viên chờ xác thực
+              </h5>
+            </div>
+            <Table
+              columns={columModalSecond}
+              rowKey={"stt"}
+              dataSource={userCourseRegister}
+              loading={loading}
+              pagination={{
+                total: userCourseRegister.length,
+                pageSize: 2,
+                showSizeChanger: false,
+                showQuickJumper: false,
+              }}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Body style={{ display: "block" }}>
+          <div className="border-bottom border-secondary">
+            <div className="row">
+              <h5 className="text-left col-6" id="URM-title">
+                Học viên đã ghi danh
+              </h5>
+            </div>
+            <Table
+              columns={columModalThree}
+              rowKey={"stt"}
+              dataSource={userCourse}
+              loading={loading}
+              pagination={{
+                total: userCourse.length,
+                pageSize: 2,
+                showSizeChanger: false,
+                showQuickJumper: false,
+              }}
+            />
           </div>
         </Modal.Body>
       </Modal>
@@ -1262,11 +1024,11 @@ const page = () => {
               </select>
             </div>
             <Modal.Footer>
-              <button type="submit" variant="primary">
+              <button type="submit" className="btn btn-primary">
                 Lưu thông tin
               </button>
               <button
-                variant="secondary"
+                className="btn btn-secondary"
                 onClick={() => {
                   setShowModalEditProfile(false);
                 }}
@@ -1275,6 +1037,25 @@ const page = () => {
               </button>
             </Modal.Footer>
           </form>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        className="modalSuccess"
+        show={showNotificationModal}
+        onHide={() => setShowNotificationModal(false)}
+      >
+        <Modal.Body className="bg-white text-center">
+          <div className={isSuccess ? "successMessage" : "errorMessage"}>
+            <i
+              className={
+                isSuccess
+                  ? "fas fa-check-circle text-center text-success d-block"
+                  : "fas fa-exclamation-circle text-center text-warning d-block"
+              }
+              style={{ fontSize: "50px" }}
+            ></i>
+            <span className="fs-4 ">{notificationMessage}</span>
+          </div>
         </Modal.Body>
       </Modal>
     </div>

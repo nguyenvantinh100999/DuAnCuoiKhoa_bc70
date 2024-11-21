@@ -43,7 +43,33 @@ const Detail = (props) => {
       secs
     ).padStart(2, "0")}`;
   };
+  const arrTime = [
+    "10:30",
+    "11:00",
+    "14:25",
+    "15:10",
+    "20:00",
+    "21:11",
+    "17:50",
+    "18:20",
+    "25:59",
+    "29:54",
+  ];
 
+  // Khởi tạo state để lưu trữ thời gian
+  const [time, setTime] = useState([]);
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+  // Sử dụng useEffect để chạy hàm renderTime chỉ một lần khi component được mount
+  useEffect(() => {
+    const shuffledTimes = shuffleArray([...arrTime]);
+    setTime(shuffledTimes);
+  }, []); // Mảng phụ thuộc rỗng để chỉ chạy một lần
   const getCourseDetailInfoById = async (id) => {
     try {
       const res = await axios(
@@ -56,7 +82,7 @@ const Detail = (props) => {
       );
       setProdDetail(res.data);
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response?.data);
     }
   };
   useEffect(() => {
@@ -283,7 +309,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[0]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -293,7 +319,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[1]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -303,7 +329,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[2]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -313,7 +339,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[3]}
                       </span>
                     </div>
                   </div>
@@ -334,7 +360,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[4]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -344,7 +370,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[5]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -354,7 +380,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[6]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -364,7 +390,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[7]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -374,7 +400,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[8]}
                       </span>
                     </div>
                   </div>
@@ -391,10 +417,11 @@ const Detail = (props) => {
                     <div className="lessonContent mt-1">
                       <span>
                         <i className="fas fa-play-circle" />
+                        Cập nhật các gói + Phiên bản React mới nhất
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[9]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -404,7 +431,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[3]}
                       </span>
                     </div>
                     <div className="lessonContent mt-1">
@@ -414,7 +441,7 @@ const Detail = (props) => {
                       </span>
                       <span>
                         <i className="fas fa-clock" />
-                        14:35
+                        {time[5]}
                       </span>
                     </div>
                   </div>
@@ -496,112 +523,33 @@ const Detail = (props) => {
       </div>
       <div className="coursesRelated">
         <h6>Khóa học liên quan</h6>
-        <div className="row">
-          {firtFourCourses.map((item) => {
-            return (
-              <div
-                key={item.maKhoaHoc}
-                className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
-              >
-                <div className="cardGlobal">
-                  <Image
-                    src={item.hinhAnh}
-                    alt="..."
-                    width={256}
-                    height={256}
-                    crossOrigin="anonymous"
-                    quality={100}
-                    style={{ width: "auto" }}
-                  />
-                  <span className="stikerCard">
-                    {item.tenKhoaHoc.length > 25
-                      ? item.tenKhoaHoc.substring(0, 25) + "..."
-                      : item.tenKhoaHoc}
-                  </span>
-                  <div className="cardBodyGlobal">
-                    <h6>
-                      {item.moTa.length > 50
-                        ? item.moTa.substring(0, 50) + "..."
-                        : item.moTa}
-                    </h6>
-                    <div className="cardIcon">
-                      <span>
-                        <i className="far fa-clock iconOclock" />8 giờ
-                      </span>
-                      <span>
-                        <i className="far fa-calendar-alt iconCalendar" />4 tuần
-                      </span>
-                      <span>
-                        <i className="fas fa-signal iconLevel" />
-                        Tất cả
-                      </span>
-                    </div>
+        <div className="card-item">
+          <div className="cardGlobalRes">
+            {firtFourCourses.map((item) => {
+              return (
+                <div key={item.maKhoaHoc} className="cardGlobal">
+                  <div className="imgBx">
+                    <img src={item.hinhAnh} className="img-fluid" alt="..." />
                   </div>
-                  <div className="cardFooter">
-                    <div className="titleMaker">
-                      <div className="imgCardFooter">
-                        <img src="/img/avatar2.bb9626e2.png" alt="..." />
-                      </div>
-                      <span className="ml-2 colorCardTitle">Elon Musk</span>
-                    </div>
-                    <div className="cardFooter-price">
-                      <p>
-                        800.000<sup>đ</sup>
-                      </p>
-                      <p>
-                        400.000<sup>đ</sup>
-                        <i className="fas fa-tag iconTag" />
-                      </p>
-                    </div>
-                  </div>
-                  <div className="subCard">
-                    <div className="subCardHead">
-                      <img src="/img/emoji.6d1b7051.png" alt="..." />
-                      <span className="ml-1 colorCardTitle">
-                        Elun Musk Ricard
-                      </span>
-                    </div>
-                    <h6>BOOTCAMP - LẬP TRÌNH FULL STACK TỪ ZERO ĐẾN CÓ VIỆC</h6>
-                    <p className="colorCardTitle">
-                      Đã có hơn 6200 bạn đăng kí học và có việc làm thông qua
-                      chương trình đào tạo Bootcamp Lập trình Front End chuyên
-                      nghiệp. Khóa học 100% thực hành cường độ cao theo dự án
-                      thực tế và kết nối doanh nghiệp hỗ trợ tìm việc ngay sau
-                      khi học...
+                  <div className="content">
+                    <h2>{item.tenKhoaHoc}</h2>
+                    <p>
+                      {item.moTa.length > 100
+                        ? item.moTa.substring(0, 100) + "..."
+                        : "React.js là thư viện JavaScript phổ biến nhất mà bạn có thể sử dụng và tìm hiểu ngày nay để xây dựng giao diện người dùng hiện đại, phản ứng cho web"}
                     </p>
-                    <div className="cardIcon">
-                      <span>
-                        <i className="far fa-clock iconOclock" />8 giờ
-                      </span>
-                      <span>
-                        <i className="far fa-calendar-alt iconCalendar" />4 tuần
-                      </span>
-                      <span>
-                        <i className="fas fa-signal iconLevel" />
-                        Tất cả
-                      </span>
-                    </div>
                     <Link
-                      className="btnGlobal btnSubCard"
-                      href={`/detail/${item.maKhoaHoc}`}
+                      href={`/detail/${
+                        item.maKhoaHoc
+                      }?tenKhoaHoc=${encodeURIComponent(item.tenKhoaHoc)}`}
                     >
-                      xem chi tiết
+                      Xem chi tiết
                     </Link>
                   </div>
-                  <div className="cardSale">
-                    <span>Yêu thích</span>
-                  </div>
-                  <Link
-                    href={`/detail/${item.maKhoaHoc}`}
-                    className="viewDetail"
-                  >
-                    Xem chi tiết
-                    <i className="fas fa-chevron-right"></i>{" "}
-                  </Link>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
       <Modal

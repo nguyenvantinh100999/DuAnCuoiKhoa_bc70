@@ -145,10 +145,10 @@ const page = () => {
       formEditProfile.setValues({
         taiKhoan: profile.taiKhoan,
         matKhau: "",
-        hoTen: "",
-        soDT: "",
+        hoTen: profile.hoTen,
+        soDT: profile.soDT,
         maNhom: profile.maNhom,
-        email: "",
+        email: profile.email,
         maLoaiNguoiDung: profile.maLoaiNguoiDung,
       });
     }
@@ -202,25 +202,25 @@ const page = () => {
                             Email: <span className="ml-2">{profile.email}</span>
                           </p>
                           <p>
-                            Họ và tên:
+                            Họ và tên:{" "}
                             <span className="ml-2">{profile.hoTen}</span>
                           </p>
                           <p>
-                            Số điện thoại:
+                            Số điện thoại:{" "}
                             <span className="ml-2">{profile.soDT}</span>
                           </p>
                         </div>
                       </div>
                       <div className="col-md-5">
                         <p>
-                          Tài khoản:
+                          Tài khoản:{" "}
                           <span className="ml-2">{profile.taiKhoan}</span>
                         </p>
                         <p>
                           Nhóm: <span className="ml-2">{profile.maNhom}</span>
                         </p>
                         <p>
-                          Đối tượng:
+                          Đối tượng:{" "}
                           <span className="ml-2">
                             {profile.maLoaiNguoiDung}
                           </span>
@@ -404,7 +404,13 @@ const page = () => {
                             </div>
                           </div>
                           <div className="col-xl-2 col-lg-2 cancelNet">
-                            <Link href={`/detail/${item.maKhoaHoc}`}>
+                            <Link
+                              href={`/detail/${
+                                item.maKhoaHoc
+                              }?tenKhoaHoc=${encodeURIComponent(
+                                item.tenKhoaHoc
+                              )}`}
+                            >
                               Xem chi tiết
                               <i className="fas fa-chevron-right"></i>
                             </Link>
@@ -519,7 +525,6 @@ const page = () => {
                   variant="secondary"
                   onClick={() => {
                     setShowModal(false);
-                    formEditProfile.resetForm();
                   }}
                 >
                   Đóng

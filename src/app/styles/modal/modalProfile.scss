@@ -9,11 +9,13 @@ body.modal-open {
   z-index: 1050 !important;
 }
 .modal-content {
-  background: linear-gradient(250deg, $primary-200, $primary-300, $primary-500);
+  background: $primary-100;
+  // background: linear-gradient(250deg, $primary-200, $primary-300, $primary-500);
   border-radius: 10px; // Bo góc modal
 
   .modal-header {
-    color: white; // Màu chữ trong header
+    color: $text-color;
+    // color: white; // Màu chữ trong header
     button {
       :hover {
         color: $text-color;
@@ -28,7 +30,7 @@ body.modal-open {
     justify-content: center;
     align-items: center;
     h2 {
-      @include mText($text-3xl, $fw-semi, $text-color-light);
+      @include mText($text-3xl, $fw-semi, $text-color);
       text-align: center;
     }
     .input-box {
@@ -39,11 +41,11 @@ body.modal-open {
         width: 100%;
         height: 50px;
         background: transparent;
-        border: 2px solid $primary-100;
+        border: 2px solid $text-color-card;
         outline: none;
         border-radius: 40px;
         font-size: $text-base;
-        color: $text-color-light;
+        color: $text-color;
         padding: 0 20px 0 50px;
         transition: all 0.5s ease-in-out;
         &::placeholder {
@@ -55,6 +57,8 @@ body.modal-open {
         &:focus + label,
         &:valid + label {
           top: -10px;
+
+          font-weight: 600;
         }
       }
 
@@ -63,13 +67,13 @@ body.modal-open {
         top: 50%;
         left: 50px;
         transform: translateY(-50%);
-        transition: 0.5s;
-        color: $primary-100;
+        transition: all 0.5s;
+        color: $text-color;
       }
       .icon {
         position: absolute;
         left: 15px;
-        color: $primary-100;
+        color: $text-color;
         font-size: 1.2em;
         line-height: 50px;
       }
@@ -77,47 +81,47 @@ body.modal-open {
         width: 100%;
         height: 50px;
         background: transparent;
-        border: 2px solid $primary-100;
+        border: 2px solid $dark;
         outline: none;
         border-radius: 40px;
         font-size: $text-base;
-        color: $text-color-light;
+        color: $text-color;
         padding: 0 20px 0 40px;
         option {
           background: transparent;
           color: $text-color;
         }
       }
-      .modal-footer {
-        background-color: $primary-100;
-        button {
-          @include mButton(
-            $text-base,
-            $fw-semi,
-            $primary-300,
-            10px,
-            1px solid $primary-300,
-            $primary-100,
-            $primary-300,
-            $text-color-light
-          );
-        }
-      }
+      // .modal-footer {
+      //   background-color: $primary-100;
+      //   button {
+      //     @include mButton(
+      //       $text-base,
+      //       $fw-semi,
+      //       $primary-300,
+      //       10px,
+      //       1px solid $primary-300,
+      //       $primary-100,
+      //       $primary-300,
+      //       $text-color-light
+      //     );
+      //   }
+      // }
     }
   }
-  .modal-footer {
-    button {
-      @include mButton(
-        $text-base,
-        $fw-semi,
-        $text-color-light,
-        10px,
-        2px solid $primary-100,
-        $primary-300,
-        $primary-100,
-        $text-color
-      );
-      @extend .me-1;
-    }
-  }
+  // .modal-footer {
+  //   button {
+  //     @include mButton(
+  //       $text-base,
+  //       $fw-semi,
+  //       $text-color-light,
+  //       10px,
+  //       2px solid $primary-100,
+  //       $primary-300,
+  //       $primary-100,
+  //       $text-color
+  //     );
+  //     @extend .me-1;
+  //   }
+  // }
 }

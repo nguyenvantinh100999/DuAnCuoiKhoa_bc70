@@ -471,3 +471,390 @@
               </div>
             </form> */
 }
+// ------------------modal useradmin---------------------------
+{
+  /* <Modal
+        className="modalProfile"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Chỉnh sửa thông tin cá nhân</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form
+            className="formEditProdile"
+            onSubmit={formEditProfile.handleSubmit}
+          >
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="taiKhoan"
+                id="taiKhoan"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.taiKhoan || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="taiKhoan">Tài khoản</label>
+            </div>
+            {formEditProfile.touched.taiKhoan && (
+              <p className="text-danger ">{formEditProfile.errors.taiKhoan}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="hoTen"
+                id="hoTen"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.hoTen || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="hoTen">Họ Tên</label>
+            </div>
+            {formEditProfile.touched.hoTen && (
+              <p className="text-danger ">{formEditProfile.errors.hoTen}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-lock"></i>
+              </span>
+              <input
+                required
+                type="password"
+                name="matKhau"
+                id="matKhau"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.matKhau || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="matKhau">Mật khẩu</label>
+            </div>
+            {formEditProfile.touched.matKhau && (
+              <p className="text-danger ">{formEditProfile.errors.matKhau}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-envelope"></i>
+              </span>
+              <input
+                required
+                type="email"
+                name="email"
+                id="email"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.email || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="email">Email</label>
+            </div>
+            {formEditProfile.touched.email && (
+              <p className="text-danger ">{formEditProfile.errors.email}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-phone"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="soDT"
+                id="soDT"
+                onChange={formEditProfile.handleChange}
+                value={formEditProfile.values.soDT || ""}
+                onBlur={formEditProfile.handleBlur}
+              />
+              <label htmlFor="soDT">Số Điện Thoại</label>
+            </div>
+            {formEditProfile.touched.soDT && (
+              <p className="text-danger ">{formEditProfile.errors.soDT}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <select
+                name="maLoaiNguoiDung"
+                id="maLoaiNguoiDung"
+                value={formEditProfile.values.maLoaiNguoiDung || ""}
+                onChange={formEditProfile.handleChange}
+              >
+                <option value="GV">Giáo vụ</option>
+                <option value="HV">Học viên</option>
+              </select>
+            </div>
+            <Modal.Footer>
+              <button type="submit" className="btn btn-primary">
+                Lưu thông tin
+              </button>
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                Đóng
+              </button>
+            </Modal.Footer>
+          </form>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        className="modalProfile"
+        show={showModalAdd}
+        onHide={() => setShowModalAdd(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Thêm người dùng</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="formAddUser" onSubmit={formAddUser.handleSubmit}>
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="taiKhoan"
+                id="taiKhoan"
+                onChange={formAddUser.handleChange}
+                value={formAddUser.values.taiKhoan || ""}
+                onBlur={formAddUser.handleBlur}
+              />
+              <label htmlFor="taiKhoan">Tài khoản</label>
+            </div>
+            {formAddUser.touched.taiKhoan && (
+              <p className="text-danger ">{formAddUser.errors.taiKhoan}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="hoTen"
+                id="hoTen"
+                onChange={formAddUser.handleChange}
+                value={formAddUser.values.hoTen || ""}
+                onBlur={formAddUser.handleBlur}
+              />
+              <label htmlFor="hoTen">Họ Tên</label>
+            </div>
+            {formAddUser.touched.hoTen && (
+              <p className="text-danger ">{formAddUser.errors.hoTen}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-lock"></i>
+              </span>
+              <input
+                required
+                type="password"
+                name="matKhau"
+                id="matKhau"
+                onChange={formAddUser.handleChange}
+                value={formAddUser.values.matKhau || ""}
+                onBlur={formAddUser.handleBlur}
+              />
+              <label htmlFor="matKhau">Mật khẩu</label>
+            </div>
+            {formAddUser.touched.matKhau && (
+              <p className="text-danger ">{formAddUser.errors.matKhau}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-envelope"></i>
+              </span>
+              <input
+                required
+                type="email"
+                name="email"
+                id="email"
+                onChange={formAddUser.handleChange}
+                value={formAddUser.values.email || ""}
+                onBlur={formAddUser.handleBlur}
+              />
+              <label htmlFor="email">Email</label>
+            </div>
+            {formAddUser.touched.email && (
+              <p className="text-danger ">{formAddUser.errors.email}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-phone"></i>
+              </span>
+              <input
+                required
+                type="text"
+                name="soDT"
+                id="soDT"
+                onChange={formAddUser.handleChange}
+                value={formAddUser.values.soDT || ""}
+                onBlur={formAddUser.handleBlur}
+              />
+              <label htmlFor="soDT">Số Điện Thoại</label>
+            </div>
+            {formAddUser.touched.soDT && (
+              <p className="text-danger ">{formAddUser.errors.soDT}</p>
+            )}
+            <div className="input-box">
+              <span className="icon">
+                <i className="fa fa-user-edit"></i>
+              </span>
+              <select
+                name="maLoaiNguoiDung"
+                id="maLoaiNguoiDung"
+                value={formAddUser.values.maLoaiNguoiDung || ""}
+                onChange={formAddUser.handleChange}
+              >
+                <option>Loại người dùng</option>
+                <option value="GV">Giáo vụ</option>
+                <option value="HV">Học viên</option>
+              </select>
+            </div>
+            <Modal.Footer>
+              <button type="submit" className="btn btn-primary">
+                Thêm người dùng
+              </button>
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  setShowModalAdd(false);
+                }}
+              >
+                Đóng
+              </button>
+            </Modal.Footer>
+          </form>
+        </Modal.Body>
+      </Modal> */
+}
+
+// //-----------cập nhật thông tin người dùng-------------------
+// const formEditProfile = useFormik({
+//   initialValues: {
+//     taiKhoan: "",
+//     matKhau: "",
+//     hoTen: "",
+//     soDT: "",
+//     maLoaiNguoiDung: "",
+//     maNhom: "GP01",
+//     email: "",
+//   },
+//   validationSchema: Yup.object().shape({
+//     taiKhoan: Yup.string().required("Tài khoản không được bỏ trống"),
+//     hoTen: Yup.string().required("Họ tên không được bỏ trống"),
+//     matKhau: Yup.string()
+//       .required("Mật khẩu không được bỏ trống")
+//       .min(8, "ít nhất 8 ký tự"),
+//     email: Yup.string()
+//       .required("email không được bỏ trống")
+//       .email("email không hợp lệ !(VD:admin@gmail.com)"),
+//     soDT: Yup.string()
+//       .required("phone không được bỏ trống")
+//       .matches(
+//         /^(0[1-9]{1}[0-9]{8}|(84|0)(9[0-9]|8[1-9]|7[0-9]|6[2-9]|5[0-9]|4[0-9]|3[2-9]|2[0-9]|1[0-9])[0-9]{7})$/,
+//         "phone không hợp lệ (VD: 0909090909)"
+//       ),
+//   }),
+
+//   onSubmit: async (values, { resetForm }) => {
+//     try {
+//       const res = await axios(
+//         "https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+//         {
+//           method: "PUT",
+//           headers: headers,
+//           data: values,
+//         }
+//       );
+//       showSuccessNotification("Cập nhật thành công");
+//       getListUser();
+//       resetForm();
+//     } catch (error) {
+//       const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+//       showErrorNotification(errorMessage);
+//     }
+//   },
+// });
+// //-------Thêm người dùng người dùng----------------
+// const formAddUser = useFormik({
+//   initialValues: {
+//     taiKhoan: "",
+//     matKhau: "",
+//     hoTen: "",
+//     soDT: "",
+//     maLoaiNguoiDung: "",
+//     maNhom: "GP01",
+//     email: "",
+//   },
+//   validationSchema: Yup.object().shape({
+//     taiKhoan: Yup.string().required("Tài khoản không được bỏ trống"),
+//     hoTen: Yup.string().required("Họ tên không được bỏ trống"),
+//     matKhau: Yup.string()
+//       .required("Mật khẩu không được bỏ trống")
+//       .min(8, "ít nhất 8 ký tự"),
+//     email: Yup.string()
+//       .required("email không được bỏ trống")
+//       .email("email không hợp lệ !"),
+//     soDT: Yup.string()
+//       .required("phone không được bỏ trống")
+//       .matches(
+//         /^(0[1-9]{1}[0-9]{8}|(84|0)(9[0-9]|8[1-9]|7[0-9]|6[2-9]|5[0-9]|4[0-9]|3[2-9]|2[0-9]|1[0-9])[0-9]{7})$/,
+//         "phone không hợp lệ (VD: 0909090909)"
+//       ),
+//     maLoaiNguoiDung: Yup.string().required("Vui lòng chọn loại người dùng"),
+//   }),
+
+//   onSubmit: async (values, { resetForm }) => {
+//     try {
+//       const res = await axios(
+//         "https://elearningnew.cybersoft.edu.vn/api/QuanLyNguoiDung/ThemNguoiDung",
+//         {
+//           method: "POST",
+//           headers: headers,
+//           data: values,
+//         }
+//       );
+//       showSuccessNotification("Thêm thành công");
+
+//       getListUser();
+//       resetForm();
+//     } catch (error) {
+//       const errorMessage = error.response?.data || "Đã xảy ra lỗi";
+//       showErrorNotification(errorMessage);
+//     }
+//   },
+// });
+// const handleEdit = (record) => {
+//   formEditProfile.setValues({
+//     taiKhoan: record.taiKhoan || "", // Đảm bảo không phải là undefined
+//     hoTen: record.hoTen || "",
+//     soDT: record.soDt || "",
+//     email: record.email || "",
+//     maLoaiNguoiDung: record.maLoaiNguoiDung || "",
+//     maNhom: record.maNhom || "GP01",
+//   });
+//   setShowModal(true);
+// };
+// const handleEditAmin = () => {
+//   formEditProfile.setValues({
+//     taiKhoan: user?.taiKhoan || "", // Đảm bảo không phải là undefined
+//     hoTen: user?.hoTen || "",
+//     soDT: user?.soDt || "",
+//     email: user?.email || "",
+//     maLoaiNguoiDung: user?.maLoaiNguoiDung || "",
+//     maNhom: user?.maNhom || "GP01",
+//   });
+//   setShowModalAdd(true);
+//   setButtonEdit(true);
+// };

@@ -106,7 +106,7 @@ const HeaderHome = () => {
                 <SearchForm />
               </li>
               <li className="courseCateMobie">
-                <Link href="/trangchu">Danh mục</Link>
+                <Link href="#">Danh mục</Link>
                 <ul className="courseCateListMobie">
                   {category?.map((item) => {
                     return (

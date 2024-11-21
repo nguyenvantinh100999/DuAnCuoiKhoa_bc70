@@ -1,15 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { TOKEN } from "../utils/setting";
+import { TOKEN, USER_LOGIN } from "../utils/setting";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const IconProfile = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState(null);
   const router = useRouter();
   useEffect(() => {
-    const token = localStorage.getItem(TOKEN);
-    if (token) {
+    const user = localStorage.getItem(USER_LOGIN);
+    if (user) {
+      setUser(JSON.parse(user));
       setIsLogin(true);
     }
     renderIconProfile();
@@ -21,13 +23,23 @@ const IconProfile = () => {
     window.location.reload();
   };
   const renderIconProfile = () => {
-    if (!!isLogin) {
+    if (user) {
       return (
         <div className="headerAvatar">
           <div className="infoHeader">
+            <span className="logoADmin">
+              {user.maLoaiNguoiDung === "GV" ? (
+                <Link href={"/admin/userManagement"}>
+                  <i className="fas fa-cog" />
+                </Link>
+              ) : (
+                ""
+              )}
+            </span>
             <Link href={"/profile"}>
               <img src="/img/unnamed.jpg" className="avatar" alt="logo" />
             </Link>
+
             <span className="logout">
               <Link
                 href="/"

@@ -73,16 +73,39 @@ const CoursesPage = async ({ searchParams }) => {
                 className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
               >
                 <div className="cardGlobal" href="/chitiet/111111111111">
-                  <Image
-                    width={250}
-                    height={250}
-                    crossOrigin="anonymous"
-                    quality={100}
-                    className=""
-                    src={item.hinhAnh}
-                    alt="..."
-                    style={{ width: "auto" }}
-                  />
+                  <div className="imgBx">
+                    <Image
+                      width={250}
+                      height={250}
+                      crossOrigin="anonymous"
+                      quality={100}
+                      className=""
+                      src={item.hinhAnh}
+                      alt="..."
+                      // style={{ width: "auto" }}
+                    />
+                    <ul key={item.maKhoaHoc}>
+                      <li>
+                        <i className="fa fa-heart" />
+                        <span>Thêm vào yêu thích</span>
+                      </li>
+                      <li>
+                        <i className="fa fa-cart-plus" />
+                        <span>Mua khóa học</span>
+                      </li>
+                      <li>
+                        <Link
+                          href={`/detail/${
+                            item.maKhoaHoc
+                          }?tenKhoaHoc=${encodeURIComponent(item.tenKhoaHoc)}`}
+                        >
+                          <i className="fa fa-eye" />
+                          <span>Xem chi tiết</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+
                   <span className="stikerCard">
                     {item.tenKhoaHoc.length > 30
                       ? item.tenKhoaHoc.substring(0, 30) + "..."
@@ -123,41 +146,6 @@ const CoursesPage = async ({ searchParams }) => {
                         <i className="fas fa-tag iconTag" />
                       </p>
                     </div>
-                  </div>
-                  <div className="subCard">
-                    <div className="subCardHead">
-                      <img src="/img/emoji.6d1b7051.png" alt="..." />
-                      <span className="ml-1 colorCardTitle">
-                        Elun Musk Ricard
-                      </span>
-                    </div>
-                    <h6>BOOTCAMP - LẬP TRÌNH FULL STACK TỪ ZERO ĐẾN CÓ VIỆC</h6>
-                    <p className="colorCardTitle">
-                      Đã có hơn 6200 bạn đăng kí học và có việc làm thông qua
-                      chương trình đào tạo Bootcamp Lập trình Front End chuyên
-                      nghiệp. Khóa học 100% thực hành cường độ cao theo dự án
-                      thực tế và kết nối doanh nghiệp hỗ trợ tìm việc ngay sau
-                      khi học...
-                    </p>
-                    <div className="cardIcon">
-                      <span>
-                        <i className="far fa-clock iconOclock" />8 giờ
-                      </span>
-                      <span>
-                        <i className="far fa-calendar-alt iconCalendar" />4 tuần
-                      </span>
-                      <span>
-                        <i className="fas fa-signal iconLevel" />
-                        Tất cả
-                      </span>
-                    </div>
-
-                    <Link
-                      className="btnGlobal btnSubCard"
-                      href={`/detail/${item.maKhoaHoc}`}
-                    >
-                      xem chi tiết
-                    </Link>
                   </div>
                   <div className="cardSale">
                     <span>Yêu thích</span>

@@ -41,273 +41,524 @@
         .cardGlobalRes {
           display: flex;
           justify-content: center;
-          .cardGlobal {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.5s;
-            width: 280px;
-            min-width: 280px;
-            min-height: 370px;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.125);
-            box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
-            &:hover a {
-              //   color: $text-color;
-              //   text-decoration: none;
+          align-items: center;
+          // .cardGlobal {
+          //   position: relative;
+          //   display: flex;
+          //   flex-direction: column;
+          //   transition: all 0.5s;
+          //   width: 280px;
+          //   min-width: 280px;
+          //   min-height: 370px;
+          //   word-wrap: break-word;
+          //   background-color: #fff;
+          //   background-clip: border-box;
+          //   border: 1px solid rgba(0, 0, 0, 0.125);
+          //   box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.2);
+          //   &:hover a {
+          //     //   color: $text-color;
+          //     //   text-decoration: none;
+          //   }
+          //   &:hover .subCard {
+          //     visibility: visible;
+          //     opacity: 1;
+          //   }
+          //   img {
+          //     //   height: auto;
+          //     width: 100%;
+          //     height: 250px;
+          //   }
+          //   .stikerCard {
+          //     display: inline-block;
+          //     position: absolute;
+          //     z-index: 10;
+          //     top: 55%;
+          //     padding: 0 10px;
+          //     color: $primary-100;
+          //     background-color: $primary-300;
+          //   }
+          //   .cardBodyGlobal {
+          //     flex: 1 1 auto;
+          //     min-height: 1px;
+          //     padding: 20px;
+          //     margin-top: 10px;
+          //     h6 {
+          //       padding: 0 0 10px;
+          //       font-size: 16px;
+          //       color: $text-color;
+          //     }
+          //     .cardIcon {
+          //       display: flex;
+          //       justify-content: space-between;
+          //       align-items: center;
+          //       span {
+          //         color: $text-color-card;
+          //         i {
+          //           margin-right: 8px;
+          //         }
+          //         .iconOclock {
+          //           color: $primary-200;
+          //         }
+          //         .iconCalendar {
+          //           color: $primary-500;
+          //         }
+          //         .iconLevel {
+          //           color: #65c9ff;
+          //         }
+          //       }
+          //     }
+          //   }
+          //   .cardFooter {
+          //     display: flex;
+          //     justify-content: space-between;
+          //     align-items: center;
+          //     padding: 5px 20px;
+          //     border-top: 1px solid rgba(0, 0, 0, 0.125);
+          //     .titleMaker {
+          //       display: flex;
+          //       align-items: center;
+          //       .imgCardFooter {
+          //         height: 40px;
+          //         width: 40px;
+          //         padding: 2px;
+          //         border-color: $primary-200 transparent;
+          //         border-left: 1px solid transparent;
+          //         border-bottom: 1px solid $primary-200;
+          //         border-right: 1px solid transparent;
+          //         border-top: 1px solid $primary-200;
+          //         border-radius: 50%;
+          //         img {
+          //           width: 100%;
+          //           height: auto;
+          //         }
+          //       }
+          //       .colorCardTitle {
+          //         color: $text-color-card;
+          //       }
+          //     }
+          //     p {
+          //       margin-bottom: 0;
+          //       sup {
+          //         top: -0.5em;
+          //       }
+
+          //       sub,
+          //       sup {
+          //         position: relative;
+          //         font-size: 75%;
+          //         line-height: 0;
+          //         vertical-align: baseline;
+          //       }
+          //     }
+          //     p:first-of-type {
+          //       -webkit-text-decoration-line: line-through;
+          //       text-decoration-line: line-through;
+          //       @include mText($text-small, $fw-normal, $text-color-card);
+          //     }
+          //     p:nth-of-type(2) {
+          //       font-weight: 500;
+          //       color: $primary-300;
+          //       .iconTag {
+          //         font-size: 18px;
+          //         color: red;
+          //         margin-left: 4px;
+          //       }
+          //     }
+          //   }
+          //   .cardSale {
+          //     position: absolute;
+          //     top: 5px;
+          //     left: -5px;
+          //     width: 90px;
+          //     height: 30px;
+          //     padding: 5px 8px 4px;
+          //     color: $primary-100;
+          //     background-color: red;
+          //     font-weight: 600;
+          //     font-size: 13px;
+          //     text-transform: uppercase;
+          //     &::after {
+          //       content: "";
+          //       position: absolute;
+          //       width: 0;
+          //       height: 0;
+          //       top: 0;
+          //       right: -12px;
+          //       border-color: red transparent;
+          //       border-style: solid;
+          //       border-width: 15px 12px 15px 0;
+          //     }
+          //     &::before {
+          //       content: "";
+          //       position: absolute;
+          //       width: 0;
+          //       height: 0;
+          //       left: 0;
+          //       bottom: -10px;
+          //       border-bottom: 10px solid transparent;
+          //       border-right: 5px solid red;
+          //       -webkit-filter: brightness(0.8);
+          //       filter: brightness(0.8);
+          //     }
+          //   }
+          //   .subCard {
+          //     position: absolute;
+          //     visibility: hidden;
+          //     opacity: 0;
+          //     z-index: 99;
+          //     top: 5%;
+          //     right: -132%;
+          //     padding: 20px;
+          //     display: flex;
+          //     flex-direction: column;
+          //     transition: all 0.5s;
+          //     width: 350px;
+          //     min-width: 280px;
+          //     word-wrap: break-word;
+          //     background-color: #fff;
+          //     background-clip: border-box;
+          //     border: 1px solid rgba(0, 0, 0, 0.125);
+          //     box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+          //     @media (max-width: 1024px) {
+          //       display: none;
+          //     }
+          //     &::before {
+          //       content: "";
+          //       position: absolute;
+          //       top: 50%;
+          //       left: -15px;
+          //       width: 0;
+          //       height: 0;
+          //       border-top: 15px solid transparent;
+          //       border-bottom: 15px solid transparent;
+          //       border-right: 15px solid $primary-100;
+          //     }
+          //     .subCardHead,
+          //     h6,
+          //     p,
+          //     .cardIcon {
+          //       padding: 10px 0;
+          //       margin-bottom: 0;
+          //     }
+          //     .subCardHead {
+          //       img {
+          //         width: 50px;
+          //         height: 50px;
+          //         border-radius: 50%;
+          //         object-fit: cover;
+          //       }
+          //       .colorCardTitle {
+          //         color: $text-color-card;
+          //       }
+          //     }
+          //     h6 {
+          //       color: $text-color;
+          //     }
+          //     .colorCardTitle {
+          //       color: $text-color-card;
+          //     }
+          //     .cardIcon,
+          //     .coursesBotHome {
+          //       display: flex;
+          //       justify-content: space-between;
+          //       align-items: center;
+          //       span {
+          //         color: $text-color-card;
+          //         i {
+          //           margin-right: 8px;
+          //         }
+          //         .iconOclock {
+          //           color: #f5c002;
+          //         }
+          //         .iconCalendar {
+          //           color: #f06f68;
+          //         }
+          //         .iconLevel {
+          //           color: #65c9ff;
+          //         }
+          //       }
+          //     }
+          //     .btnGlobal {
+          //       @include mButton(
+          //         $text-base,
+          //         $fw-semi,
+          //         $text-color,
+          //         15px,
+          //         1px solid $primary-300,
+          //         $primary-300,
+          //         $primary-300,
+          //         $text-color-light
+          //       );
+          //       text-align: center;
+          //     }
+          //   }
+
+          //   .viewDetail {
+          //     color: $text-color-card;
+          //     text-align: end;
+          //     display: none;
+          //     transition: all 0.5s;
+          //     @extend .pe-1;
+          //     @extend .mb-1;
+          //     @media (max-width: 1024px) {
+          //       display: block;
+          //     }
+          //     &:hover {
+          //       color: $primary-200;
+          //       text-decoration: underline !important;
+          //     }
+          //     i {
+          //       @extend .ms-1;
+          //     }
+          //   }
+          // }
+          // .card {
+          //   position: relative;
+          //   width: 300px;
+          //   height: 400px;
+          //   &:hover .face.face1 {
+          //     transition-property: transform, z-index, left;
+          //     transition-delay: 0s, 0.5s, 0.5s;
+          //     transition-duration: 0.5s, 0s, 0.5s;
+          //     transform: translate(170px, -10px);
+          //     z-index: 1;
+          //     left: -160px;
+          //   }
+          //   &:hover .face.face2 {
+          //     transition-property: transform, z-index, left;
+          //     transition-delay: 0s, 0.5s, 0.5s;
+          //     transition-duration: 0.5s, 0s, 0.5s;
+          //     transform: translateX(-160px);
+          //     z-index: 2;
+          //     left: 160px;
+          //   }
+          //   .face {
+          //     position: absolute;
+          //     width: 100%;
+          //     height: 100%;
+          //     background: $primary-300;
+          //     display: flex;
+          //     justify-content: center;
+          //     align-items: center;
+          //   }
+          //   .face1 {
+          //     top: 0;
+          //     left: 0;
+          //     transition-property: left, z-index, transform;
+          //     transition-delay: 0s, 0.5s, 0.5s;
+          //     transition-duration: 0.5s, 0s, 0.5s;
+          //     z-index: 2;
+          //     transform: translate(-10px, -10px);
+          //     img {
+          //       max-width: 100%;
+          //     }
+          //   }
+          //   .face2 {
+          //     background: $primary-200;
+          //     transition-property: left, z-index, transform;
+          //     transition-delay: 0s, 0.5s, 0.5s;
+          //     transition-duration: 0.5s, 0s, 0.5s;
+          //     top: 0;
+          //     left: 0;
+          //     z-index: 1;
+
+          //     overflow: hidden;
+          //     .content {
+          //       padding: 20px;
+          //       h2 {
+          //         margin: 0;
+          //         padding: 0;
+          //         color: #fff;
+          //       }
+          //       p {
+          //         margin: 10px 0 0;
+          //         padding: 0;
+          //         color: #fff;
+          //       }
+          //     }
+          //   }
+          // }
+          // .box {
+          //   position: relative;
+          //   width: 300px;
+          //   height: 400px;
+          //   background: transparent;
+          //   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.5);
+          //   &:hover .imgBx img {
+          //     opacity: 0;
+          //   }
+          //   &:hover .contents {
+          //     width: 100%;
+          //     height: 100%;
+          //     bottom: 0;
+          //     left: 0;
+          //     p {
+          //       opacity: 1;
+          //       transition-delay: 0.5s;
+          //     }
+          //   }
+          //   .imgBx {
+          //     position: absolute;
+          //     top: 0;
+          //     left: 0;
+          //     width: 100%;
+          //     height: 100%;
+          //     object-fit: cover;
+          //     transition: 0.5s;
+          //     img {
+          //       width: 100%;
+          //       height: 100%;
+          //       position: absolute;
+          //       top: 0;
+          //       left: 0;
+          //       object-fit: cover;
+          //       transition: 0.5s;
+          //     }
+          //   }
+          //   .contents {
+          //     position: absolute;
+          //     bottom: 20px;
+          //     left: 10%;
+          //     width: 80%;
+          //     height: 60px;
+          //     background: $primary-300;
+          //     color: $text-color-light;
+          //     transition: 0.5s;
+          //     overflow: hidden;
+          //     padding: 15px;
+          //     h3 {
+          //       margin: 0;
+          //       padding: 0;
+          //       font-size: $text-2xl;
+          //     }
+          //     p {
+          //       margin: 10px 0 0;
+          //       padding: 0;
+          //       opacity: 0;
+          //       line-height: 1.2em;
+          //       transition: 0.5s;
+          //       text-align: justify;
+          //     }
+          //   }
+          // }
+          .card {
+            width: 100%;
+            background: #fff;
+            &:hover .imgBx {
+              img {
+                transform: scale(1.5);
+              }
+              ul {
+                li {
+                  transform: translateX(0px);
+                }
+              }
             }
-            &:hover .subCard {
-              visibility: visible;
-              opacity: 1;
-            }
-            img {
-              //   height: auto;
+            .imgBx {
+              position: relative;
               width: 100%;
-              height: 250px;
-            }
-            .stikerCard {
-              display: inline-block;
-              position: absolute;
-              z-index: 10;
-              top: 55%;
-              padding: 0 10px;
-              color: $primary-100;
-              background-color: $primary-300;
-            }
-            .cardBodyGlobal {
-              flex: 1 1 auto;
-              min-height: 1px;
-              padding: 20px;
-              margin-top: 10px;
-              h6 {
-                padding: 0 0 10px;
-                font-size: 16px;
-                color: $text-color;
-              }
-              .cardIcon {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                span {
-                  color: $text-color-card;
-                  i {
-                    margin-right: 8px;
-                  }
-                  .iconOclock {
-                    color: $primary-200;
-                  }
-                  .iconCalendar {
-                    color: $primary-500;
-                  }
-                  .iconLevel {
-                    color: #65c9ff;
-                  }
-                }
-              }
-            }
-            .cardFooter {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding: 5px 20px;
-              border-top: 1px solid rgba(0, 0, 0, 0.125);
-              .titleMaker {
-                display: flex;
-                align-items: center;
-                .imgCardFooter {
-                  height: 40px;
-                  width: 40px;
-                  padding: 2px;
-                  border-color: $primary-200 transparent;
-                  border-left: 1px solid transparent;
-                  border-bottom: 1px solid $primary-200;
-                  border-right: 1px solid transparent;
-                  border-top: 1px solid $primary-200;
-                  border-radius: 50%;
-                  img {
-                    width: 100%;
-                    height: auto;
-                  }
-                }
-                .colorCardTitle {
-                  color: $text-color-card;
-                }
-              }
-              p {
-                margin-bottom: 0;
-                sup {
-                  top: -0.5em;
-                }
-
-                sub,
-                sup {
-                  position: relative;
-                  font-size: 75%;
-                  line-height: 0;
-                  vertical-align: baseline;
-                }
-              }
-              p:first-of-type {
-                -webkit-text-decoration-line: line-through;
-                text-decoration-line: line-through;
-                @include mText($text-small, $fw-normal, $text-color-card);
-              }
-              p:nth-of-type(2) {
-                font-weight: 500;
-                color: $primary-300;
-                .iconTag {
-                  font-size: 18px;
-                  color: red;
-                  margin-left: 4px;
-                }
-              }
-            }
-            .cardSale {
-              position: absolute;
-              top: 5px;
-              left: -5px;
-              width: 90px;
-              height: 30px;
-              padding: 5px 8px 4px;
-              color: $primary-100;
-              background-color: red;
-              font-weight: 600;
-              font-size: 13px;
-              text-transform: uppercase;
-              &::after {
-                content: "";
+              height: 310px;
+              overflow: hidden;
+              img {
                 position: absolute;
-                width: 0;
-                height: 0;
                 top: 0;
-                right: -12px;
-                border-color: red transparent;
-                border-style: solid;
-                border-width: 15px 12px 15px 0;
-              }
-              &::before {
-                content: "";
-                position: absolute;
-                width: 0;
-                height: 0;
                 left: 0;
-                bottom: -10px;
-                border-bottom: 10px solid transparent;
-                border-right: 5px solid red;
-                -webkit-filter: brightness(0.8);
-                filter: brightness(0.8);
+                width: 100%;
+                height: 300px;
+                object-fit: cover;
+                transition: 0.5s ease-in-out;
+                transform-origin: right;
+              }
+              ul {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                li {
+                  position: relative;
+                  list-style: none;
+                  width: 40px;
+                  height: 40px;
+                  background-color: #fff;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin-bottom: 4px;
+                  cursor: pointer;
+                  transform: translateX(60px);
+                  transition: transform 0.5s;
+                  a {
+                    text-decoration: none;
+                    color: $text-color;
+                  }
+                  &:nth-child(2) {
+                    transition-delay: 0.15s;
+                  }
+                  &:nth-child(3) {
+                    transition-delay: 0.3s;
+                  }
+                  &:hover {
+                    background: red;
+                    color: $text-color-light;
+                    a {
+                      color: $text-color-light;
+                    }
+                    span {
+                      opacity: 1;
+                      transform: translateY(-50%) translateX(0);
+                    }
+                  }
+                  span {
+                    position: absolute;
+                    right: 50px;
+                    top: 50%;
+                    transform: translateY(-50%) translateX(-20px);
+                    white-space: nowrap;
+                    padding: 4px 6px;
+                    background: $primary-100;
+                    color: #333;
+                    font-weight: 500;
+                    font-size: 12px;
+                    border-radius: 4px;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: 0.5s;
+                    &::before {
+                      content: "";
+                      position: absolute;
+                      top: 50%;
+                      right: -4px;
+                      width: 8px;
+                      height: 8px;
+                      background: $primary-100;
+                      transform: translateY(-50%) rotate(45deg);
+                    }
+                  }
+                }
               }
             }
-            .subCard {
-              position: absolute;
-              visibility: hidden;
-              opacity: 0;
-              z-index: 99;
-              top: 5%;
-              right: -132%;
-              padding: 20px;
-              display: flex;
-              flex-direction: column;
-              transition: all 0.5s;
-              width: 350px;
-              min-width: 280px;
-              word-wrap: break-word;
-              background-color: #fff;
-              background-clip: border-box;
-              border: 1px solid rgba(0, 0, 0, 0.125);
-              box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
-              @media (max-width: 1024px) {
-                display: none;
-              }
-              &::before {
-                content: "";
-                position: absolute;
-                top: 50%;
-                left: -15px;
-                width: 0;
-                height: 0;
-                border-top: 15px solid transparent;
-                border-bottom: 15px solid transparent;
-                border-right: 15px solid $primary-100;
-              }
-              .subCardHead,
-              h6,
-              p,
-              .cardIcon {
-                padding: 10px 0;
-                margin-bottom: 0;
-              }
-              .subCardHead {
-                img {
-                  width: 50px;
-                  height: 50px;
-                  border-radius: 50%;
-                  object-fit: cover;
-                }
-                .colorCardTitle {
-                  color: $text-color-card;
+            .content {
+              padding: 10px;
+              .productName {
+                h3 {
+                  font-size: 18px;
+                  font-weight: 500;
+                  color: #111;
+                  margin: 5px 0;
                 }
               }
-              h6 {
-                color: $text-color;
-              }
-              .colorCardTitle {
-                color: $text-color-card;
-              }
-              .cardIcon,
-              .coursesBotHome {
+              .price_rating {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                span {
-                  color: $text-color-card;
-                  i {
-                    margin-right: 8px;
-                  }
-                  .iconOclock {
-                    color: #f5c002;
-                  }
-                  .iconCalendar {
-                    color: #f06f68;
-                  }
-                  .iconLevel {
-                    color: #65c9ff;
-                  }
+                h2 {
+                  font-size: $text-2xl;
+                  color: red;
+                  font-weight: 500;
                 }
-              }
-              .btnGlobal {
-                @include mButton(
-                  $text-base,
-                  $fw-semi,
-                  $text-color,
-                  15px,
-                  1px solid $primary-300,
-                  $primary-300,
-                  $primary-300,
-                  $text-color-light
-                );
-                text-align: center;
-              }
-            }
-
-            .viewDetail {
-              color: $text-color-card;
-              text-align: end;
-              display: none;
-              transition: all 0.5s;
-              @extend .pe-1;
-              @extend .mb-1;
-              @media (max-width: 1024px) {
-                display: block;
-              }
-              &:hover {
-                color: $primary-200;
-                text-decoration: underline !important;
-              }
-              i {
-                @extend .ms-1;
+                i {
+                  color: $primary-200;
+                  cursor: pointer;
+                }
               }
             }
           }
