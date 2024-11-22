@@ -7,6 +7,7 @@
     top: 50%;
     right: 0;
     transform: translateY(-50%);
+
     ul {
       margin: 0;
       padding: 0;
@@ -15,12 +16,17 @@
       li {
         margin-bottom: 2px;
         height: 40px;
+        // background: linear-gradient(
+        //   135deg,
+        //   #37b8ff,
+        //   #02548a,
+        //   #37b8ff
+        // ) !important;
         background: linear-gradient(
-          135deg,
-          #37b8ff,
-          #02548a,
-          #37b8ff
-        ) !important;
+          45deg,
+          hsla(201, 100%, 61%, 1) 0%,
+          hsla(207, 85%, 16%, 1) 100%
+        );
         transform: translateX(160px);
         transition: all 0.5s ease-in-out;
         cursor: pointer;
@@ -47,12 +53,17 @@
             color: $text-color-light;
             display: block;
             height: 40px;
+            // background: linear-gradient(
+            //   45deg,
+            //   #37b8ff,
+            //   #02548a,
+            //   #37b8ff
+            // ) !important;
             background: linear-gradient(
               45deg,
-              #37b8ff,
-              #02548a,
-              #37b8ff
-            ) !important;
+              hsla(201, 100%, 61%, 1) 0%,
+              hsla(207, 85%, 16%, 1) 100%
+            );
             cursor: pointer;
 
             i {
@@ -83,6 +94,9 @@
           }
         }
       }
+    }
+    @media (max-width: 1024px) {
+      top: 70%;
     }
   }
   .backToTop {

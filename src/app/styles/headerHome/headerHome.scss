@@ -115,7 +115,7 @@
             z-index: 999;
             max-height: 0;
             overflow: hidden;
-            background-color: rgba(1, 135, 126, 0.5);
+            background-color: rgba(105, 195, 255, 0.641);
             transition: all 0.5s linear;
             min-width: 250px;
             transition: all 0.5s;
@@ -206,7 +206,7 @@
           right: 0;
           -webkit-transform: translateX(calc(100% + 50px));
           transform: translateX(calc(100% + 50px));
-          background-color: rgba(1, 135, 126, 0.8);
+          background-color: rgba(56, 156, 222, 0.916);
           -webkit-animation: fadeInDown 0.5s ease-in;
           animation: fadeInDown 0.5s ease-in;
           transition: all 0.5s;
@@ -245,7 +245,7 @@
               z-index: 999;
               max-height: 0;
               overflow: hidden;
-              background-color: rgba(1, 135, 126, 0.9);
+              background-color: rgba(56, 156, 222, 0.916);
               transition: all 0.5s linear;
               min-width: 200px;
               transition: all 0.5s;

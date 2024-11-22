@@ -41,6 +41,10 @@
           width: 512px;
           height: 512px;
           // z-index: 1002;
+          @media (max-width: 1024px) {
+            width: 256px;
+            height: 256px;
+          }
           img {
             position: absolute;
             top: 0;
@@ -138,6 +142,8 @@
         background: rgba(255, 255, 255, 0.1);
         padding: 5px;
         border: 2px solid rgba(255, 255, 255, 0.25);
+
+        overflow: hidden;
         &::before {
           content: attr(data-text);
           position: absolute;

@@ -32,7 +32,7 @@ const Home = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000, // Thời gian animation (ms)
-      once: false, // Chỉ chạy một lần khi cuộn vào
+      once: true, // Chỉ chạy một lần khi cuộn vào
     });
   }, []);
   useEffect(() => {
@@ -154,11 +154,15 @@ const Home = () => {
         <div className="bg" style={{ background: backgroundFruit }}></div>
         <div className="contentTest">
           <div className="textBox">
-            <h2>V-Learning</h2>
-            <p>{discription}</p>
-            <a href="#">Đọc thêm</a>
+            <h2 data-aos="fade-right">V-Learning</h2>
+            <p data-aos="fade-right" data-aos-delay="300">
+              {discription}
+            </p>
+            <a href="#" data-aos="fade-right" data-aos-delay="500">
+              Đọc thêm
+            </a>
           </div>
-          <div className="imgBox">
+          <div className="imgBox" data-aos="fade-left">
             <img src={imgFruit} alt="..." />
           </div>
         </div>
@@ -176,7 +180,12 @@ const Home = () => {
                   setDiscription(fruit.dicription);
                 }}
               >
-                <img src={fruit.image} alt={fruit.name} />
+                <img
+                  data-aos="fade-up"
+                  data-aos-offset="0"
+                  src={fruit.image}
+                  alt={fruit.name}
+                />
               </li>
             );
           })}
@@ -186,9 +195,11 @@ const Home = () => {
         <h1 data-aos="fade-up">Các khóa học bán chạy nhất của VLearning</h1>
         <div className="container">
           <div className="row">
-            {courseList.map((item) => {
+            {courseList.map((item, index) => {
               return (
                 <div
+                  data-aos="fade-down-right"
+                  data-aos-delay={index + "00"}
                   key={item.maKhoaHoc}
                   className="col-xl-3 col-lg-4 col-md-6 mt-4 cardGlobalRes"
                 >
@@ -483,7 +494,7 @@ const Home = () => {
       </div> */}
       <div className="learnMore">
         <div className="row">
-          <div className="col-lg-6 sloganRighT">
+          <div data-aos="zoom-in-right" className="col-lg-6 sloganRighT">
             <div className="sliderRight">
               <div></div>
               <div>
@@ -550,7 +561,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 viewLearn">
+          <div data-aos="zoom-in-left" className="col-lg-6 viewLearn">
             <div className="titleLearn">
               <h2>HỆ THỐNG HỌC TẬP TRỰC TUYẾN BỔ TRỢ</h2>
               <p>
@@ -799,11 +810,15 @@ const Home = () => {
             <div className="col-md-6">
               <div className="reviewImg">
                 <div className="bgStudentReview" />
-                <img src="/img/avatarReview.2f5a1f3c.png" alt="..." />
+                <img
+                  data-aos="fade-right"
+                  src="/img/avatarReview.2f5a1f3c.png"
+                  alt="..."
+                />
               </div>
             </div>
             <div className="col-md-6 quoteRight">
-              <blockquote className="textQoute">
+              <blockquote data-aos="fade-left" className="textQoute">
                 <q>
                   Chương trình giảng dạy được biên soạn dành riêng cho các bạn
                   Lập trình từ trái ngành hoặc đã có kiến thức theo cường độ
@@ -812,8 +827,12 @@ const Home = () => {
                   hay và hấp dẫn
                 </q>
               </blockquote>
-              <p>Tiva Dev</p>
-              <span>Học viên xuất sắc</span>
+              <p data-aos="fade-left" data-aos-delay="300">
+                Tiva Dev
+              </p>
+              <span data-aos="fade-left" data-aos-delay="500">
+                Học viên xuất sắc
+              </span>
             </div>
           </div>
         </div>

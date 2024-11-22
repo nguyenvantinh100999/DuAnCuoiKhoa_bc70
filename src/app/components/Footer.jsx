@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="footerBody">
         <div className="">
           <div className="row textCardTitle">
-            <div className="p-2 col-md-4 col-sm-6">
+            <div data-aos="fade-up" className="p-2 col-md-4 col-sm-6">
               <a href="#" className="mr-5 textLogo">
                 <span className="textE">V</span> learning{" "}
                 <i className="far fa-keyboard iconLogo" />
@@ -26,7 +26,11 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="p-2 col-md-2 col-sm-3 col-6">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="p-2 col-md-2 col-sm-3 col-6"
+            >
               <h3 className="textFooterTitle">Liên kết</h3>
               <ul className="menuFooter">
                 <li>
@@ -43,7 +47,11 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="p-2 col-md-2 col-sm-3 col-6">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="p-2 col-md-2 col-sm-3 col-6"
+            >
               <h3 className="textFooterTitle">Khóa học</h3>
               <ul className="menuFooter">
                 <li>
@@ -60,7 +68,11 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="p-2 col-md-4">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="500"
+              className="p-2 col-md-4"
+            >
               <h3 className="textFooterTitle">Đăng kí tư vấn</h3>
               <form>
                 <input
