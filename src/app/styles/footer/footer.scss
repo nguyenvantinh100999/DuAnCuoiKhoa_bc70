@@ -2,17 +2,18 @@
 @import "../variableIndex.scss";
 .footerPages {
   padding: 10px;
-  background-color: $primary-900;
+  // background-color: $primary-900;
+  background-color: #2c3238;
   .footerBody {
     padding: 10px 40px;
     .row {
       .p-2 {
         .textLogo {
-          @include mText($text-2xl, $fw-semi, $text-color);
+          @include mText($text-2xl, $fw-semi, $text-color-light);
           display: inline-block;
           position: relative;
           transition: all 0.3s;
-          text-shadow: 5px -2px 3px #54d2c0;
+          text-shadow: 5px -2px 3px #37b8ff;
           &:hover {
             transition: all 0.5s;
             -webkit-transform: scale(1.05);
@@ -20,7 +21,7 @@
           }
           .textE {
             font-size: 40px;
-            color: $primary-300;
+            color: #37b8ff;
           }
           .iconLogo {
             right: 5px;
@@ -34,14 +35,16 @@
             transition: all 0.5s;
             font-weight: $fw-semi;
             font-size: $text-base;
+            color: $text-color-card;
             &:hover {
               -webkit-transform: translateY(-2px);
               transform: translateY(-2px);
-              color: #01877e;
+              color: #37b8ff;
               cursor: pointer;
             }
             i {
               font-size: $text-small;
+              // color: $text-color-light;
             }
             .iconFooter {
               display: inline-block;
@@ -49,7 +52,7 @@
               width: 40px;
               height: 40px;
               color: #fff;
-              background: $primary-300;
+              background: #37b8ff;
               border-radius: 50%;
               line-height: 40px;
               text-align: center;
@@ -58,7 +61,8 @@
           }
         }
         .textFooterTitle {
-          @include mText($text-2xl, $fw-semi, $text-base);
+          text-transform: uppercase;
+          @include mText($text-2xl, $fw-normal, #37b8ff);
         }
         form {
           .formFooter {
@@ -85,9 +89,9 @@
             $fw-semi,
             $text-color-light,
             5px 10px,
-            1px solid $primary-200,
-            $primary-200,
-            $primary-200,
+            1px solid #37b8ff,
+            #37b8ff,
+            #37b8ff,
             $text-color-light
           );
         }
@@ -101,6 +105,7 @@
     border-top: 1px solid #d0d0d0;
     .textCardTitle {
       p {
+        color: $text-color-card;
       }
     }
     .divGlobal {
@@ -111,7 +116,7 @@
         margin: 0 5px;
         transition: all 0.3s linear;
         &:hover {
-          box-shadow: 1px 2px 2px 1px #636363;
+          box-shadow: 2px 4px 4px 2px #636363;
         }
       }
       .iconFooter {
@@ -120,7 +125,8 @@
         width: 40px;
         height: 40px;
         color: #fff;
-        background: $primary-300;
+        // background: $primary-300;
+        background: #062c4b;
         border-radius: 50%;
         line-height: 40px;
         text-align: center;

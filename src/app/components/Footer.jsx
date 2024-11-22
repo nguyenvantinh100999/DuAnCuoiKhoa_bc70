@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="">
           <div className="row textCardTitle">
             <div className="p-2 col-md-4 col-sm-6">
-              <a href="/" className="mr-5 textLogo">
+              <a href="#" className="mr-5 textLogo">
                 <span className="textE">V</span> learning{" "}
                 <i className="far fa-keyboard iconLogo" />
               </a>

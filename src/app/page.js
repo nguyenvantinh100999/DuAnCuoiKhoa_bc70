@@ -338,7 +338,7 @@ const Home = () => {
           </div>
         </div>
       </div> */}
-      <div className="infoCoureBox">
+      {/* <div className="infoCoureBox">
         <div className="infoCourseHome">
           <div className="infoItemHome infoLargeItem">
             <div className="infoItemContent">
@@ -480,7 +480,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="learnMore">
         <div className="row">
           <div className="col-lg-6 sloganRighT">
@@ -571,7 +571,8 @@ const Home = () => {
                   <h3>Giáo trình học tập</h3>
                   <p>
                     Lộ trình học từ zero đến đi làm với đầy đủ skill theo nhà
-                    tuyển dụng.Thực chiến ngay từ buổi học đầu tiên
+                    tuyển dụng.Thực chiến ngay từ buổi học đầu tiên.Nắm bắt xu
+                    thế và cập nhật liên tục theo công nghệ mới nhất hiện nay.
                   </p>
                 </div>
               </div>
@@ -601,7 +602,7 @@ const Home = () => {
                 <div className="text-item">
                   <h3>Hỗ trợ học tập</h3>
                   <p>
-                    Nhóm hỗ trợ học tập liên tục ngoài giờ,Review code, chuẩn
+                    Nhóm hỗ trợ học tập liên tục ngoài giờ.Review code, chuẩn
                     hóa code.
                   </p>
                 </div>
@@ -610,7 +611,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="boxNumberContainer mt-5">
+      <div className="boxNumberContainer">
         <div className="row">
           <div className="col-lg-3 p-4 col-md-6">
             <CountUpBox

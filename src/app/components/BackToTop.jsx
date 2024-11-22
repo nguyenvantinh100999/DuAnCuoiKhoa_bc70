@@ -35,10 +35,7 @@ const BackToTop = () => {
             </Link>
           </li>
           <li>
-            <Link
-              className="wpfm-menu-link"
-              href="https://cybersoft.edu.vn/lo-trinh-hoc/"
-            >
+            <Link className="wpfm-menu-link" href="#">
               <span className="icon-service">
                 <i className="fa fa-dice-d6" />
               </span>
@@ -46,10 +43,7 @@ const BackToTop = () => {
             </Link>
           </li>
           <li>
-            <Link
-              className="wpfm-menu-link"
-              href="https://cybersoft.edu.vn/lien-he/"
-            >
+            <Link className="wpfm-menu-link" href="#">
               <span className="icon-service">
                 <i className="fa fa-envelope" aria-hidden="true" />
               </span>
@@ -57,11 +51,7 @@ const BackToTop = () => {
             </Link>
           </li>
           <li>
-            <Link
-              className="wpfm-menu-link"
-              href="https://www.youtube.com/channel/UCWc3ASTJcb0FeO2oFfX8IDQ"
-              target="_blank"
-            >
+            <Link className="wpfm-menu-link" href="#" target="_blank">
               <span className="icon-service">
                 <i className="fab fa-youtube" />
               </span>
@@ -69,11 +59,7 @@ const BackToTop = () => {
             </Link>
           </li>
           <li>
-            <Link
-              className="wpfm-menu-link"
-              href="https://www.facebook.com/lophocviet/"
-              target="_blank"
-            >
+            <Link className="wpfm-menu-link" href="#" target="_blank">
               <span className="icon-service">
                 <i className="fab fa-facebook-f" />
               </span>
