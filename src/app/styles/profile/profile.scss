@@ -4,7 +4,7 @@
   .titleCourse {
     padding: 50px;
     text-transform: uppercase;
-    background-color: #ffd60a;
+    background-color: #007cce;
     color: $text-color-light;
     h3 {
     }
@@ -56,9 +56,9 @@
                 $fw-normal,
                 $text-color-light,
                 10px,
-                1px solid $primary-200,
-                $primary-200,
-                $primary-200,
+                1px solid $primary-300,
+                $primary-300,
+                $primary-300,
                 $text-color-light
               );
             }
@@ -68,10 +68,10 @@
                 $fw-normal,
                 $text-color,
                 10px,
-                1px solid $primary-200,
+                1px solid $primary-300,
                 $primary-100,
-                $primary-200,
-                $text-color
+                $primary-300,
+                $text-color-light
               );
             }
             .active.infoProfile {
@@ -79,7 +79,7 @@
               color: $text-color;
             }
             .active.infoCourse {
-              background-color: $primary-200;
+              background-color: $primary-300;
               color: $text-color-light;
             }
           }
@@ -102,9 +102,9 @@
                         $fw-normal,
                         $text-color,
                         10px,
-                        1px solid $primary-200,
-                        $primary-200,
-                        $primary-200,
+                        1px solid $primary-300,
+                        $primary-300,
+                        $primary-300,
                         $text-color-light
                       );
                     }
@@ -284,7 +284,7 @@
                     a {
                       @include mText($text-base, $fw-normal, $text-color-card);
                       &:hover {
-                        color: $text-color;
+                        color: $primary-300;
                         text-decoration: underline !important;
                         transition: all 0.5s;
                       }
@@ -299,10 +299,10 @@
                         $fw-normal,
                         $text-color-light,
                         10px,
-                        1px solid $primary-200,
-                        $primary-200,
-                        $primary-200,
-                        $text-color-light
+                        1px solid $primary-300,
+                        $primary-300,
+                        $primary-100,
+                        $primary-300
                       );
                     }
                   }

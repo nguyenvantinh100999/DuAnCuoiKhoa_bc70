@@ -26,6 +26,8 @@ import { Modal } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useRouter } from "next/navigation";
 import { USER_LOGIN } from "@/app/utils/setting";
+import { SearchOutlined } from "@ant-design/icons";
+import Highlighter from "react-highlight-words";
 const page = () => {
   const [loading, setLoading] = useState(false);
   const [dataCourse, setDataCourse] = useState([]);
@@ -46,6 +48,7 @@ const page = () => {
   const [buttonEdit, setButtonEdit] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
   const [khoaHocClick, setKhoaHocClick] = useState("");
+  const [imageUrl, setImageUrl] = React.useState(null); // State để lưu trữ URL hình ảnh
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem(USER_LOGIN));
     if (storedUser && storedUser.maLoaiNguoiDung === "GV") {
@@ -220,7 +223,16 @@ const page = () => {
   const [fileList, setFileList] = useState([]); // Quản lý danh sách tệp
   const handleFileChange = (info) => {
     setFileList(info.fileList); // Cập nhật danh sách tệp
-    console.log(fileList);
+    if (info.fileList.length > 0) {
+      const file = info.fileList[0].originFileObj; // Lấy tệp hình ảnh
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result); // Cập nhật URL hình ảnh
+      };
+      reader.readAsDataURL(file); // Đọc tệp hình ảnh
+    } else {
+      setImageUrl(null); // Nếu không có tệp nào, đặt URL về null
+    }
   };
   const onFinish = async (values) => {
     let url =
@@ -262,6 +274,7 @@ const page = () => {
       formAdd.resetFields();
       setShowModalAddCourse(false);
       setFileList([]);
+      setImageUrl(null);
       console.log(
         buttonEdit ? "Chỉnh sửa thành công" : "Thêm Khóa học thành công",
         response.data
@@ -431,6 +444,149 @@ const page = () => {
       showErrorNotification(errorMessage);
     }
   };
+  //------------bí danh----------------
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    // Chuyển đổi tên khóa học thành bí danh
+    const alias = value
+      .normalize("NFD") // Loại bỏ dấu
+      .replace(/[\u0300-\u036f]/g, "") // Xóa các ký tự dấu
+      .trim()
+      .replace(/\s+/g, "-") // Thay thế khoảng trắng bằng dấu "-"
+      .toLowerCase(); // Chuyển thành chữ thường
+
+    // Cập nhật giá trị bí danh trong form
+    formAdd.setFieldsValue({ biDanh: alias });
+  };
+  //---------------Filter Table------------------------
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
+  const handleSearchFilter = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const handleResetFilter = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          id="inputSearchFilterform"
+          name="inputSearchFilterform"
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearchFilter(selectedKeys, confirm, dataIndex)
+          }
+          style={{
+            marginBottom: 8,
+            display: "block",
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearchFilter(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleResetFilter(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({
+                closeDropdown: false,
+              });
+              setSearchText(selectedKeys[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? "#1677ff" : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) => {
+      if (dataIndex === "nguoiTao") {
+        return record.nguoiTao.hoTen
+          .toString()
+          .toLowerCase()
+          .includes(value.toLowerCase());
+      }
+      return record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase());
+    },
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{
+            backgroundColor: "#ffc069",
+            padding: 0,
+          }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
   const columModalSecond = [
     {
       title: "STT",
@@ -512,11 +668,13 @@ const page = () => {
       title: "Mã KH",
       dataIndex: "maKhoaHoc",
       key: "maKhoaHoc",
+      ...getColumnSearchProps("maKhoaHoc"),
     },
     {
       title: "tên KH",
       dataIndex: "tenKhoaHoc",
       key: "tenKhoaHoc",
+      ...getColumnSearchProps("tenKhoaHoc"),
     },
     {
       title: "Hình ảnh",
@@ -534,6 +692,7 @@ const page = () => {
       title: "Người tạo",
       dataIndex: "nguoiTao",
       key: "nguoiTao",
+      ...getColumnSearchProps("nguoiTao"),
       render: (record) => record.hoTen,
     },
     {
@@ -561,6 +720,7 @@ const page = () => {
               console.log("Selected Course Record:", record);
               formAdd.setFieldsValue(updatedRecord); // Điền dữ liệu vào form
               setShowModalAddCourse(true); // Mở modal
+              setImageUrl(record.hinhAnh);
               setButtonEdit(true);
             }}
           >
@@ -587,6 +747,7 @@ const page = () => {
               setShowModalAddCourse(true);
               setButtonEdit(false);
               formAdd.resetFields();
+              setImageUrl(null);
             }}
             className="btn btn-primary btnGlobal"
           >
@@ -687,7 +848,7 @@ const page = () => {
                     { required: true, message: "Vui lòng nhập bí danh!" },
                   ]}
                 >
-                  <Input />
+                  <Input disabled />
                 </Form.Item>
               </Col>
             </Row>
@@ -704,69 +865,9 @@ const page = () => {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input onChange={handleNameChange} />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Mô Tả"
-                  name="moTa"
-                  rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}
-                >
-                  <Input.TextArea />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Hình Ảnh"
-                  name="hinhAnh"
-                  rules={[
-                    { required: true, message: "Vui lòng tải lên hình ảnh!" },
-                  ]}
-                >
-                  <Upload
-                    beforeUpload={() => false} // Ngăn không cho tự động tải lên
-                    onChange={handleFileChange}
-                    fileList={fileList} // Sử dụng fileList để quản lý danh sách tệp
-                    showUploadList={false}
-                  >
-                    <Button>Chọn Hình Ảnh</Button>
-                  </Upload>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Mã Nhóm"
-                  name="maNhom"
-                  rules={[
-                    { required: true, message: "Vui lòng chọn mã nhóm!" },
-                  ]}
-                >
-                  <Select placeholder="Chọn mã nhóm">
-                    <Select.Option value="GP01">GP01</Select.Option>
-                    <Select.Option value="GP02">GP02</Select.Option>
-                    <Select.Option value="GP03">GP03</Select.Option>
-                    <Select.Option value="GP04">GP04</Select.Option>
-                    <Select.Option value="GP05">GP05</Select.Option>
-                    <Select.Option value="GP06">GP06</Select.Option>
-                    <Select.Option value="GP07">GP07</Select.Option>
-                    <Select.Option value="GP08">GP08</Select.Option>
-                    <Select.Option value="GP09">GP09</Select.Option>
-                    <Select.Option value="GP10">GP10</Select.Option>
-                    <Select.Option value="GP11">GP11</Select.Option>
-                    <Select.Option value="GP12">GP12</Select.Option>
-                    <Select.Option value="GP13">GP13</Select.Option>
-                    <Select.Option value="GP14">GP14</Select.Option>
-                    <Select.Option value="GP15">GP15</Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
                   label="Mã Danh Mục Khóa Học"
@@ -806,6 +907,53 @@ const page = () => {
               </Col>
               <Col span={12}>
                 <Form.Item
+                  label="Mã Nhóm"
+                  name="maNhom"
+                  rules={[
+                    { required: true, message: "Vui lòng chọn mã nhóm!" },
+                  ]}
+                >
+                  <Select placeholder="Chọn mã nhóm">
+                    <Select.Option value="GP01">GP01</Select.Option>
+                    <Select.Option value="GP02">GP02</Select.Option>
+                    <Select.Option value="GP03">GP03</Select.Option>
+                    <Select.Option value="GP04">GP04</Select.Option>
+                    <Select.Option value="GP05">GP05</Select.Option>
+                    <Select.Option value="GP06">GP06</Select.Option>
+                    <Select.Option value="GP07">GP07</Select.Option>
+                    <Select.Option value="GP08">GP08</Select.Option>
+                    <Select.Option value="GP09">GP09</Select.Option>
+                    <Select.Option value="GP10">GP10</Select.Option>
+                    <Select.Option value="GP11">GP11</Select.Option>
+                    <Select.Option value="GP12">GP12</Select.Option>
+                    <Select.Option value="GP13">GP13</Select.Option>
+                    <Select.Option value="GP14">GP14</Select.Option>
+                    <Select.Option value="GP15">GP15</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Hình Ảnh"
+                  name="hinhAnh"
+                  rules={[
+                    { required: true, message: "Vui lòng tải lên hình ảnh!" },
+                  ]}
+                >
+                  <Upload
+                    beforeUpload={() => false} // Ngăn không cho tự động tải lên
+                    onChange={handleFileChange}
+                    fileList={fileList} // Sử dụng fileList để quản lý danh sách tệp
+                    showUploadList={false}
+                  >
+                    <Button>Chọn Hình Ảnh</Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
                   label="Lượt Xem"
                   name="luotXem"
                   rules={[
@@ -816,9 +964,36 @@ const page = () => {
                 </Form.Item>
               </Col>
             </Row>
-
+            <Row gutter={16}>
+              <Col span={6}>
+                {imageUrl && ( // Hiển thị hình ảnh nếu có URL
+                  <img
+                    src={imageUrl}
+                    alt="Hình Ảnh Khóa Học"
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto",
+                    }}
+                  />
+                )}
+              </Col>
+              <Col span={6}></Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Mô Tả"
+                  name="moTa"
+                  rules={[{ required: true, message: "Vui lòng nhập mô tả!" }]}
+                >
+                  <Input.TextArea />
+                </Form.Item>
+              </Col>
+            </Row>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginTop: 10 }}
+              >
                 {buttonEdit ? "Lưu thông tin" : "Thêm khóa học"}
               </Button>
             </Form.Item>

@@ -4,7 +4,7 @@
   .titleCourse {
     padding: 50px;
     text-transform: uppercase;
-    background-color: $primary-200;
+    background-color: #007cce;
     color: $primary-100;
     h3 {
     }
@@ -135,6 +135,15 @@
                     i {
                       color: $primary-300;
                       margin-right: 10px;
+                    }
+                    &:nth-child(2) {
+                      width: 70px;
+                    }
+                    @media (max-width: 992px) {
+                      max-width: 290px;
+                    }
+                    @media (max-width: 499px) {
+                      max-width: 200px;
                     }
                   }
                 }

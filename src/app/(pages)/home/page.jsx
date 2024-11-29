@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Parallax from "parallax-js";
 // import MyComponent from "../components/MyComponent";
 import Marquee from "react-fast-marquee";
@@ -32,6 +32,26 @@ const Home = () => {
       };
     }
   }, []); // Chạy một lần khi component mount
+  //------------
+  const sliderRef = useRef(null);
+  const slidesRef = useRef([]);
+  useEffect(() => {
+    slidesRef.current = Array.from(sliderRef.current.children);
+  }, []);
+  const handleClickNext = () => {
+    if (slidesRef.current.length > 0) {
+      const firlSlide = slidesRef.current.shift();
+      sliderRef.current.appendChild(firlSlide);
+      slidesRef.current.push(firlSlide);
+    }
+  };
+  const handleClickPrev = () => {
+    if (slidesRef.current.length > 0) {
+      const lastSlide = slidesRef.current.pop();
+      sliderRef.current.prepend(lastSlide);
+      slidesRef.current.unshift(lastSlide);
+    }
+  };
   return (
     <div className="test">
       <div className="card-item">
@@ -360,6 +380,96 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <div className="infoTeacher">
+        <div className="slider" ref={sliderRef}>
+          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+            <div className="content">
+              <h2>Slide 01</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                maiores incidunt nemo laudantium culpa, rem vero dolor magni
+                vitae quod!
+              </p>
+            </div>
+          </div>
+          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+            <div className="content">
+              <h2>Slide 01</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                maiores incidunt nemo laudantium culpa, rem vero dolor magni
+                vitae quod!
+              </p>
+            </div>
+          </div>
+          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+            <div className="content">
+              <h2>Slide 01</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                maiores incidunt nemo laudantium culpa, rem vero dolor magni
+                vitae quod!
+              </p>
+            </div>
+          </div>
+          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+            <div className="content">
+              <h2>Slide 01</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                maiores incidunt nemo laudantium culpa, rem vero dolor magni
+                vitae quod!
+              </p>
+            </div>
+          </div>
+          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+            <div className="content">
+              <h2>Slide 01</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                maiores incidunt nemo laudantium culpa, rem vero dolor magni
+                vitae quod!
+              </p>
+            </div>
+          </div>
+          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+            <div className="content">
+              <h2>Slide 01</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                maiores incidunt nemo laudantium culpa, rem vero dolor magni
+                vitae quod!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="buttons">
+          <span
+            className="prev"
+            onClick={() => {
+              handleClickPrev();
+            }}
+          ></span>
+          <span
+            className="next"
+            onClick={() => {
+              handleClickNext();
+            }}
+          ></span>
+        </div>
+      </div>
+      {/* <script>let next = doccument.querySelector('.next')
+      let prev = doccument.querySelector('.prev');
+      let slider =  doccument.querySelector('.slider');
+      next.addEventListenner("click",function(){
+        let slides = doccument.querySelectorAll('.slides');
+        slider.appendChild(slides[0])
+      })
+         prev.addEventListenner("click",function(){
+        let slides = doccument.querySelectorAll('.slides');
+        slider.perpend(slides[slides.length-1])
+      })
+      </script> */}
     </div>
   );
 };

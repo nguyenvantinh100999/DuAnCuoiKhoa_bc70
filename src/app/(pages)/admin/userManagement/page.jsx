@@ -657,29 +657,29 @@ const page = () => {
               Xin chào <span>{user?.hoTen},</span>
             </p>
             <img src="/img/emoji.6d1b7051.png" alt="iconProfile" />
-          </div>
-          <Dropdown>
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
-              Chỉnh sửa
-            </Dropdown.Toggle>
+            <Dropdown>
+              <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Chỉnh sửa
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item
-                onClick={() => {
-                  handleEditAmin(true);
-                }}
-              >
-                Cập nhật thông tin
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={() => {
-                  handleLogoutAmin();
-                }}
-              >
-                Đăng Xuất
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    handleEditAmin(true);
+                  }}
+                >
+                  Cập nhật thông tin
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    handleLogoutAmin();
+                  }}
+                >
+                  Đăng Xuất
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </Header>
         <Table
           columns={columns}

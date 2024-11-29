@@ -4,7 +4,7 @@
   .titleCourse {
     padding: 50px;
     text-transform: uppercase;
-    background-color: #ffd60a;
+    background-color: #007cce;
     color: $text-color-light;
     h3 {
     }
@@ -158,10 +158,10 @@
                     $fw-normal,
                     $text-color-light,
                     10px,
-                    1px solid $primary-200,
-                    $primary-200,
-                    $primary-200,
-                    $text-color-light
+                    1px solid $primary-300,
+                    $primary-300,
+                    $primary-100,
+                    $primary-300
                   );
                 }
               }

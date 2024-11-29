@@ -4,7 +4,11 @@
   width: 100%;
   min-height: 100vh;
   padding: 20px 0;
-  background: linear-gradient(90deg, $primary-300, $primary-100, $primary-500);
+  background: linear-gradient(
+    45deg,
+    hsla(201, 100%, 61%, 1) 0%,
+    hsla(207, 85%, 16%, 1) 100%
+  );
   .menuAdmin {
     display: flex;
     justify-content: center;
