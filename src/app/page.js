@@ -107,25 +107,25 @@ const Home = () => {
     setActiveIndex(index); // Cập nhật chỉ số thẻ được click
   };
   //------------slide infoteacher---------------
-  const sliderRef = useRef(null);
-  const slidesRef = useRef([]);
-  useEffect(() => {
-    slidesRef.current = Array.from(sliderRef.current.children);
-  }, []);
-  const handleClickNext = () => {
-    if (slidesRef.current.length > 0) {
-      const firlSlide = slidesRef.current.shift();
-      sliderRef.current.appendChild(firlSlide);
-      slidesRef.current.push(firlSlide);
-    }
-  };
-  const handleClickPrev = () => {
-    if (slidesRef.current.length > 0) {
-      const lastSlide = slidesRef.current.pop();
-      sliderRef.current.prepend(lastSlide);
-      slidesRef.current.unshift(lastSlide);
-    }
-  };
+  // const sliderRef = useRef(null);
+  // const slidesRef = useRef([]);
+  // useEffect(() => {
+  //   slidesRef.current = Array.from(sliderRef.current.children);
+  // }, []);
+  // const handleClickNext = () => {
+  //   if (slidesRef.current.length > 0) {
+  //     const firlSlide = slidesRef.current.shift();
+  //     sliderRef.current.appendChild(firlSlide);
+  //     slidesRef.current.push(firlSlide);
+  //   }
+  // };
+  // const handleClickPrev = () => {
+  //   if (slidesRef.current.length > 0) {
+  //     const lastSlide = slidesRef.current.pop();
+  //     sliderRef.current.prepend(lastSlide);
+  //     slidesRef.current.unshift(lastSlide);
+  //   }
+  // };
   return (
     <div className="homePage">
       <section className="banner">

@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossOrigin="anonymous"
         />
-        <link rel="shortcut icon" type="image/png" href="/icons/logoweb.png" />
+        {/* <link rel="shortcut icon" type="image/png" href="/icons/logoweb.png" /> */}
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"

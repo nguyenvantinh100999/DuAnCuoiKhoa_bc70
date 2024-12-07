@@ -525,18 +525,6 @@ const Home = () => {
           ></span>
         </div>
       </div>
-      {/* <script>let next = doccument.querySelector('.next')
-      let prev = doccument.querySelector('.prev');
-      let slider =  doccument.querySelector('.slider');
-      next.addEventListenner("click",function(){
-        let slides = doccument.querySelectorAll('.slides');
-        slider.appendChild(slides[0])
-      })
-         prev.addEventListenner("click",function(){
-        let slides = doccument.querySelectorAll('.slides');
-        slider.perpend(slides[slides.length-1])
-      })
-      </script> */}
     </div>
   );
 };
