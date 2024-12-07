@@ -8,6 +8,7 @@ import { API_URL, getHeaders, TOKEN_CYBERSOFT } from "@/app/utils/configHeader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Button, Modal, ModalFooter } from "react-bootstrap";
+import ClientImageComponent from "@/app/components/ClientImageComponent";
 const Detail = (props) => {
   const [prodDetail, setProdDetail] = useState([]);
   const [relatedCourses, setRelatedCourses] = useState([]);
@@ -163,7 +164,9 @@ const Detail = (props) => {
       showErrorNotification(errorMessage);
     }
   };
-
+  const handleImageError = (e) => {
+    e.target.src = "/img/back-end-trung-cap_gp01.png"; // Thay bằng ảnh mặc định của bạn
+  };
   return (
     <div className="detailCoures">
       <div className="titleCourse">
@@ -452,7 +455,11 @@ const Detail = (props) => {
           <div className="col-lg-4 col-md-5">
             <div className="sideBarCourseDetail">
               <div className="img-product">
-                <img src={prodDetail?.hinhAnh} alt="..." />
+                <img
+                  src={prodDetail.hinhAnh}
+                  onError={handleImageError}
+                  alt={prodDetail.moTa}
+                />
               </div>
 
               <div className="coursePrice">
@@ -529,7 +536,11 @@ const Detail = (props) => {
               return (
                 <div key={item.maKhoaHoc} className="cardGlobal">
                   <div className="imgBx">
-                    <img src={item.hinhAnh} className="img-fluid" alt="..." />
+                    <ClientImageComponent
+                      src={item.hinhAnh}
+                      alt={item.moTa}
+                      fallbackSrc="/img/back-end-trung-cap_gp01.png"
+                    />
                   </div>
                   <div className="content">
                     <h2>{item.tenKhoaHoc}</h2>

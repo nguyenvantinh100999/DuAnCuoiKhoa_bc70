@@ -112,6 +112,7 @@ const page = () => {
         setDataUserFilter(dataWithSTT);
       } else {
         // Nếu không có từ khóa tìm kiếm, hiển thị lại toàn bộ danh sách
+        // setDataUserFilter(dataUser);
         setDataUserFilter(dataUser);
       }
     } catch (error) {
@@ -235,6 +236,7 @@ const page = () => {
           headers: headers,
           data,
         });
+
         showSuccessNotification(
           buttonEdit ? "Cập nhật thành công" : "Thêm người dùng thành công"
         );
@@ -507,6 +509,7 @@ const page = () => {
       title: "Tài khoản",
       dataIndex: "taiKhoan",
       key: "taiKhoan",
+      ...getColumnSearchProps("taiKhoan"),
     },
     {
       title: "ND",

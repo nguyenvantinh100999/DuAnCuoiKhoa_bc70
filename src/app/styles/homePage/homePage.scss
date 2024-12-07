@@ -1139,6 +1139,152 @@
       }
     }
   }
+  // .infoTeacher {
+  //   position: relative;
+  //   width: 100vw;
+  //   height: 100vh;
+  //   overflow: hidden;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   h6 {
+  //     font-size: $text-3xl;
+  //     margin-bottom: 40px;
+  //   }
+  //   .slider {
+  //     position: absolute;
+  //     inset: 80px 200px 80px 80px;
+  //     .slides {
+  //       position: absolute;
+  //       display: flex;
+  //       justify-content: flex-start;
+  //       align-items: flex-end;
+  //       top: 50%;
+  //       transform: translateY(-50%);
+  //       width: 240px;
+  //       height: 320px;
+  //       background: var(--img);
+  //       background-position: center;
+  //       background-repeat: no-repeat;
+  //       background-size: auto;
+  //       transition: 0.5s;
+  //       border-radius: 20px;
+  //       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  //       &:nth-child(1),
+  //       &:nth-child(2) {
+  //         position: absolute;
+  //         top: 0;
+  //         left: 0;
+  //         width: 100%;
+  //         height: 100%;
+  //         transform: translateY(0);
+  //         box-shadow: 0 25px 50px rgba(0, 0, 0, 0);
+  //         background-size: cover;
+  //         .content {
+  //           opacity: 1;
+  //           transform: translateY(0px);
+  //           transition-delay: 0.5s;
+  //         }
+  //       }
+  //       &:nth-child(3) {
+  //         left: calc(50% + 240px);
+  //         background-size: cover;
+  //       }
+  //       &:nth-child(4) {
+  //         left: calc(50% + 500px);
+  //         background-size: cover;
+  //       }
+  //       &:nth-child(5) {
+  //         left: calc(50% + 760px);
+  //         background-size: cover;
+  //       }
+  //       &:nth-child(6) {
+  //         left: calc(50% + 1020px);
+  //         background-size: cover;
+  //         opacity: 0;
+  //       }
+  //     }
+  //     .content {
+  //       position: relative;
+  //       padding: 40px;
+  //       max-width: 600px;
+  //       transition: 0.25s;
+  //       transition-delay: 0s;
+  //       transform: translateY(40px);
+  //       z-index: 1000;
+  //       opacity: 0;
+  //       h2 {
+  //         font-size: 4em;
+  //         color: $text-color-light;
+  //       }
+  //       p {
+  //         color: $text-color-light;
+  //       }
+  //     }
+  //   }
+  //   .buttons {
+  //     position: absolute;
+  //     bottom: 15px;
+  //     display: flex;
+  //     gap: 20px;
+  //     span {
+  //       position: relative;
+  //       width: 50px;
+  //       height: 50px;
+  //       background: #111;
+  //       cursor: pointer;
+  //       display: flex;
+  //       justify-content: center;
+  //       align-items: center;
+  //       border-radius: 50%;
+  //       &::before {
+  //         content: "";
+  //         position: absolute;
+  //         width: 15px;
+  //         height: 15px;
+  //         border-top: 4px solid #fff;
+  //         border-left: 4px solid #fff;
+  //         transform: rotate(315deg) translate(2px, 3px);
+  //       }
+  //       &:nth-child(2)::before {
+  //         transform: rotate(135deg) translate(2px, 2px);
+  //       }
+  //       &:active {
+  //         opacity: 0.5;
+  //       }
+  //     }
+  //   }
+  //   @media (max-width: 900px) {
+  //     .slider {
+  //       position: absolute;
+  //       inset: 40px 40px 200px 40px;
+  //       .slides {
+  //         width: 100px;
+  //         height: 100px;
+  //         top: initial;
+  //         bottom: -200px;
+  //         box-shadow: 0 10px 0px rgba(0, 0, 0, 0.25);
+  //         &:nth-child(1),
+  //         &:nth-child(2) {
+  //           top: initial;
+  //           bottom: 0px;
+  //         }
+  //         &:nth-child(3) {
+  //           left: 0;
+  //         }
+  //         &:nth-child(4) {
+  //           left: 120px;
+  //         }
+  //         &:nth-child(5) {
+  //           left: 240px;
+  //         }
+  //         &:nth-child(6) {
+  //           left: 360px;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
   .review {
     padding: 20px 50px;
     position: relative;

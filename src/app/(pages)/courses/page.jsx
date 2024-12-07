@@ -2,12 +2,14 @@ import { getCourseListByPaginationAction } from "@/app/actions/service/productAp
 import "../../styles/courses/courses.scss";
 import Link from "next/link";
 import Image from "next/image";
+import ClientImageComponent from "@/app/components/ClientImageComponent";
 const CoursesPage = async ({ searchParams }) => {
   const page = searchParams.page || 1; // Lấy số trang từ tham số truy vấn
   const pageSize = 12; // Số mục mỗi trang
 
   const { courses, currentPage, totalPages } =
     await getCourseListByPaginationAction(page, pageSize);
+
   return (
     <div className="coursesPage">
       <div className="titleCourse">
@@ -74,15 +76,10 @@ const CoursesPage = async ({ searchParams }) => {
               >
                 <div className="cardGlobal" href="/chitiet/111111111111">
                   <div className="imgBx">
-                    <Image
-                      width={250}
-                      height={250}
-                      crossOrigin="anonymous"
-                      quality={100}
-                      className=""
+                    <ClientImageComponent
                       src={item.hinhAnh}
-                      alt="..."
-                      // style={{ width: "auto" }}
+                      alt={item.moTa}
+                      fallbackSrc="/img/back-end-trung-cap_gp01.png"
                     />
                     <ul key={item.maKhoaHoc}>
                       <li>

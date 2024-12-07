@@ -616,7 +616,7 @@
     }
   }
   .infoTeacher {
-    position: absolute;
+    position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
@@ -626,7 +626,6 @@
     .slider {
       position: absolute;
       inset: 80px 200px 80px 80px;
-      background: #000;
       .slides {
         position: absolute;
         display: flex;
@@ -637,6 +636,9 @@
         width: 240px;
         height: 320px;
         background: var(--img);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: auto;
         transition: 0.5s;
         border-radius: 20px;
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);

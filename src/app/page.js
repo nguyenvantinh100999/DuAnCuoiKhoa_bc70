@@ -1,7 +1,7 @@
 "use client";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getAllCourseListAction } from "./actions/service/productApi";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +10,8 @@ import Parallax from "parallax-js";
 import { API_URL, getHeaders } from "./utils/configHeader";
 import axios from "axios";
 import CountUpBox from "./components/CountUpBox";
+import ClientImageComponent from "./components/ClientImageComponent";
+
 const Home = () => {
   const [data, setData] = useState([]);
   const [courseList, setCourseList] = useState([]);
@@ -104,6 +106,26 @@ const Home = () => {
   const handleClick = (index) => {
     setActiveIndex(index); // Cập nhật chỉ số thẻ được click
   };
+  //------------slide infoteacher---------------
+  const sliderRef = useRef(null);
+  const slidesRef = useRef([]);
+  useEffect(() => {
+    slidesRef.current = Array.from(sliderRef.current.children);
+  }, []);
+  const handleClickNext = () => {
+    if (slidesRef.current.length > 0) {
+      const firlSlide = slidesRef.current.shift();
+      sliderRef.current.appendChild(firlSlide);
+      slidesRef.current.push(firlSlide);
+    }
+  };
+  const handleClickPrev = () => {
+    if (slidesRef.current.length > 0) {
+      const lastSlide = slidesRef.current.pop();
+      sliderRef.current.prepend(lastSlide);
+      slidesRef.current.unshift(lastSlide);
+    }
+  };
   return (
     <div className="homePage">
       <section className="banner">
@@ -181,7 +203,11 @@ const Home = () => {
                 >
                   <div className="card">
                     <div className="imgBx">
-                      <img src={item.hinhAnh} alt="" />
+                      <ClientImageComponent
+                        src={item.hinhAnh}
+                        alt={item.moTa}
+                        fallbackSrc="/img/back-end-trung-cap_gp01.png"
+                      />
                       <ul key={item.maKhoaHoc}>
                         <li>
                           <i className="fa fa-heart" />
@@ -536,6 +562,152 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {/* <div className="infoTeacher">
+        <h6>Giảng viên hàng đầu</h6>
+        <div className="slider" ref={sliderRef}>
+          <div
+            className="slides"
+            style={{ "--img": "url('/images/pexels-max-fischer-5212361.jpg')" }}
+          >
+            <div className="content">
+              <h2>Nguyễn Văn An</h2>
+              <p>
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
+              </p>
+            </div>
+          </div>
+          <div
+            className="slides"
+            style={{ "--img": "url('/images/pexels-thirdman-7652509.jpg')" }}
+          >
+            <div className="content">
+              <h2>Nguyễn Văn An</h2>
+              <p>
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
+              </p>
+            </div>
+          </div>
+          <div
+            className="slides"
+            style={{ "--img": "url('/images/pexels-rdne-7845465.jpg')" }}
+          >
+            <div className="content">
+              <h2>Nguyễn Văn An</h2>
+              <p>
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
+              </p>
+            </div>
+          </div>
+          <div
+            className="slides"
+            style={{
+              "--img": "url('/images/pexels-mikhail-nilov-9159039.jpg')",
+            }}
+          >
+            <div className="content">
+              <h2>Nguyễn Văn An</h2>
+              <p>
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
+              </p>
+            </div>
+          </div>
+          <div
+            className="slides"
+            style={{
+              "--img":
+                "url('/images/pexels-anthonyshkraba-production-8374251.jpg')",
+            }}
+          >
+            <div className="content">
+              <h2>Nguyễn Văn An</h2>
+              <p>
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
+              </p>
+            </div>
+          </div>
+          <div
+            className="slides"
+            style={{
+              "--img": "url('/images/pexels-max-fischer-5212317 (1).jpg')",
+            }}
+          >
+            <div className="content">
+              <h2>Nguyễn Văn An</h2>
+              <p>
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="buttons">
+          <span
+            className="prev"
+            onClick={() => {
+              handleClickPrev();
+            }}
+          ></span>
+          <span
+            className="next"
+            onClick={() => {
+              handleClickNext();
+            }}
+          ></span>
+        </div>
+      </div> */}
       <div className="review mt-5">
         <div className="reviewStudent">
           <div className="triangleTopRight" />

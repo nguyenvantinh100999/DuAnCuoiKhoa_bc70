@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useState } from "react";
+import { deburr } from "lodash";
 import {
   Layout,
   Menu,
@@ -28,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { USER_LOGIN } from "@/app/utils/setting";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import ClientImageComponent from "@/app/components/ClientImageComponent";
 const page = () => {
   const [loading, setLoading] = useState(false);
   const [dataCourse, setDataCourse] = useState([]);
@@ -112,9 +114,10 @@ const page = () => {
   const handleSearchCourse = async (value) => {
     setLoading(true);
     try {
-      if (value) {
+      const normalizedValue = deburr(value.trim());
+      if (normalizedValue) {
         const res = await axios(
-          `https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?tenKhoaHoc=${value}`,
+          `https://elearningnew.cybersoft.edu.vn/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?tenKhoaHoc=${normalizedValue}`,
           {
             method: "GET",
             headers: getHeaders(),
@@ -680,7 +683,12 @@ const page = () => {
       title: "Hình ảnh",
       dataIndex: "hinhAnh",
       render: (text) => (
-        <img src={text} alt="course" style={{ width: 50, height: 50 }} />
+        <ClientImageComponent
+          src={text}
+          alt={"course"}
+          style={(50, 50)}
+          fallbackSrc="/img/back-end-trung-cap_gp01.png"
+        />
       ),
     },
     {
@@ -818,7 +826,7 @@ const page = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {buttonEdit ? "Chỉnh sữa khóa học" : "Thêm Khóa học"}
+            {buttonEdit ? "Chỉnh sửa khóa học" : "Thêm Khóa học"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -837,7 +845,7 @@ const page = () => {
                     { required: true, message: "Vui lòng nhập mã khóa học!" },
                   ]}
                 >
-                  <Input />
+                  {buttonEdit ? <Input disabled /> : <Input />}
                 </Form.Item>
               </Col>
               <Col span={12}>

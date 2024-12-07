@@ -2,11 +2,15 @@ import React from "react";
 import "../../styles/search/search.scss";
 import Link from "next/link";
 import { getCourseListInfoByKeyWord } from "@/app/actions/service/productApi";
+import ClientImageComponent from "@/app/components/ClientImageComponent";
+
 const Search = async (props) => {
   const keyword = props.searchParams.keyword || "";
+
   const data = await getCourseListInfoByKeyWord(keyword);
-  console.log(data);
-  console.log(keyword);
+  const handleImageError = (e) => {
+    e.target.src = "/img/back-end-trung-cap_gp01.png"; // Thay bằng ảnh mặc định của bạn
+  };
   return (
     <div className="searchPageContainer">
       <div className="titleCourse">
@@ -175,10 +179,10 @@ const Search = async (props) => {
                   return (
                     <div className="row mt-3" key={item.maKhoaHoc}>
                       <div className="col-xl-3 col-lg-4">
-                        <img
-                          className="imgNet"
+                        <ClientImageComponent
                           src={item.hinhAnh}
                           alt={item.moTa}
+                          fallbackSrc="/img/back-end-trung-cap_gp01.png"
                         />
                       </div>
                       <div className="col-xl-7 col-lg-6 cardNetContent">
@@ -215,7 +219,9 @@ const Search = async (props) => {
                       <div className="col-xl-2 col-lg-2 mt-2 cancelNet">
                         <Link
                           className="btnGlobal"
-                          href={`/detail/${item.maKhoaHoc}`}
+                          href={`/detail/${
+                            item.maKhoaHoc
+                          }?tenKhoaHoc=${encodeURIComponent(item.tenKhoaHoc)}`}
                         >
                           Xem chi tiết
                         </Link>

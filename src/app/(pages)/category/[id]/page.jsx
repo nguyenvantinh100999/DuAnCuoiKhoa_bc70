@@ -3,10 +3,13 @@ import "../../../styles/category/category.scss";
 import Link from "next/link";
 import { getCourseListByCategoryAction } from "@/app/actions/service/productApi";
 import Image from "next/image";
+import ClientImageComponent from "@/app/components/ClientImageComponent";
 const Category = async (props) => {
   const { id } = props.params;
   const data = await getCourseListByCategoryAction(id);
-
+  const handleImageError = (e) => {
+    e.target.src = "/img/back-end-trung-cap_gp01.png"; // Thay bằng ảnh mặc định của bạn
+  };
   return (
     <div className="CourseCategories">
       <div className="titleCourse">
@@ -32,7 +35,11 @@ const Category = async (props) => {
                 >
                   <div className="card">
                     <div className="imgBx">
-                      <img src={item.hinhAnh} alt="" />
+                      <ClientImageComponent
+                        src={item.hinhAnh}
+                        alt={item.moTa}
+                        fallbackSrc="/img/back-end-trung-cap_gp01.png"
+                      />
                       <ul key={item.maKhoaHoc}>
                         <li>
                           <i className="fa fa-heart" />

@@ -153,6 +153,9 @@ const page = () => {
       });
     }
   }, [profile]);
+  const handleImageError = (e) => {
+    e.target.src = "/img/back-end-trung-cap_gp01.png"; // Thay bằng ảnh mặc định của bạn
+  };
   return (
     <section className="infoPage">
       <div className="titleCourse">
@@ -368,6 +371,7 @@ const page = () => {
                             <img
                               className="imgNet"
                               src={item.hinhAnh}
+                              onError={handleImageError}
                               alt="..."
                             />
                           </div>

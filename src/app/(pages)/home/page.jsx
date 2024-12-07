@@ -382,63 +382,130 @@ const Home = () => {
       </section>
       <div className="infoTeacher">
         <div className="slider" ref={sliderRef}>
-          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+          <div
+            className="slides"
+            style={{ "--img": "url('/images/pexels-max-fischer-5212361.jpg')" }}
+          >
             <div className="content">
-              <h2>Slide 01</h2>
+              <h2>Nguyễn Văn An</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-                maiores incidunt nemo laudantium culpa, rem vero dolor magni
-                vitae quod!
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
               </p>
             </div>
           </div>
-          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+          <div
+            className="slides"
+            style={{ "--img": "url('/images/pexels-thirdman-7652509.jpg')" }}
+          >
             <div className="content">
-              <h2>Slide 01</h2>
+              <h2>Nguyễn Văn An</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-                maiores incidunt nemo laudantium culpa, rem vero dolor magni
-                vitae quod!
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
               </p>
             </div>
           </div>
-          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+          <div
+            className="slides"
+            style={{ "--img": "url('/images/pexels-rdne-7845465.jpg')" }}
+          >
             <div className="content">
-              <h2>Slide 01</h2>
+              <h2>Nguyễn Văn An</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-                maiores incidunt nemo laudantium culpa, rem vero dolor magni
-                vitae quod!
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
               </p>
             </div>
           </div>
-          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+          <div
+            className="slides"
+            style={{
+              "--img": "url('/images/pexels-mikhail-nilov-9159039.jpg')",
+            }}
+          >
             <div className="content">
-              <h2>Slide 01</h2>
+              <h2>Nguyễn Văn An</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-                maiores incidunt nemo laudantium culpa, rem vero dolor magni
-                vitae quod!
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
               </p>
             </div>
           </div>
-          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+          <div
+            className="slides"
+            style={{
+              "--img":
+                "url('/images/pexels-anthonyshkraba-production-8374251.jpg')",
+            }}
+          >
             <div className="content">
-              <h2>Slide 01</h2>
+              <h2>Nguyễn Văn An</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-                maiores incidunt nemo laudantium culpa, rem vero dolor magni
-                vitae quod!
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
               </p>
             </div>
           </div>
-          <div className="slides" style={{ "--img": "url('/img/02.jpg')" }}>
+          <div
+            className="slides"
+            style={{
+              "--img": "url('/images/pexels-max-fischer-5212317 (1).jpg')",
+            }}
+          >
             <div className="content">
-              <h2>Slide 01</h2>
+              <h2>Nguyễn Văn An</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-                maiores incidunt nemo laudantium culpa, rem vero dolor magni
-                vitae quod!
+                Thầy Nguyễn Văn An, một chuyên gia trong lĩnh vực phát triển
+                web, hiện đang giảng dạy Front-end tại Học viện Công nghệ ABC.
+                Với hơn 10 năm kinh nghiệm trong ngành, thầy An đã giúp hàng
+                trăm học viên nắm vững các kỹ năng cần thiết để trở thành những
+                nhà phát triển Front-end xuất sắc. Thầy nổi tiếng với phương
+                pháp giảng dạy thực tế, tập trung vào việc ứng dụng kiến thức
+                vào các dự án thực tế, đồng thời luôn cập nhật các xu hướng mới
+                nhất trong ngành công nghệ thông tin. Ngoài ra, thầy An còn là
+                tác giả của nhiều bài viết và khóa học trực tuyến về Front-end,
+                được cộng đồng developer đánh giá cao.
               </p>
             </div>
           </div>
